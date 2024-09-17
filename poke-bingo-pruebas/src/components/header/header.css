@@ -1,0 +1,56 @@
+@media screen and (min-width: 401px) {
+    body{
+        background-color: #B11A17;
+    }
+    .parentHeader {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 100%;
+        //grid-column-gap: 0px;
+        //grid-row-gap: 0px;
+        background-color: #B11A17;
+        //margin-bottom: 1%;
+        height: 100px;
+        box-shadow: 2px 5px 5px 2px #7A170C;
+    }
+    .logoHeader {
+        width:300px;
+        height:120px;
+    }
+
+    .link-pages {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //padding-right: 75%;
+    }
+
+    
+
+    .separarInicio {
+        display: flex;
+        justify-content: center;
+        padding-left: 10%;
+        transition: all .5s ease;
+
+    }
+    .separarInicio:hover {
+        scale: 1.2;
+        color: #FFFAB3
+    }
+
+    .tamanioHeader {
+        font-size: 24px;
+        color: #FFFAB3;
+        font-weight: bold;
+        
+    }
+
+    .nav-justify {
+        display: flex;
+        justify-content: space-around; /* Distribuye los enlaces uniformemente */
+        width: 100%; /* Asegura que el nav ocupe todo el ancho */
+      }
+
+
+}
