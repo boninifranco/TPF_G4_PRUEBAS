@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Footer } from './shared/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,8 +10,7 @@ import { Nosotros } from './pages/Nosotros';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Nosotros></Nosotros>
-    <Footer></Footer>
+    <App></App>
   </React.StrictMode>
 );
 

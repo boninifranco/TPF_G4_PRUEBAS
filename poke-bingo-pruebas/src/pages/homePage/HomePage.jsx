@@ -1,12 +1,12 @@
 import React from 'react'
 import "../homePage/homePage.css"
-import { Headerbs } from '../../components/header/Headerbs'
 import { Carrousel } from '../../components/varios/Carrousel'
+
 
  export const HomePage = () => {
   return (
     <div style={{backgroundColor: "#B11A17"}}>
-        <Headerbs/>
+        
         <div className='contieneBody'>
           <section className='contieneCarrousel'>
             <Carrousel/>
@@ -53,7 +53,7 @@ import { Carrousel } from '../../components/varios/Carrousel'
         Regístrate y compra tus cartones hoy mismo para ser parte de esta emocionante aventura. ¡Diviértete y gana con Pokémon!
         </p>
           </section>
-        </div>
+        </div>        
     </div> 
   )
 }

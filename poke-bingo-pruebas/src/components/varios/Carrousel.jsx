@@ -29,13 +29,13 @@ export const Carrousel = () => {
         <Carousel.Item key={index}>
             <h3 style={{color: '#7A170C', textAlign:'center', fontSize:'36px',fontStyle:'italic'}}>{slide.name}</h3>
           <img
-            className="d-block w-80"
+            className="d-block w-50"
             src={slide.image}
             alt="Imagen no disponible"
           />
           <Carousel.Caption>
             
-            <h1 style={{color: '#7A170C', fontSize: '120px', fontWeight:'bold', fontStyle:'italic',textAlign:'right'}}>{slide.id}</h1>
+            <h1 style={{color: '#7A170C', fontSize: '100px', fontWeight:'bold', fontStyle:'italic',textAlign:'right'}}>{slide.id}</h1>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
