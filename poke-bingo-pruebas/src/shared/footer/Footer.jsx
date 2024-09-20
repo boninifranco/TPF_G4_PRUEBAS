@@ -1,8 +1,8 @@
 import React from 'react'
 import './footer.css'
-import instagram from '../assets/instagram.png'
-import tiktok from '../assets/tiktok.png'
-import x from '../assets/x.png'
+import instagram from '../../assets/instagram.png'
+import tiktok from '../../assets/tiktok.png'
+import x from '../../assets/x.png'
 
 export const Footer = () => {
     return (
