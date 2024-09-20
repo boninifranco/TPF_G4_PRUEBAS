@@ -1,0 +1,30 @@
+body {
+    color: #B11A17;
+    background-color: #FFFAB3;
+}
+
+.nosotros-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide la página en dos mitades */
+    align-items: center; /* Alinea verticalmente el contenido */
+    height: 100vh; /* Asegura que la altura ocupe toda la página */
+}
+
+.texto-historia {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el texto */
+    align-items: center; /* Centra verticalmente el texto */
+    flex-direction: column;
+    padding: 20px;
+}
+
+.carrusel_size {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centra el carrusel en la mitad derecha */
+    align-items: center;
+}
+
+.carousel-container {
+    width: 80%; /* Ajusta el tamaño del carrusel */
+}

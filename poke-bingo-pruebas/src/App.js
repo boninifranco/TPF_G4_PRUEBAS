@@ -4,7 +4,8 @@ import { HomePage } from './pages/homePage/HomePage';
 import { BrowserRouter } from 'react-router-dom';
 import { RoutesList } from './routes/RoutesList';
 import { Headerbs } from './components/header/Headerbs';
-import { Footer } from './shared/Footer';
+import { Footer } from './shared/footer/Footer';
+
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <RoutesList>
           <HomePage/>
         </RoutesList>
-        <Footer/>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   );
