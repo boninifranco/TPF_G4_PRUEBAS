@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import "./registro.css";
+import { FormularioReg } from "../../components/formularioReg/FormularioReg";
 
 export const Registro = () => {
   return (
-    <div>
-      Registro
-    </div>
-  )
+    <body className="reg_body">
+      <div className="reg_container">
+        <FormularioReg/>
+      </div>
+    </body>
+  );
 };
-
-

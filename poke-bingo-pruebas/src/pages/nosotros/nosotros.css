@@ -1,30 +1,46 @@
-body {
-    color: #B11A17;
-    background-color: #FFFAB3;
-}
-
 .nosotros-container {
+    color: #b11a17;
+    background-color: #fffab3;
+    margin: 4vh 0 0 0;
+    padding-bottom: 40px}
+@media (max-width: 768px) {  /*Responsive Mobile*/
+    .nosotros-container{
+        display: flex;
+        flex-direction: column;
+    }
+    .texto-historia {
+        margin: 10vh 4vw 4vh 4vw;
+        text-align: justify;
+        font-size: 1.2rem;
+      }
+}
+@media (min-width: 769px) {  /*Responsive Desktop*/
+  .nosotros-container {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Divide la página en dos mitades */
     align-items: center; /* Alinea verticalmente el contenido */
-    height: 100vh; /* Asegura que la altura ocupe toda la página */
-}
-
-.texto-historia {
+  }
+  .texto-historia {
+    margin-top:10vh;
+    font-size: 1.2rem;
     display: flex;
     justify-content: center; /* Centra horizontalmente el texto */
     align-items: center; /* Centra verticalmente el texto */
     flex-direction: column;
     padding: 20px;
-}
+    text-align: justify;
+  }
 
-.carrusel_size {
+  .carrusel_size {
     width: 100%;
     display: flex;
     justify-content: center; /* Centra el carrusel en la mitad derecha */
     align-items: center;
-}
+  }
 
-.carousel-container {
+  .carousel-container {
+    margin-top: 10vh;
+    margin-left: 4vw;
     width: 80%; /* Ajusta el tamaño del carrusel */
+  }
 }

@@ -4,7 +4,10 @@ import { CarruselNosotros } from '../../components/nosotros/CarruselNosotros';
 
 export const Nosotros = () => {
     return (
-        <div className="nosotros-container">
+        <body className="nosotros-container">
+             <div className="carrusel_size">
+                <CarruselNosotros />
+            </div> 
             <div className="texto-historia">
                 <h3>Nuestra Historia</h3>
                 <p>Una divertida combinación entre el clásico juego de Bingo y el universo Pokémon.</p>
@@ -15,10 +18,7 @@ export const Nosotros = () => {
                 <p><strong>Brock</strong>: El cerebro detrás de la programación, que asegura que cada partida sea justa y emocionante.</p>
                 <h2>¡Únete a la Aventura!</h2>
                 <p>Estamos emocionados de que formes parte de nuestra comunidad. ¡No pierdas la oportunidad de disfrutar de PokeBingo y atrapar a todos los Pokémon mientras juegas!</p>
-            </div>
-            <div className="carrusel_size">
-                <CarruselNosotros />
-            </div>
-        </div>
+                </div>
+        </body>
     );
 };
