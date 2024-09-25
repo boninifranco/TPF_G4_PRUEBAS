@@ -1,0 +1,17 @@
+.label_reg {
+  text-align: left;
+  color: #fffab3;
+}
+@media (max-width: 768px) {
+  /*Responsive Mobile*/
+  .form_reg {
+    margin-top: 2.5vh;
+  }
+  .button_reg{
+    background-color: #fffab3;
+    color: #b11a17;
+    border-color: #827f4f;
+    font-weight: bold;
+    font-size: 2.6vh;
+  }
+}

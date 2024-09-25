@@ -1,0 +1,28 @@
+.reg_body {
+  color: #b11a17;
+  background-color: #fffab3;
+  margin: 10vh 0 0 0;
+  padding-bottom: 40px;
+}
+.reg_container {
+  background-color: #b11a17;
+  border-radius: 17px 17px 17px 17px;
+  -moz-border-radius: 17px 17px 17px 17px;
+  -webkit-border-radius: 17px 17px 17px 17px;
+  border: 0px solid #b11a17;
+}
+@media (max-width: 768px) {/*Responsive Mobile*/
+  .reg_container {
+    margin-top: 2vh;
+    margin-left: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
+    padding-right: 2em;
+    font-size: 2vh;
+  }
+}
+@media (min-width: 769px) {/*Responsive Desktop*/
+}

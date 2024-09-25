@@ -10,7 +10,7 @@ import { Footer } from './shared/footer/Footer';
 
 function App() {
   return (
-    <div >
+    <div>
       <BrowserRouter>
         <Headerbs />
         <RoutesList>
