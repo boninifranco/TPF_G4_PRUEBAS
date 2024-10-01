@@ -11,13 +11,14 @@ import '../loginPage/login.css'
 export const Login = () => {
 
   const [data, setData] = useState({});
+  const [error, setError] = useState('');
 
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
 
   const navigate = useNavigate();
 
-  const handleUser = (e)=>{
+  const handleUser = (e)=>{    
     setUser(e.target.value)
     console.log(user)
   }
@@ -27,12 +28,16 @@ export const Login = () => {
     console.log(pass)
   }
 
+  const focusUser = ()=>{
+    setError('')
+  }
+
 
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:3000/logueo/login/', {
+      const response = await fetch('http://localhost:3000/logueo/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -42,6 +47,7 @@ export const Login = () => {
       });
        console.log(user)
        console.log(pass)
+       console.log(response.statusText)
       if (response.ok) {
         const resp = await response.json()
         setData(resp)
@@ -58,9 +64,11 @@ export const Login = () => {
       } else {
         const errorData = await response.json();
         console.log("Error al registrar usuario:", errorData);
+        setError('El email o la contraseña son inválidas')
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
+      
     }
   };
 
@@ -78,7 +86,7 @@ export const Login = () => {
           </Form.Label>
         </Form.Group>
         <Form.Group style={{display:'flex', justifyContent:'end', width:'85%'}}>
-          <Col sm="10" style={{marginRight:'2em'}} onChange={(e)=>handleUser(e)}>
+          <Col sm="10" style={{marginRight:'2em'}} onChange={(e)=>handleUser(e)} onFocus={focusUser}>
             <Form.Control type="email" placeholder="Email" />
           </Col>
         </Form.Group>
@@ -96,10 +104,12 @@ export const Login = () => {
           </Col>
         </Form.Group>
       </Form.Group>
+      <p style={{color:'#FFFAB3'}}>{error}</p>
       {/*<NavLink as={NavLink} to={'./'}><Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}</NavLink>*/}
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}      
-      <p style={{color:'#FFFAB3'}}>No tienes una cuenta? <span style={{fontStyle:'italic', textDecoration:'underline', fontWeight:'bold', cursor:'pointer'}}><Link style={{color:'#FFFAB3'}} to='/Nosotros'>Registrate aquí!!</Link></span></p>
+      <p style={{color:'#FFFAB3'}}>No tienes una cuenta? <span style={{fontStyle:'italic', textDecoration:'underline', fontWeight:'bold', cursor:'pointer'}}><Link style={{color:'#FFFAB3'}} to='/Registro'>Registrate aquí!!</Link></span></p>
     </Form>
+    
 
     </div>
     

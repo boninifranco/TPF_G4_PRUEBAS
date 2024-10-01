@@ -59,7 +59,7 @@ export const FormularioReg = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/registro", {
+      const response = await fetch("http://localhost:3000/registro/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
