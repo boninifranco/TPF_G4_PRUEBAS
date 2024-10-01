@@ -2,16 +2,62 @@
   text-align: left;
   color: #fffab3;
 }
+.label_log{
+  color: #fffab3;
+  font-size: 1.5em;
+}
+.alink,
+.alink:active,
+.alink:visited {
+  color: #fffab3;
+  font-weight: bold;
+}
+.alrt_dark {
+  background-color: #ffe70cda;
+  color: #000000;
+}
+.alrt_sccss {
+  border-color: #61781b;
+  background-color: #82a128;
+  color: #ffffff;
+}
+
+.button_reg {
+  background-color: #fffab3;
+  color: #b11a17;
+  border-color: #827f4f;
+  font-weight: bold;
+  font-size: 2.6vh;
+  transition: background-color 0.3s;
+}
+.button_reg:hover {
+  background-color: #7a170c;
+  color: white;
+  border-color: #fffab3;
+}
+.button_reg:focus,
+.button_reg:active,
+.button_reg:focus:active {
+  background-color: #c12817 !important;
+  color: white !important;
+  border-color: #fffab3 !important;
+  outline: none;
+  box-shadow: none;
+}
+.button_reg:visited {
+  background-color: #7a170c;
+  color: white;
+  border-color: #fffab3;
+}
+.btn_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 @media (max-width: 768px) {
   /*Responsive Mobile*/
   .form_reg {
     margin-top: 2.5vh;
-  }
-  .button_reg{
-    background-color: #fffab3;
-    color: #b11a17;
-    border-color: #827f4f;
-    font-weight: bold;
-    font-size: 2.6vh;
   }
 }

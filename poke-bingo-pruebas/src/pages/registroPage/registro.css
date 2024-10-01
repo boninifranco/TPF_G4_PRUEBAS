@@ -13,16 +13,20 @@
 }
 @media (max-width: 768px) {/*Responsive Mobile*/
   .reg_container {
-    margin-top: 2vh;
-    margin-left: 2em;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    margin-right: 2em;
-    padding-left: 2em;
-    padding-bottom: 2em;
-    padding-right: 2em;
+    margin: 2em 2em 2em 2em;
+    padding: 0 2em 2em 2em;
     font-size: 2vh;
   }
 }
 @media (min-width: 769px) {/*Responsive Desktop*/
+  .reg_body{
+    display: flex;
+    align-items: center
+  }
+  .reg_container {
+    width: 45%;
+    margin: 5em 10em 2em 10em;
+    padding: 2em 2em 2em 2em;
+    font-size: 2vh;
+  }
 }
