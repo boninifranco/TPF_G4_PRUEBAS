@@ -77,10 +77,10 @@ const handleLogout = async() => {
             <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/Nosotros'}>Nosotros</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/Login'}>Sala de Juegos</Nav.Link>
+            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/SalaDeJuegos'}>Sala de Juegos</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/'} >Mi Cuenta</Nav.Link>            
+            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/MiCuenta'} >Mi Cuenta</Nav.Link>            
             </Nav.Item>
             <Nav.Item>
             {usuario ? (

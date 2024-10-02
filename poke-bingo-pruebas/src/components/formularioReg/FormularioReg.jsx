@@ -74,7 +74,7 @@ export const FormularioReg = () => {
         setDatosReg({ email: "", contrasenia: "", confirmarContrasenia: "" });
         setErrores({});
         setTimeout(()=>{
-          navigate('/');
+          navigate('/Login');
         },2000)
 
       } else {
