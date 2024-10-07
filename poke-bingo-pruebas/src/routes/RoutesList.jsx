@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { HomePage } from '../pages/homePage/HomePage'
-import { Nosotros } from '../pages/nosotros/Nosotros'
+import { Nosotros } from '../pages/nosotrosPage/Nosotros'
 import { Registro } from '../pages/registroPage/Registro'
 import { Login } from '../pages/loginPage/Login'
 import { SalaDeJuegos } from '../pages/salaDeJuegosPage/SalaDeJuegos'

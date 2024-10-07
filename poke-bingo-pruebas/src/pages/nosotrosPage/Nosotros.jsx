@@ -2,7 +2,7 @@ import React from "react";
 import "./nosotros.css";
 import { CarruselNosotros } from "../../components/nosotros/CarruselNosotros";
 import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export const Nosotros = () => {
   return (

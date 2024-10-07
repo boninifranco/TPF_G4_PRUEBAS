@@ -1,6 +1,6 @@
 import React from "react";
 import "./registro.css";
-import { FormularioReg } from "../../components/formularioReg/FormularioReg";
+import { FormularioReg } from "../../components/registro/FormularioReg";
 
 export const Registro = () => {
   return (
