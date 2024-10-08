@@ -1,0 +1,65 @@
+.data_style {
+    color: #B11A17;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.data_style > h2 {
+    color: #fffab3;
+}
+
+.info_style {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.8em;
+    text-align: left;
+    font-weight: 600;
+}
+
+.pbox_style {
+    background-color: #fffab3;
+    border-radius: 8px;
+    padding: 0 0.5em 0 0.5em;
+    margin-bottom: 10px;
+}
+
+.pform_style {
+    color: #fffab3;
+    margin-right: 10px; /* Espaciado entre el texto y el input */
+    width: 100px; /* Ancho fijo para que todos tengan el mismo tamaño */
+}
+
+.form_nombres,
+.form_info {
+    display: flex;
+    justify-content: flex-start; /* Alinear elementos al inicio */
+    margin-bottom: 10px; /* Espacio entre grupos */
+}
+
+.form_group {
+    display: flex;
+    align-items: center; /* Alinear verticalmente el texto y el input */
+    margin-right: 20px; /* Espacio entre los grupos de formulario */
+}
+
+.form_input_style1 {
+    border: 1px solid #B11A17;
+    border-radius: 8px;
+    padding: 0 0.5em 0 0.5em;
+    font-size: 1em;
+    width: 250px; /* Ajusta el ancho del input */
+    margin-top: 4vh;
+}
+
+.form_input_style2 {
+    border: 1px solid #B11A17;
+    border-radius: 8px;
+    padding: 0 0.5em 0 0.5em;
+    font-size: 1em;
+    width: 250px; /* Ajusta el ancho del input */
+    margin-bottom: 3vh;
+}
+.btn_div{
+    display: flex;
+}
