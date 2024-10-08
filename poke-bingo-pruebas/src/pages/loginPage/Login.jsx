@@ -51,12 +51,15 @@ export const Login = () => {
       if (response.ok) {
         const resp = await response.json()
         setData(resp)
-        console.log(`Esto es resp ${resp.idUsuario}`);
+        console.log(`Esto es resp ${resp}`);
 
         //localStorage.setItem('user', JSON.stringify(dataLocalStorage));
-        localStorage.setItem('user',user)
-        localStorage.setItem('idUser', resp.idUsuario)
-        localStorage.setItem('idLogin', resp.id)
+        localStorage.setItem('user',resp.email) //user
+        localStorage.setItem('idUser', resp.id)
+        localStorage.setItem('token', resp.access_token)
+        localStorage.setItem('admin', resp.admin)
+        localStorage.setItem('idLogin', resp.idLogin)
+        
         window.dispatchEvent(new Event('storage'));
         navigate('/')    
        
@@ -71,6 +74,18 @@ export const Login = () => {
       
     }
   };
+/*useEffect(async() => {
+  const userId = data.idUsuario;
+  const response = await fetch(`http://localhost:3000/registro/${userId}/userId`,{
+
+  }
+.then ((response) = response.json)
+.then (console.log(response))
+.then (localStorage.setItem('Admin',response.administrador))
+
+
+  
+)}, [data])*/
 
   
 
