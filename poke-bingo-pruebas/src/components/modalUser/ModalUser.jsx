@@ -12,7 +12,7 @@ export const ModalUser = ({showModal, handleClose}) => {
       </Modal.Header>
 
       <Modal.Body>
-        <MisDatosPatch hideEmailAndPassword={true} className="modal-form"/>
+        <MisDatosPatch hideEmailAndPassword={true} onGuardado={handleClose} className="modal-form"/>
       </Modal.Body>
     </Modal>
   );
