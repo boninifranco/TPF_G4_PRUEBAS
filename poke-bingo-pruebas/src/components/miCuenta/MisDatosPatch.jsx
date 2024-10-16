@@ -16,7 +16,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
     contrasenia: ''
   });
 
-
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const idUser = localStorage.getItem('idUser');
@@ -65,9 +65,10 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
     e.preventDefault();
 
     if (!user.nombre || !user.apellido || !user.dni || !user.celular || !user.direccion) {
-      alert("Existem campos sin completar"); // Muestra un alert
-      return; // Evita que continúe con el envío del formulario
+      setError("Existen campos sin completar");
+      return;
     }
+    setError("");
 
     const idUser = localStorage.getItem('idUser');
 
@@ -91,8 +92,6 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
         },
         body: JSON.stringify({ email, contrasenia }),
       });
-
-
       onGuardado();
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
@@ -101,6 +100,11 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
   return (
     <Form className="flex_container" onSubmit={handleSubmit}>
+    {error && (
+      <div className="alert alert-warning p-1 mt-1 alrt_dark">
+        {error}
+      </div>
+    )}
       {!hideEmailAndPassword && (<div>
         <h1>Modificar datos</h1>
       </div>

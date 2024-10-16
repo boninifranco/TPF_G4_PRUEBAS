@@ -1,75 +1,84 @@
-.data_style {
-  color: #b11a17;
+.info_style {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.data_style > h2 {
-  color: #fffab3;
-}
-.info_style{
-  margin: 3vh 0 3vh 0;
+  margin: 3vh 0;
   font-size: 3vh;
 }
-.ptitle_style{
+
+.ptitle_style {
   color: #fffab3;
   font-weight: bold;
   margin-bottom: 0.2em;
 }
+
 .pbox_style {
   background-color: #fffab3;
   border-radius: 8px;
-  padding: 0 0.5em 0 0.5em;
+  padding: 0 0.5em;
   margin-bottom: 2vh;
 }
+
 .form_input_style, .pbox_style {
-  /*Sombra de los form*/
-  -webkit-box-shadow: 2px 9px 18px -4px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 9px 18px -4px rgba(0,0,0,0.75);
-  box-shadow: 2px 9px 18px -4px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 2px 9px 18px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 2px 9px 18px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 9px 18px -4px rgba(0, 0, 0, 0.75);
 }
-.pform_style {
-  color: #fffab3;
-  margin-bottom: 0.5vh;
-}
-.form_input_style {
-  border: 3px solid #fffab3;
-  border-radius: 8px;
-  font-size: 1em;
-}
+
 .divcont {
   display: flex;
   flex-direction: column;
-  margin: 0 5vh 0 5vh;
+  margin: 0 2vh;
 }
-@media (min-width: 769px) {/*Responsive Desktop*/
-  /*Contenedor de MisDatosPatch*/
+/* Responsive adjustments */
+@media (min-width: 769px) {
   .flex_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
     font-size: 3vh;
   }
+
   .flex_container h1 {
     color: #fffab3;
   }
-  .flex_container div {
+  
+  /* Alinear dos columnas (mail y nombre) */
+  .info_row_two {
     display: flex;
+    justify-content: center;
   }
-}
-@media (max-width: 769px) { /*Responsive Mobile*/
- .flex_container{
+
+  /* Alinear tres columnas (dni, celular, dirección) */
+  .info_row_three {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .info_row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2vh;
+  }
+  .data_style{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .divcont{
+    padding: 0 2.5em 0 2.5em
+  }
+}
+
+@media (max-width: 769px) {
+  .flex_container {
     font-size: 2.5vh;
     font-weight: bold;
- }
- .form_input_style{
+  }
+
+  .form_input_style {
     width: 70vw;
- }
- .divcont{
+  }
+
+  .divcont {
     margin-top: 2vh;
- }
+  }
 }
