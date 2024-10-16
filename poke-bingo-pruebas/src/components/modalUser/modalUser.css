@@ -1,0 +1,28 @@
+.custom-modal .modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  height: 100vh;
+  color: #FFFAB3;
+}
+.custom-modal .modal-content {
+  background-color: #831C16;
+  width: 70vw;
+  max-width: 90vw;
+  margin: auto;
+}
+.custom-modal .flex_container {
+  background-color: #831C16;
+  padding: 2em;
+  width: 100%;
+}
+.custom-modal .form_input_style {
+  width: 18vw;
+}
+.custom-modal .button_reg{
+  margin: 1.5em;
+}
+.custom-modal .divcont {
+  margin: 1.3em;
+}
