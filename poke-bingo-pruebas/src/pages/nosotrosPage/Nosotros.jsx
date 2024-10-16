@@ -6,7 +6,7 @@ import { Link} from "react-router-dom";
 
 export const Nosotros = () => {
   return (
-    <body className="nosotros-container">
+    <div className="nosotros-container">
       <div className="carrusel_size">
         <CarruselNosotros />
       </div>
@@ -43,6 +43,6 @@ export const Nosotros = () => {
           INGRESAR
         </Button>
       </div>
-    </body>
+    </div>
   );
 };

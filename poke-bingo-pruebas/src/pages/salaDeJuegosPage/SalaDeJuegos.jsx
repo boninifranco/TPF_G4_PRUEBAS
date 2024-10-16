@@ -1,11 +1,12 @@
 import React from 'react'
-//import { SitioEnConstruccion } from '../../components/varios/SitioEnConstruccion'
-import {AbmPage} from '../abmPage/AbmPage'
+import { SitioEnConstruccion } from '../../components/varios/SitioEnConstruccion'
+
 
 export const SalaDeJuegos = () => {
   return (
     <div>
-        <AbmPage/>
+        <h1>SALA DE JUEGO</h1>
+        <SitioEnConstruccion></SitioEnConstruccion>
     </div>
   )
 }

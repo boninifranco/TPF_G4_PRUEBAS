@@ -26,10 +26,14 @@ export const MisDatos = ({ onModify }) => {
     <div className='data_style'>
       <h2>Mis datos</h2>
       <div className="info_style">
-        <p className="pbox_style">Nombre: {user.nombre} {user.apellido}</p>
-        <p className="pbox_style">DNI: {user.dni}</p>
-        <p className="pbox_style">Celular: {user.celular}</p>
-        <p className="pbox_style">Dirección: {user.direccion}</p>
+        <p className="ptitle_style">Nombre</p>
+        <p className="pbox_style">{user.nombre} {user.apellido}</p>
+        <p className="ptitle_style">DNI</p>
+        <p className="pbox_style">{user.dni}</p>
+        <p className="ptitle_style">Celular</p>
+        <p className="pbox_style">{user.celular}</p>
+        <p className="ptitle_style">Dirección</p>
+        <p className="pbox_style">{user.direccion}</p>
         </div>
         <div>
         <Button className="button_reg" onMouseUp={(e) => e.currentTarget.blur()} onClick={onModify}>Modificar</Button>

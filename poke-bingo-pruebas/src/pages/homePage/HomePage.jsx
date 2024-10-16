@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "../homePage/homePage.css"
 import { Carrousel } from '../../components/varios/Carrousel'
+import { ModalUser } from '../../components/modalUser/ModalUser';
 
 
  export const HomePage = () => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(()=> {
+    const idUser = localStorage.getItem('idUser');
+
+    if (idUser) {
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/usuario/${idUser}`);
+          const data = await response.json();
+          if (!data.nombre || !data.apellido || !data.dni || !data.celular || !data.direccion) {
+            setShowModal(true);
+            console.log(data)
+          }
+        } catch (error) {
+          console.error('Error al obtener los datos del usuario:', error);
+        }
+      };
+      fetchUser();
+    }
+  }, [])
+
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <div style={{backgroundColor: "#B11A17"}}>
         
@@ -54,6 +80,8 @@ import { Carrousel } from '../../components/varios/Carrousel'
         </p>
           </section>
         </div>        
+
+        <ModalUser showModal={showModal} handleClose={handleCloseModal}/>
     </div> 
   )
 }
