@@ -1,12 +1,10 @@
 import React from 'react'
-import { SitioEnConstruccion } from '../../components/varios/SitioEnConstruccion'
+import { Resultados } from '../../components/resultados/Resultados'
 
 
 export const SalaDeJuegos = () => {
   return (
     <div>
-        <h1>SALA DE JUEGO</h1>
-        <SitioEnConstruccion></SitioEnConstruccion>
     </div>
   )
 }

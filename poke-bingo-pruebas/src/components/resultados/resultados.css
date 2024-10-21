@@ -1,0 +1,16 @@
+.restotal_box{
+    background-color: blueviolet;
+    height: 45vh;
+}
+.res_box{
+    background-color: aqua;
+    height: 15vh;
+}
+.puntaje_box{
+    background-color: chartreuse;
+    height: 15vh;
+}
+.salio_box{
+    background-color: darkgreen;
+    height: 15vh;
+}
