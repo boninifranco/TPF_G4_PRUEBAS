@@ -2,7 +2,7 @@ import { Button, Form } from "react-bootstrap";
 import React, { useEffect, useState } from 'react';
 import './misDatos.css';
 
-export const MisDatosPatch = ({ onGuardado }) => {
+export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
@@ -16,7 +16,7 @@ export const MisDatosPatch = ({ onGuardado }) => {
     contrasenia: ''
   });
 
-  
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const idUser = localStorage.getItem('idUser');
@@ -46,139 +46,146 @@ export const MisDatosPatch = ({ onGuardado }) => {
     }
   }, []);
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  if (name === 'email' || name === 'contrasenia') {
-    setRegistro((prevRegistro) => ({
-      ...prevRegistro,
-      [name]: value,
-    }));
-  } else {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  }
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'email' || name === 'contrasenia') {
+      setRegistro((prevRegistro) => ({
+        ...prevRegistro,
+        [name]: value,
+      }));
+    } else {
+      setUser((prevUser) => ({
+        ...prevUser,
+        [name]: value,
+      }));
+    }
+  };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const idUser = localStorage.getItem('idUser');
+    if (!user.nombre || !user.apellido || !user.dni || !user.celular || !user.direccion) {
+      setError("Existen campos sin completar");
+      return;
+    }
+    setError("");
 
-  const { id, ...userData } = user;
+    const idUser = localStorage.getItem('idUser');
 
-  const { email, contrasenia } = registro;
+    const { id, ...userData } = user;
 
-  console.log('Datos de usuario a enviar:', userData);
-  console.log('Datos de registro a enviar:', { email, contrasenia });
-  try {
-    await fetch(`http://localhost:3000/usuario/${idUser}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
+    const { email, contrasenia } = registro;
 
-    await fetch(`http://localhost:3000/registro/${idUser}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, contrasenia }),
-    });
+    try {
+      await fetch(`http://localhost:3000/usuario/${idUser}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
 
+      await fetch(`http://localhost:3000/registro/${idUser}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, contrasenia }),
+      });
+      onGuardado();
+    } catch (error) {
+      console.error('Error al guardar los cambios:', error);
+    }
+  };
 
-    onGuardado();
-  } catch (error) {
-    console.error('Error al guardar los cambios:', error);
-  }
-};
-
-
-return (
-  <div className='data_style'>
-    <h2>Modificar datos</h2>
-    <Form className="info_style" onSubmit={handleSubmit}>
-      <div className="registro_style">
-
-        <Form.Group className="form_group">
-          <p className="pform_style">Email:</p>
+  return (
+    <Form className="flex_container" onSubmit={handleSubmit}>
+    {error && (
+      <div className="alert alert-warning p-1 mt-1 alrt_dark">
+        {error}
+      </div>
+    )}
+      {!hideEmailAndPassword && (<div>
+        <h1>Modificar datos</h1>
+      </div>
+      )}
+      {!hideEmailAndPassword && (<div className="registro_style">
+        <Form.Group className="divcont">
+          <p className="pform_style">Email</p>
           <Form.Control
             type="email"
             name="email"
             value={registro.email}
             onChange={handleChange}
-            className="form_input_style1"
+            className="form_input_style"
           />
         </Form.Group>
-        <Form.Group className="form_group">
-          <p className="pform_style">Contraseña:</p>
+        <Form.Group className="divcont">
+          <p className="pform_style">Contraseña</p>
           <Form.Control
             type="password"
             name="contrasenia"
             value={registro.contrasenia}
             onChange={handleChange}
-            className="form_input_style1"
+            className="form_input_style"
           />
         </Form.Group>
       </div>
-
+      )}
       <div className="form_nombres">
-        <Form.Group className="form_group">
-          <p className="pform_style">Nombre:</p>
+        <Form.Group className="divcont">
+          <p className="pform_style">Nombre</p>
           <Form.Control
             type="text"
             name="nombre"
             value={user.nombre}
             onChange={handleChange}
-            className="form_input_style1"
+            className="form_input_style"
           />
         </Form.Group>
 
-        <Form.Group className="form_group">
-          <p className="pform_style">Apellido:</p>
+        <Form.Group className="divcont">
+          <p className="pform_style">Apellido</p>
           <Form.Control
             type="text"
             name="apellido"
             value={user.apellido}
             onChange={handleChange}
-            className="form_input_style1"
+            className="form_input_style"
           />
         </Form.Group>
-      </div>
-      <div className="form_info">
-        <Form.Group className="form_group">
-          <p className="pform_style">DNI:</p>
+
+        <Form.Group className="divcont">
+          <p className="pform_style">DNI</p>
           <Form.Control
             type="text"
             name="dni"
             value={user.dni}
             onChange={handleChange}
-            className="form_input_style2"
+            className="form_input_style"
           />
         </Form.Group>
-
-        <Form.Group className="form_group">
-          <p className="pform_style">Celular:</p>
+      </div>
+      <div className="form_info">
+        <Form.Group className="divcont">
+          <p className="pform_style">Celular</p>
           <Form.Control
             type="text"
             name="celular"
             value={user.celular}
             onChange={handleChange}
-            className="form_input_style2"
+            className="form_input_style"
           />
         </Form.Group>
 
-        <Form.Group className="form_group">
-          <p className="pform_style">Dirección:</p>
+        <Form.Group className="divcont">
+          <p className="pform_style">Dirección</p>
           <Form.Control
             type="text"
             name="direccion"
             value={user.direccion}
             onChange={handleChange}
-            className="form_input_style2"
+            className="form_input_style"
           />
         </Form.Group>
       </div>
@@ -188,6 +195,5 @@ return (
         </Button>
       </div>
     </Form>
-  </div>
-);
+  );
 };

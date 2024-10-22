@@ -1,0 +1,11 @@
+.sala_body{
+    height: 100%;
+    background-color: #fffab3;
+}
+.resultados_component{
+    padding: 125px 0 100px 40px;
+    margin-left: 40px;
+    background-color: blueviolet;
+    height: 100%;
+    width: 550px;
+}
