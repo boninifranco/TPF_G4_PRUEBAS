@@ -65,12 +65,19 @@ export const Login = () => {
        
         
       } else {
+        //const errorData = await response.json();
+        //console.log("Error en el login del usuario:", errorData);
+        setError('El usuario o la contraseña son inválidas')
         const errorData = await response.json();
-        console.log("Error al registrar usuario:", errorData);
-        setError('El email o la contraseña son inválidas')
+          console.log(errorData.error)
+          //throw new Error(errorData.error || 'Error en la solicitud!!');
+          
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+      //     console.error("Error en la solicitud:", error);
+      setError(error.message); // Almacenar el mensaje de error
+      console.log(error)
+        //navigate('/error', { state: { message: error.message } });
       
     }
   };
