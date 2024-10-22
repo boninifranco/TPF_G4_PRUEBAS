@@ -8,7 +8,7 @@
 }
 .custom-modal .modal-content {
   background-color: #831C16;
-  width: 70vw;
+  width: 80vw;
   max-width: 90vw;
   margin: auto;
 }
@@ -16,9 +16,13 @@
   background-color: #831C16;
   padding: 2em;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .custom-modal .form_input_style {
-  width: 18vw;
+  width: 55vw;
 }
 .custom-modal .button_reg{
   margin: 1.5em;

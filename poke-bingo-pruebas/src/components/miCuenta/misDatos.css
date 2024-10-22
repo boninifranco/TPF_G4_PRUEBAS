@@ -30,7 +30,6 @@
   flex-direction: column;
   margin: 0 2vh;
 }
-/* Responsive adjustments */
 @media (min-width: 769px) {
   .flex_container {
     font-size: 3vh;
@@ -41,13 +40,13 @@
   }
   
   /* Alinear dos columnas (mail y nombre) */
-  .info_row_two {
+  .form_nombres {
     display: flex;
     justify-content: center;
   }
 
   /* Alinear tres columnas (dni, celular, dirección) */
-  .info_row_three {
+  .form_info {
     display: flex;
     justify-content: center;
     align-items: center;

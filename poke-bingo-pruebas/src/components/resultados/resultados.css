@@ -1,16 +1,38 @@
-.restotal_box{
-    background-color: blueviolet;
-    height: 45vh;
+.res_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.res_box{
+.puntaje_box {
+  background-color: #fffccd;
+  height: 420px;
+  width: 500px;
+  /* Sombra */
+  -webkit-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
+  -moz-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
+  box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
+}
+
+@media (min-width: 769px) {
+  /*Responsive Desktop*/
+  .restotal_box {
+    padding: 5vh;
+    background-color: #e1db86;
+    height: 100%;
+    /* Sombra */
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
+  }
+  .res_box {
     background-color: aqua;
-    height: 15vh;
+    height: 8vh;
+  }
+  .restotal_box img {
+    width: 15vw;
+    margin: 0;
+  }
 }
-.puntaje_box{
-    background-color: chartreuse;
-    height: 15vh;
-}
-.salio_box{
-    background-color: darkgreen;
-    height: 15vh;
+@media (max-width: 769px) {
+  /*Responsive Mobile*/
 }

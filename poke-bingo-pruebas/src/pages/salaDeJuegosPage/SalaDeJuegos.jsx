@@ -1,11 +1,6 @@
-
-
 import { ListaCartonBingo } from '../../components/cartonBingo/ListaCartonBingo'
 import { AddImages } from '../../components/varios/utilitarios/AddImages'
 import { AddCartones } from '../../components/varios/utilitarios/AddCartones'
-
-
-
 
 export const SalaDeJuegos = () => {
   

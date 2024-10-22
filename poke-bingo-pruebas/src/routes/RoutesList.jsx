@@ -8,6 +8,7 @@ import { SalaDeJuegos } from '../pages/salaDeJuegosPage/SalaDeJuegos'
 import { MiCuenta } from '../pages/MiCuentaPage/MiCuenta'
 import { AbmPage } from '../pages/abmPage/AbmPage'
 import ErrorPage from '../components/varios/ErrorPage'
+import { SaladeJuegoUser } from '../pages/salaDeJuegoUser/SaladeJuegoUser'
 
 export const RoutesList = () => {
   return (
@@ -21,6 +22,7 @@ export const RoutesList = () => {
             <Route path='/MiCuenta' element={<MiCuenta/>}>Mi Cuenta</Route>
             <Route path='/ABMPage' element={<AbmPage/>}>Administración del Sitio</Route>
             <Route path='/error' element={<ErrorPage/>}>Error</Route>
+            <Route path='/SalaJuegoUser' element={<SaladeJuegoUser/>}>Sala de Juegos User</Route>
         </Routes>        
     </>
   )
