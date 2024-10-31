@@ -14,6 +14,11 @@
 }
 @media (max-width: 768px) {
   /*Responsive Mobile*/
+  .account_body {
+    padding-top: 10vh;
+    padding-bottom: 5vh;
+    height: 100%;
+  }
   .misdatos {
     padding: 0 2em 2em 2em;
     font-size: 2vh;
@@ -28,7 +33,7 @@
   }
   .misdatos {
     width: 100%;
-    margin: 5em 10em 2em 10em;
+    margin: 5em 4em 2em 4em;
     padding: 2em 2em 2em 2em;
     font-size: 2vh;
   }

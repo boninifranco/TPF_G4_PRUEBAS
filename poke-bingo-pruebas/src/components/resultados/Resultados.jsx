@@ -1,6 +1,7 @@
 import React from "react";
 import "./resultados.css";
 import ResultadosImagen from "../../assets/Resultados.png";
+import { Ganaron } from "./Ganaron";
 
 export const Resultados = () => {
   return (
@@ -9,10 +10,7 @@ export const Resultados = () => {
         <img src={ResultadosImagen} alt="" />
         <div className="puntaje_box">
           <div>
-            <h5>Puntajes</h5>
-          </div>
-          <div>
-            <h5>Ya Salieron</h5>
+            <Ganaron/>
           </div>
         </div>
       </div>

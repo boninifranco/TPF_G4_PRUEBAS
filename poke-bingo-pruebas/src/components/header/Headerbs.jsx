@@ -16,7 +16,7 @@ export const Headerbs = () => {
   const [showAlert, setShowAlert] = useState(false);
   const handleShowAlert = () => setShowAlert(true);
   const handleCloseAlert = () => setShowAlert(false);
-
+  
 
   const handleNavClick = () => {
     //if (isAdmin === true) {
@@ -125,7 +125,7 @@ const handleLogout = async() => {
             <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/Nosotros'}>Nosotros</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/SalaDeJuegos'}>Sala de Juegos</Nav.Link>
+            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={isAdmin===true ? '/SalaDeJuegos' : isAdmin===false ? '/SalaJuegoUser' : '/'}>Sala de Juegos</Nav.Link>
             </Nav.Item>
             <Nav.Item>
             {/*<Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  to={isAdmin ? '/ABMPage' : '/MiCuenta'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>*/}

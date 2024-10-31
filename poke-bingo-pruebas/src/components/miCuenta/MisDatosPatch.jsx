@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import React, { useEffect, useState } from 'react';
 import './misDatos.css';
+import { ContraseniaPatch } from "./ContraseniaPatch";
 
 export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
   const [user, setUser] = useState({
@@ -12,8 +13,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
   });
 
   const [registro, setRegistro] = useState({
-    email: '',
-    contrasenia: ''
+    email: ''
   });
 
   const [error, setError] = useState("");
@@ -48,7 +48,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'email' || name === 'contrasenia') {
+    if (name === 'email') {
       setRegistro((prevRegistro) => ({
         ...prevRegistro,
         [name]: value,
@@ -74,7 +74,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
     const { id, ...userData } = user;
 
-    const { email, contrasenia } = registro;
+    const { email } = registro;
 
     try {
       await fetch(`http://localhost:3000/usuario/${idUser}`, {
@@ -90,7 +90,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, contrasenia }),
+        body: JSON.stringify({ email }),
       });
       onGuardado();
     } catch (error) {
@@ -122,13 +122,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
         </Form.Group>
         <Form.Group className="divcont">
           <p className="pform_style">Contraseña</p>
-          <Form.Control
-            type="password"
-            name="contrasenia"
-            value={registro.contrasenia}
-            onChange={handleChange}
-            className="form_input_style"
-          />
+          <ContraseniaPatch/>
         </Form.Group>
       </div>
       )}

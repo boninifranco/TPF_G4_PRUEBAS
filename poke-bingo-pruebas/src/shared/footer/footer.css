@@ -46,7 +46,7 @@ footer{
     flex-direction: column;
     margin: 0.5vh 0px 0.1vh 0px;
   }
-  img {
+  .redes img {
     margin-left: 4vh;
   }
   .parrafo_style {

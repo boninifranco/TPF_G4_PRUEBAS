@@ -4,16 +4,16 @@
   justify-content: center;
   margin: auto;
   height: 100vh;
-  color: #FFFAB3;
+  color: #fffab3;
 }
 .custom-modal .modal-content {
-  background-color: #831C16;
+  background-color: #831c16;
   width: 80vw;
   max-width: 90vw;
   margin: auto;
 }
 .custom-modal .flex_container {
-  background-color: #831C16;
+  background-color: #831c16;
   padding: 2em;
   width: 100%;
   display: flex;
@@ -21,12 +21,21 @@
   justify-content: center;
   align-items: center;
 }
-.custom-modal .form_input_style {
-  width: 55vw;
-}
-.custom-modal .button_reg{
+
+.custom-modal .button_reg {
   margin: 1.5em;
 }
-.custom-modal .divcont {
-  margin: 1.3em;
+@media (max-width: 769px) {
+  .custom-modal .form_input_style {
+    width: 60vw;
+  }
+}
+@media (min-width: 769px) {
+  .custom-modal .divcont {
+    margin: 1.3em 0 1.3em 0;
+    padding: 1vw;
+  }
+  .custom-modal .form_input_style {
+    width: 20vw;
+  }
 }

@@ -1,0 +1,48 @@
+.carton-user {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1em;
+  max-width: 100%;
+  width: 100%;
+  border: 2px solid #000;
+  padding: 0.2em;
+  margin: 0.5em 0 0.5em 0.5em
+}
+
+.fila-user {
+  display: contents;
+}
+.casilleroUser {
+  background-color: #f0f0f0;
+}
+
+.casilleroToggle {
+  background-color: #5180578c;
+}
+.casilleroUser, .casilleroToggle {
+  aspect-ratio: 1 / 1; /* Mantiene los casilleros cuadrados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.casilleroUser img, .casilleroToggle img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .carton-user {
+    gap: 5px;
+  }
+}
+
+@media (min-width: 769px) {
+  .carton-user {
+    gap: 8px;
+  }
+}
