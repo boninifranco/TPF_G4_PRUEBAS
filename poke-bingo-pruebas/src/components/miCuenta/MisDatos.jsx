@@ -37,7 +37,7 @@ export const MisDatos = ({ onModify }) => {
 
   return (
    <div className="data_style">
-    <h2>Mis datos</h2>
+    <h1>Mis datos</h1>
     <div className="info_style">
       <div className="info_row info_row_two">
         <div className="divcont">

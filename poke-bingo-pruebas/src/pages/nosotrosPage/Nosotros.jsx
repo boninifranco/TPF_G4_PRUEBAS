@@ -39,7 +39,7 @@ export const Nosotros = () => {
         <p>
           Estamos emocionados de que formes parte de nuestra comunidad! 👇
         </p>
-        <Button as={Link} to="/login" className="button_reg">
+        <Button as={Link} to="/login" className="button_reg" onMouseUp={(e) => e.currentTarget.blur()}>
           INGRESAR
         </Button>
       </div>

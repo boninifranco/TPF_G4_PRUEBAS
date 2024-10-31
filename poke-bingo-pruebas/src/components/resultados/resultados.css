@@ -2,21 +2,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin-top: 0;
 }
 .puntaje_box {
   background-color: #fffccd;
-  height: 420px;
-  width: 500px;
+  height: 400px;
+  width: 520px;
   /* Sombra */
   -webkit-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
   -moz-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
   box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 990px) {
   /*Responsive Desktop*/
   .restotal_box {
-    padding: 5vh;
+    padding: 0 1.5vw 1em 1.5vw;
+    margin-top: 2vh;
     background-color: #e1db86;
     height: 100%;
     /* Sombra */
@@ -26,12 +29,15 @@
   }
   .res_box {
     background-color: aqua;
-    height: 8vh;
+    height: 5vh;
   }
   .restotal_box img {
-    width: 15vw;
+    width: 14vw;
     margin: 0;
   }
+}
+@media (min-width: 770px) and (max-width: 989px) {
+
 }
 @media (max-width: 769px) {
   /*Responsive Mobile*/
