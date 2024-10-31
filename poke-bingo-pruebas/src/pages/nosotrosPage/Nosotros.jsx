@@ -4,6 +4,7 @@ import { CarruselNosotros } from "../../components/nosotros/CarruselNosotros";
 import { Button } from "react-bootstrap";
 import { Link} from "react-router-dom";
 
+
 export const Nosotros = () => {
   return (
     <div className="nosotros-container">
@@ -44,5 +45,6 @@ export const Nosotros = () => {
         </Button>
       </div>
     </div>
+    
   );
 };

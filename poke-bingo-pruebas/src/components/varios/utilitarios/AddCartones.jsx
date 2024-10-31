@@ -8,7 +8,7 @@ export const AddCartones = () => {
     const [filas, setFilas] = useState([]);
     const [cartones, setCartones] = useState([]);
 
-    const totalCartones = 3; // Definimos cuántos cartones queremos (50 cartones)
+    const totalCartones = 10; // Definimos cuántos cartones queremos (50 cartones)
     const casillerosPorCarton = 15; // Cada cartón tiene 15 casilleros (3 filas de 5 casilleros)
     const partida = {
         salaId: 1,

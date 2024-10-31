@@ -4,6 +4,10 @@ import Tabs from 'react-bootstrap/Tabs';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './abmPage.css'
 import { AbmUsuario } from '../../components/abmUsuarios/AbmUsuario';
+import { AddImages } from '../../components/varios/utilitarios/AddImages';
+import { AddCartones } from '../../components/varios/utilitarios/AddCartones';
+import { AbmPartidas } from '../../components/abmPartidas/AbmPartidas';
+import { AbmCartones } from '../../components/abmCartones/AbmCartones';
 
 export const AbmPage = ()=> {
   const [key, setKey] = useState('usuarios');
@@ -26,16 +30,23 @@ export const AbmPage = ()=> {
       </osdiv>
       </Tab>
       <Tab eventKey="partidas" title="Partidas" >
-      <div className="tab-content-custom">Contenido de partidas</div>
+      <div className="tab-content-custom">
+        <AbmPartidas/>
+      </div>
       </Tab>
       <Tab eventKey="cartones" title="Cartones">
-      <div className="tab-content-custom">Contenido de cartones</div>
+      <div className="tab-content-custom">
+        <AbmCartones/>
+      </div>
       </Tab>
       <Tab eventKey="pokemones" title="Pokemones">
       <div className="tab-content-custom">Contenido de pokemones</div>
       </Tab>
       <Tab eventKey="premios" title="Premios">
-      <div className="tab-content-custom">Contenido de premios</div>
+      <div className="tab-content-custom">
+      <AddImages/>
+      <AddCartones/>
+      </div>      
       </Tab>
     </Tabs>
     </div>

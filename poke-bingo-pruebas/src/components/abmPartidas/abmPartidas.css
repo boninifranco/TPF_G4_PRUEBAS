@@ -1,0 +1,14 @@
+.custom-datepicker {
+    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Opcional: personalizar el calendario emergente */
+  .custom-datepicker .react-datepicker__input-container input {
+    width: 100%;
+    border-radius: 4px;
+    padding: 8px;
+  }
+  
