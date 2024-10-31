@@ -1,0 +1,17 @@
+{
+    "usuarios":[
+    {
+      "apellido": "Admin",
+      "nombre": "NameAdmin",
+      "dni": "11111111",
+      "celular": "2983111111",
+      "direccion": "De La Garma",
+      "administrador": true
+    }
+],
+    "registro":[
+    {
+
+    }
+]
+}

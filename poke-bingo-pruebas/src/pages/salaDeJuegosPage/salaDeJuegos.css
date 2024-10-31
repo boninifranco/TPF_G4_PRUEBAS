@@ -1,0 +1,21 @@
+.slider-container {
+    width: 50%; /* El contenedor ocupa el 50% del ancho de la pantalla */
+    overflow-x: auto; /* Habilita el desplazamiento horizontal */
+    white-space: nowrap; /* Impide que las imágenes se envuelvan en múltiples líneas */
+    border: 1px solid #ccc; /* Opcional: borde para visualizar los límites del slider */
+  }
+  
+  .slider-track {
+    display: flex; /* Coloca las imágenes en fila */
+    flex-direction: row; /* Asegura que las imágenes estén alineadas en una fila horizontal */
+  }
+  
+  .slide {
+    display: inline-block; /* Hace que los divs de las imágenes se comporten en fila */
+    margin-right: 10px; /* Espacio entre imágenes */
+  }
+  
+  .slide img {
+    width: 100px; /* Ajusta el ancho de las imágenes */
+    height: auto; /* Mantiene la proporción de las imágenes */
+  }
