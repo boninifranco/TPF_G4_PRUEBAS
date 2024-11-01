@@ -1,0 +1,40 @@
+.account_body {
+  color: #b11a17;
+  background-color: #fffab3;
+  height: 100vh;
+}
+.misdatos {
+  background-color: #b11a17;
+  border-radius: 17px 17px 17px 17px;
+  -moz-border-radius: 17px 17px 17px 17px;
+  -webkit-border-radius: 17px 17px 17px 17px;
+  border: 0px solid #b11a17;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  /*Responsive Mobile*/
+  .account_body {
+    padding-top: 10vh;
+    padding-bottom: 5vh;
+    height: 100%;
+  }
+  .misdatos {
+    padding: 0 2em 2em 2em;
+    font-size: 2vh;
+  }
+}
+@media (min-width: 769px) {
+  /*Responsive Desktop*/
+  .account_body {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+  }
+  .misdatos {
+    width: 100%;
+    margin: 5em 4em 2em 4em;
+    padding: 2em 2em 2em 2em;
+    font-size: 2vh;
+  }
+}

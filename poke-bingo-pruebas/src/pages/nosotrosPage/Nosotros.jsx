@@ -2,11 +2,12 @@ import React from "react";
 import "./nosotros.css";
 import { CarruselNosotros } from "../../components/nosotros/CarruselNosotros";
 import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
+
 
 export const Nosotros = () => {
   return (
-    <body className="nosotros-container">
+    <div className="nosotros-container">
       <div className="carrusel_size">
         <CarruselNosotros />
       </div>
@@ -39,10 +40,11 @@ export const Nosotros = () => {
         <p>
           Estamos emocionados de que formes parte de nuestra comunidad! 👇
         </p>
-        <Button as={Link} to="/login" className="button_reg">
+        <Button as={Link} to="/login" className="button_reg" onMouseUp={(e) => e.currentTarget.blur()}>
           INGRESAR
         </Button>
       </div>
-    </body>
+    </div>
+    
   );
 };

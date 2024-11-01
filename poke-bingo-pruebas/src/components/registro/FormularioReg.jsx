@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Alert } from "react-bootstrap"; // Importamos Alert
+import { Button, Form, Alert } from "react-bootstrap";
 import "./formularioReg.css";
 import { Link, useNavigate } from "react-router-dom";
 

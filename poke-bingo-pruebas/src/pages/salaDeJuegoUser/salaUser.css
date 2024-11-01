@@ -1,0 +1,30 @@
+.sala_body {
+    width: 100vw; /* Ocupa todo el ancho de la pantalla */
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    display: flex; /* Centrado de elementos si es necesario */
+    flex-direction: column; /* Ajuste para disposición en columna */
+    justify-content: center; /* Centrado vertical */
+    align-items: center; /* Centrado horizontal */
+    overflow: hidden; /* Evita desplazamiento adicional si no es necesario */
+    padding: 0; /* Remueve cualquier padding adicional */
+    margin: 0; /* Remueve margen adicional */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho/alto */
+    background-color: #FFFAB3;
+  }
+  
+.resultados_component{
+    height: 100%;
+    width: 100%;
+    display: flex;  
+    align-items: center;
+    margin-left: 2em;
+}
+.resul_style{
+    margin-left: 2em
+}
+@media (max-width: 989px) {
+    .resultados_component{
+        display: flex;  
+        flex-direction: column;
+    }
+}

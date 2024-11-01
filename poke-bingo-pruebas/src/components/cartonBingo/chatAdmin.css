@@ -1,0 +1,29 @@
+/* Opcional: estilo adicional */
+.chat-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;    
+  }  
+  
+  .message {
+    padding: 5px;
+    border-radius: 8px;
+    max-width: 90%;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+  }
+  
+  .my-message {
+    background-color: #d1e7dd;
+    align-self: flex-end;
+    text-align: left;
+    color: #0f5132;
+  }
+  
+  .other-message {
+    background-color: #fff;
+    align-self: flex-start;
+    color: #842029;
+  }
+  

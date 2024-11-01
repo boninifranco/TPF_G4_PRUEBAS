@@ -1,0 +1,61 @@
+/* Fondo semitransparente que cubre toda la pantalla */
+.alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Asegura que se muestre por encima de otros elementos */
+  }
+  
+  /* Centrado del Alert */
+  .alert-centered {
+    width: 50%; /* Puedes ajustar el ancho */
+    max-width: 500px;
+    min-width: 300px;
+  }
+  
+  /* Estilo personalizado del Alert */
+  .custom-alert {
+    background-color: #7A170C;
+    background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png'); /* Imagen de fondo */
+    background-repeat: no-repeat;
+    background-position: start;
+    background-size: 20%; /* Ajustar la imagen para cubrir el alert */
+    border-color: #f5c6cb;
+    color: #FFFAB3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .custom-alert .alert-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .custom-alert .btn-outline-success {
+    border-radius: 20px;
+  }
+  /* Personalización del botón de cerrar */
+.custom-close-btn {
+    background-color: #FFFAB3; /* Color de fondo personalizado */
+    color: #7A170C; /* Color del texto */
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    border: none;
+    transition: background-color 0.3s ease, border 0.3s ease;
+  }
+  
+  .custom-close-btn:hover {
+    background-color: #7A170C; /* Color de fondo al pasar el cursor */
+    color: #FFFAB3;
+    border: 1px solid #FFFAB3;
+    
+    cursor: pointer;
+  }
+    
