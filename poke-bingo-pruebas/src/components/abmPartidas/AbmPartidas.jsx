@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Button, Form, Table } from 'react-bootstrap'
-import { format,formatDate,parse} from 'date-fns';
+import { format,parse} from 'date-fns';
 import '../abmPartidas/abmPartidas.css'
 
 
@@ -33,10 +33,10 @@ export const AbmPartidas = () => {
     // Convertir la fecha desde el formato ISO al tipo Date
     //const parsedDate = parse(fecha, "dd/MM/yyyy HH:mm", new Date());;
     //setSelectedDate(parsedDate);
-    console.log(fecha)
+    //console.log(fecha)
     //console.log(parsedDate)
     setFecha(fecha)
-    console.log(fecha)
+    //console.log(fecha)
   };
   
   const handleSort = () => {
@@ -74,9 +74,25 @@ export const AbmPartidas = () => {
         }))
     }
 
+    const existeSala = async()=>{
+      const response = await fetch('http://localhost:3000/sala/1')
+      if(!response.ok){
+        await fetch ('http://localhost:3000/sala',{
+          method:'POST',
+          headers: {
+              'Content-Type': 'application/json',
+            },body: JSON.stringify({
+            }),          
+      })
+      .then((response) => response.json())
+      .catch(console.log('error agregando sala')) 
+      }
+    }
+
     const handleAdd = async(e)=>{
       e.preventDefault();
-        console.log("Datos enviados:", form);
+              
+        //console.log("Datos enviados:", form);
         await fetch(`http://localhost:3000/partidas/`,{
             method: 'POST',
             headers: {
@@ -91,7 +107,7 @@ export const AbmPartidas = () => {
               }), // Enviar los nuevos datos
         })
         .then((response) => response.json())
-        .then((response)=> console.log(`response en handleAdd: ${response}`))
+        //.then((response)=> console.log(`response en handleAdd: ${response}`))
         
       .then((updatedRecor) => {        
         setRenderizar(!renderizar)
@@ -109,7 +125,7 @@ export const AbmPartidas = () => {
 
     const handleDelete = async (e)=>{
       e.preventDefault();
-        console.log("Datos enviados:", form);
+        //console.log("Datos enviados:", form);
         await fetch(`http://localhost:3000/partidas/${seleccionado.partidaId}`,{
             method: 'DELETE',            
         })
@@ -131,7 +147,7 @@ export const AbmPartidas = () => {
     const handleUpdate = async (e)=>{
 
       e.preventDefault();
-        console.log("Datos enviados:", form);
+        //console.log("Datos enviados:", form);
         await fetch(`http://localhost:3000/partidas/${seleccionado.partidaId}`,{
             method: 'PATCH',
             headers: {
@@ -167,6 +183,10 @@ export const AbmPartidas = () => {
       .catch((error) => console.error('Error updating data:', error));
 
     }
+
+    useEffect(()=>{
+      existeSala();
+    },[]);
 
 
     useEffect(()=>{
@@ -204,7 +224,7 @@ export const AbmPartidas = () => {
       }
       setPartidasFiltradas(partidasFiltradas);
     }, [estadoFiltro, partidas]);
-    console.log(partidas)
+    //console.log(partidas)
 
   return (
     <div style={{display:'flex', justifyContent:'center'}}>
