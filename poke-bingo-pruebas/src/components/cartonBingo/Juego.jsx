@@ -193,7 +193,7 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
             <ul style={{listStyleType:'none', alignItems:'center'}}>
               {cartones.map(carton => (
               <>
-              {/*<h5 style={{textAlign:'left',color:'#B11A17'}}>Cartón ID: {carton.cartonId} - Usuario ID: {carton.usuarioId} - Aciertos: {carton.aciertos}</h5>*/}
+              
             <CartonBingo key={carton.cartonId} carton={carton} />
               </>
               ))}
