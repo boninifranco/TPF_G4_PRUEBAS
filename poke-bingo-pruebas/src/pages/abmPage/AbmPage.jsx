@@ -8,6 +8,7 @@ import { AddImages } from '../../components/varios/utilitarios/AddImages';
 import { AddCartones } from '../../components/varios/utilitarios/AddCartones';
 import { AbmPartidas } from '../../components/abmPartidas/AbmPartidas';
 import { AbmCartones } from '../../components/abmCartones/AbmCartones';
+import { AbmPokemones } from '../../components/abmPokemones/AbmPokemones';
 
 export const AbmPage = ()=> {
   const [key, setKey] = useState('usuarios');
@@ -25,9 +26,9 @@ export const AbmPage = ()=> {
       
     >
       <Tab eventKey="usuarios" title="Usuarios" >
-      <osdiv className="tab-content-custom">
+      <div className="tab-content-custom">
         <AbmUsuario/>
-      </osdiv>
+      </div>
       </Tab>
       <Tab eventKey="partidas" title="Partidas" >
       <div className="tab-content-custom">
@@ -40,12 +41,15 @@ export const AbmPage = ()=> {
       </div>
       </Tab>
       <Tab eventKey="pokemones" title="Pokemones">
-      <div className="tab-content-custom">Contenido de pokemones</div>
+      <div className="tab-content-custom">
+        <AbmPokemones/>
+      </div>
       </Tab>
       <Tab eventKey="premios" title="Premios">
       <div className="tab-content-custom">
       <AddImages/>
       <AddCartones/>
+      
       </div>      
       </Tab>
     </Tabs>
