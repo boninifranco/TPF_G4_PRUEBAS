@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Dropdown, DropdownButton, InputGroup, Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-
+import './abmUsuario.css'
 
 export const AbmUsuario =()=> {
     const [esAdmin, setEsAdmin] = useState(null); 
