@@ -10,7 +10,7 @@ export const AbmCartones = () => {
     const [isAsc, setIsAsc] = useState(true);
     const [seleccionado, setSeleccionado]= useState(null);
     const [cantidadCartones, setCantidadCartones] = useState([]);
-    const [cartonesDeSelec, setCartonesDeSelec] = useState(null);
+    const [cartonesDeSelec, setCartonesDeSelec] = useState(null);    
     const [imagenes, setImagenes] = useState([])
     const [seleccionadas,setSeleccionadas]=useState([])
     const [filas, setFilas] = useState([]);

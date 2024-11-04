@@ -26,9 +26,9 @@ export const AbmPage = ()=> {
       
     >
       <Tab eventKey="usuarios" title="Usuarios" >
-      <div className="tab-content-custom">
+      <osdiv className="tab-content-custom">
         <AbmUsuario/>
-      </div>
+      </osdiv>
       </Tab>
       <Tab eventKey="partidas" title="Partidas" >
       <div className="tab-content-custom">
