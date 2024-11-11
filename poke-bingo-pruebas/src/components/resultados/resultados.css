@@ -5,17 +5,65 @@
   justify-content: center;
   margin-top: 0;
 }
-.puntaje_box {
-  background-color: #fffccd;
-  height: 400px;
-  width: 520px;
-  /* Sombra */
-  -webkit-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
-  -moz-box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
-  box-shadow: 0px 0px 0px 1px rgba(59, 59, 59, 1);
+
+/*TABS*/
+/* Contenedor de Tabs */
+.resultados-tabs .nav-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+  height: 60vh;
+  width: 35vw;
 }
 
-@media (min-width: 990px) {
+/* Estilo de cada tab */
+.resultados-tabs .nav-link {
+  color: #B11A17;
+  background-color: #FFFAB3;
+  margin-right: 5px;
+  position: relative;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2); 
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3); 
+  z-index: 1; 
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Tab activa */
+.resultados-tabs .nav-link.active {
+  color: #B11A17;
+  background-color: #fffccd;
+  font-style: italic;
+  border-bottom: none;
+  box-shadow: none;
+  z-index: 2;
+}
+
+/* Hover */
+.resultados-tabs .nav-link:hover {
+  color: #B11A17;
+  background-color: #f1e86cb4;
+}
+
+/* Contenedor de contenido */
+.resultados-tabs .tab-content {
+  background-color: #fffccd;
+  padding: 1em;
+  border: 1px solid rgba(59, 59, 59, 0.2);
+  border-top: none;
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
+  width: 35vw;
+  height: 50vh;
+  margin-top: -2px; 
+  position: relative;
+  z-index: 1; 
+}
+
+/* Efecto de borde y sombra en pestañas inactivas */
+.resultados-tabs .nav-link:not(.active) {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(59, 59, 59, 0.2);
+}
+@media (min-width: 1025px) {
   /*Responsive Desktop*/
   .restotal_box {
     padding: 0 1.5vw 1em 1.5vw;
@@ -27,18 +75,15 @@
     -moz-box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.75);
   }
-  .res_box {
-    background-color: aqua;
-    height: 5vh;
-  }
   .restotal_box img {
     width: 14vw;
     margin: 0;
   }
 }
-@media (min-width: 770px) and (max-width: 989px) {
-
-}
-@media (max-width: 769px) {
+@media (max-width: 1024px) {
   /*Responsive Mobile*/
+  .restotal_box img {
+    width: 14vw;
+    margin: 0;
+  }
 }
