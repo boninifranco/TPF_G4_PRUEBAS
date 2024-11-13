@@ -18,13 +18,14 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
     
 
     const seleccionarAleatorio = async () => {
-        if (seleccionadas.length > 0) {
-          const randomIndex = Math.floor(Math.random() * seleccionadas.length);
-          const imagenSeleccionada = seleccionadas[randomIndex];
+        if (partidasSelec.length > 0) {
+          const randomIndex = Math.floor(Math.random() * partidasSelec.length);
+          const imagenSeleccionada = partidasSelec[randomIndex];
     
           // Eliminar la imagen seleccionada del array de seleccionadas
-          const nuevasSeleccionadas = seleccionadas.filter((_, index) => index !== randomIndex);
+          const nuevasSeleccionadas = partidasSelec.filter((_, index) => index !== randomIndex);          
           setPartidasSelec(nuevasSeleccionadas);
+          
     
           // Añadir la imagen seleccionada al array de salieron
           //setSalieron([...salieron, imagenSeleccionada.imagen]);
@@ -122,14 +123,19 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       };
 
       const cargarDatos = ()=>{
+        setPartidasSelec(seleccionadas)
         fetchSalieron();
         nuevoFetchCartones();
       }
 
      
+      /*useEffect(()=>{
+        setPartidasSelec(seleccionadas)
+        console.log(partidasSelec)
+      },[partida])*/
       
-      
-      console.log(instancia)  
+      console.log(instancia)
+        
     
   return (
     <div style={{display:'flex', flexDirection:'column'}}>

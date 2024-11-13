@@ -9,7 +9,7 @@
   .message {
     padding: 5px;
     border-radius: 8px;
-    max-width: 90%;
+    max-width: 100%;
     word-wrap: break-word;
     margin-bottom: 10px;
   }

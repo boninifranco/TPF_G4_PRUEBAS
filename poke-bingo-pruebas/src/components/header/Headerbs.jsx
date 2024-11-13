@@ -11,7 +11,7 @@ import CustomAlert from '../varios/CustomAlert/CustomAlert';
 export const Headerbs = () => {
 
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState(localStorage.getItem('user') || '');
+  const [usuario, setUsuario] = useState(localStorage.getItem('userName') || '');
   const [isAdmin, setIsAdmin] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const handleShowAlert = () => setShowAlert(true);
@@ -34,7 +34,7 @@ export const Headerbs = () => {
 
   // Función para actualizar el usuario del localStorage
   const actualizarUsuario = () => {
-    const nuevoUsuario = localStorage.getItem('user') || '';
+    const nuevoUsuario = localStorage.getItem('userName') || '';
     setUsuario(nuevoUsuario); // Actualiza el estado si el valor ha cambiado
   };
   
@@ -161,6 +161,7 @@ const handleLogout = async() => {
       show={showAlert}
       variant="primary"
       message="Para ingresar a su cuenta debe loguearse."
+      showAcceptButton = {false}      
       onClose={handleCloseAlert}
       titulo="Atención!!"/>
     </Navbar>

@@ -19,6 +19,10 @@ export const AbmPartidas = () => {
     const [isAsc, setIsAsc] = useState(true); // Estado para el orden
     const [estadoFiltro, setEstadoFiltro] = useState('todas'); // todas, pendientes, finalizadas
     const [partidasFiltradas, setPartidasFiltradas] = useState(partidas);
+    const [tieneImagenes, setTieneImagenes] = useState(false)
+    const [imagenes, setImagenes] = useState([]);
+    const [seleccionadas, setSeleccionadas] = useState([]);
+    const [partidasImagenes, setPartidasImagenes] = useState({});
     
 
 
@@ -65,6 +69,7 @@ export const AbmPartidas = () => {
         setFinalizada(fila.estadoPartida)
         handleRowClick(fila.horaInicio)        
         setForm(fila);
+        setRenderizar(!renderizar)
     }
 
     const handleForm = (event)=>{
@@ -184,9 +189,84 @@ export const AbmPartidas = () => {
 
     }
 
+    const obtenerImagenes = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/imagenes'); 
+        if (!response.ok) {
+          //console.log(response)
+          throw new Error('Error al obtener las imágenes');
+        }
+        const data = await response.json();
+        setImagenes(data); 
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    const seleccionarImagenesAleatorias = (imagenes, cantidad) => {
+      
+     const imgseleccionadas = new Set();
+     while (imgseleccionadas.size < cantidad) {
+      const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+      imgseleccionadas.add(imagenes[indiceAleatorio]); 
+    }
+    return Array.from(imgseleccionadas);
+    };
+
+    const enviarSeleccionadas = async(partida)=>{
+      
+      try {
+        for (const seleccionada of seleccionadas){
+          await fetch('http://localhost:3000/img-seleccionadas',{
+            method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      partidaId:partida,
+                      imagenId: seleccionada.imagenId,//imagenId
+                  }),
+                });
+                console.log('Imagenes seleccionadas enviadas')  
+        }
+        setPartidasImagenes((prevPartidasImagenes) =>
+          prevPartidasImagenes.map((p) =>
+            p.partidaId === partida ? { ...p, hasImages: true } : p
+          )
+        );
+        setForm({})
+        setFecha(null)
+      } catch (error) {
+                console.log('No se pudieron enviar las imagenes seleccionadas')
+        
+      }
+    }
+
+    const generarImagenes = (e)=>{
+      e.preventDefault()
+      if (imagenes.length > 0) {
+        const imagenesSeleccionadas = seleccionarImagenesAleatorias(imagenes, 90);
+        setSeleccionadas(imagenesSeleccionadas);
+        setForm({});
+        setFinalizada(null);
+        setFecha(null);
+        setTieneImagenes(true);
+        
+      }
+    }
+  
+
     useEffect(()=>{
       existeSala();
+      obtenerImagenes();
     },[]);
+
+    useEffect(()=>{
+      if(seleccionado){
+        enviarSeleccionadas(seleccionado.partidaId);
+      }
+      
+    },[seleccionadas])
 
 
     useEffect(()=>{
@@ -226,6 +306,52 @@ export const AbmPartidas = () => {
     }, [estadoFiltro, partidas]);
     //console.log(partidas)
 
+    useEffect(()=>{
+
+      const fetchImgPartida = async ()=>{
+          try {
+              const response = await fetch(`http://localhost:3000/img-seleccionadas/partida/${seleccionado.partidaId}`);
+              if(!response.ok) throw new Error ('Error al recuperar las imagenes')
+              const data = await response.json();
+            if(data.length>0){
+              setTieneImagenes(true)
+            }else{
+              setTieneImagenes(false)
+            }
+              
+          } catch (error) {
+              
+          }            
+      }
+      fetchImgPartida();
+  },[seleccionado])
+
+  useEffect(()=>{
+
+    const fetchPartidasConImagenes = async ()=>{
+        try {
+            const response = await fetch(`http://localhost:3000/partidas/conImagenes/`);
+            if(!response.ok) throw new Error ('Error al recuperar las partidas con imagenes')
+            const data = await response.json();
+          setPartidasImagenes(data);
+         
+          
+            
+        } catch (error) {
+            
+        }            
+    }
+    fetchPartidasConImagenes();
+},[renderizar])
+
+const conImagenes = (partidaId) => {
+  const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
+  return partida ? partida.hasImages : false;
+};
+  console.log(`tiene imagenes?:${tieneImagenes}`)
+  console.log(`seleccionadas:${seleccionadas.length}`)
+  console.log(`Partidas con imagenes: ${JSON.stringify(partidasImagenes)}`)
+
   return (
     <div style={{display:'flex', justifyContent:'center'}}>
         <div style={{display:'flex', flexDirection:'column',width:'50%'}}>
@@ -241,7 +367,8 @@ export const AbmPartidas = () => {
             <th>Id Partida</th>
             <th onClick={handleSort} style={{ cursor: 'pointer' }}>Inicio {isAsc ? '▲' : '▼'}</th>
             <th>Cantidad de Cartones</th>
-            <th>Finalizada</th>            
+            <th>Finalizada</th>
+            <th>Imagenes</th>            
           </tr>
         </thead>
         <tbody>
@@ -252,6 +379,9 @@ export const AbmPartidas = () => {
               <td>{partida.cantidadCartones}</td>
               <td >
                 <input type='checkbox' checked={partida.estadoPartida} readOnly/>
+                </td>
+              <td>
+              <Button variant={conImagenes(partida.partidaId) ? "danger":"success"} style={{width:'100%'}} onClick={(e)=>generarImagenes(e)} type='submit' disabled={!seleccionado ? true : conImagenes(partida.partidaId) ? true : false}>{conImagenes(partida.partidaId) ? 'Con imágenes' : 'Generar imágenes'}</Button>{' '}
                 </td>              
             </tr>
           ))}
@@ -321,7 +451,9 @@ export const AbmPartidas = () => {
                     checked={finalizada === true} // Solo checked si es false
                     onChange={() => handleFinalizada(true)} // Marca como false
                     />
-                    </div>                
+
+                    </div>
+                    {/*<Button variant={tieneImagenes ? "danger":"success"} style={{marginTop:'1em', marginBottom:'1em',width:'50%'}} onClick={(e)=>generarImagenes(e)} type='submit' disabled={!seleccionado ? true : tieneImagenes ? true : false}>{tieneImagenes ? 'Partida con imágenes' : 'Generar imágenes'}</Button>{' '}*/}                
                 </Form.Group>
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                 <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleAdd} type='submit'>Agregar</Button>{' '}

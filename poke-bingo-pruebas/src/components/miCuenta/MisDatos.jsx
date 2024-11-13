@@ -5,6 +5,7 @@ import "./misDatos.css";
 export const MisDatos = ({ onModify }) => {
   const [user, setUser] = useState({});
   const [mail, setMail] = useState("");
+  const [datosRegistro, setDatosRegistro] = useState({})
 
   useEffect(() => {
     const idUser = localStorage.getItem("idUser");
@@ -28,6 +29,11 @@ export const MisDatos = ({ onModify }) => {
         const response = await fetch(`http://localhost:3000/registro/${idUser}`)
         const data = await response.json();
         setMail(data);
+        setDatosRegistro({
+          mail: data.email,
+          userName: data.userName,
+          avatar: data.avatar
+        })
       } catch (error) {
         console.error('Error al obtener los datos del registro:', error);
       }
@@ -42,7 +48,7 @@ export const MisDatos = ({ onModify }) => {
       <div className="info_row info_row_two">
         <div className="divcont">
           <p className="ptitle_style">Mail</p>
-          <p className="pbox_style">{mail.email}</p>
+          <p className="pbox_style">{datosRegistro.mail}</p>
         </div>
         <div className="divcont">
           <p className="ptitle_style">Nombre</p>
@@ -63,6 +69,15 @@ export const MisDatos = ({ onModify }) => {
         <div className="divcont">
           <p className="ptitle_style">Dirección</p>
           <p className="pbox_style">{user.direccion}</p>
+        </div>
+        <div className="divcont">
+          <p className="ptitle_style">UserName</p>
+          <p className="pbox_style">{datosRegistro.userName}</p>
+        </div>
+        <div className="divcont">
+          <p className="ptitle_style">Avatar</p>
+          <img src={datosRegistro.avatar} style={{width:'100px'}}/>
+          
         </div>
       </div>
     </div>

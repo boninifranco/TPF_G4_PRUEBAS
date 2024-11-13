@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Dropdown, DropdownButton, InputGroup, Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import './abmUsuario.css'
+
 
 export const AbmUsuario =()=> {
     const [esAdmin, setEsAdmin] = useState(null); 
@@ -50,6 +50,7 @@ export const AbmUsuario =()=> {
         })
         .then(() => {
             // Actualiza el estado eliminando el registro de la tabla
+            console.log(seleccionado)
             setData((prevData) => prevData.filter((item) => item.id !== seleccionado.id));
             setSeleccionado(null); // Deselecciona el registro después de eliminarlo
             setForm({}); // Limpia el formulario después de eliminar

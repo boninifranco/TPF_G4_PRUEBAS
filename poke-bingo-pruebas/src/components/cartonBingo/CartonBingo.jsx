@@ -16,7 +16,7 @@ export const CartonBingo = ({ carton }) => {
       
       <li>
         <div style={{ cursor: 'pointer' }} onClick={toggleFilas}>
-          <h5 style={{textAlign:'center',color:'#B11A17'}}>Cartón ID: {carton.cartonId} - Usuario ID: {carton.idUsuario.id} - Aciertos: {carton.aciertos}</h5>
+          <h5 style={{textAlign:'center',color:'#B11A17'}}>Cartón ID: {carton.cartonId} - Usuario ID: {carton.idUsuario ? carton.idUsuario.id : ''} - Aciertos: {carton.aciertos}</h5>
           
         </div>
         
