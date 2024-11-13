@@ -23,7 +23,7 @@ export const Ganaron = () => {
   }, []);
 
   return (
-    <div>{ganadores.length > 0 ? (
+    <div className='ganadores'>{ganadores.length > 0 ? (
         ganadores.map((ganador, index) => (
           <div key={ganador.resultadoId || index}>
             <p> <strong>{ganador.usuario.nombre} {ganador.usuario.apellido}</strong> ganó {ganador.resultado}</p>

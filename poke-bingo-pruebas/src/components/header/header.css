@@ -6,10 +6,10 @@
         display: grid;
         grid-template-columns: 30% 70%;
         grid-template-rows: 100%;
-        //grid-column-gap: 0px;
-        //grid-row-gap: 0px;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
         background-color: #B11A17;
-        //margin-bottom: 1%;
+        margin-bottom: 1%;
         height: 100px;
         box-shadow: 2px 5px 5px 2px #7A170C;
     }
@@ -22,7 +22,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        //padding-right: 75%;
+        padding-right: 75%;
     }
 
     
@@ -38,15 +38,27 @@
         scale: 1.3;
         color: rgb(255, 250, 179)
     }
-    /*.separarInicio:active, .separarInicio:focus {
+    .separarInicio:active, .separarInicio:focus {
         color: #fff;
-    }*/
+    }
     
-    .nav-link.active{
-        color: #FFFAB3 !important;
-        scale: 1.3;
+    .parentHeader .tamanioHeader.separarInicio.active {
+        color: #ede34f !important;
+        transform: scale(1.3);
         font-style: italic;
-        
+        transition: none; /* Sin transición */
+    }
+    
+    /* Deshabilitar el efecto hover solo en el enlace activo */
+    .parentHeader .tamanioHeader.separarInicio.active:hover {
+        transform: none;
+        pointer-events: none;
+    }
+    
+    /* Efecto hover solo en enlaces no activos */
+    .parentHeader .tamanioHeader.separarInicio:not(.active):hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease;
     }
     .tamanioHeader {
         font-size: 24px;
@@ -58,8 +70,8 @@
 
     .nav-justify {
         display: flex;
-        justify-content: space-around; /* Distribuye los enlaces uniformemente */
-        width: 100%; /* Asegura que el nav ocupe todo el ancho */
+        justify-content: space-around;
+        width: 100%;
       }
 
 
