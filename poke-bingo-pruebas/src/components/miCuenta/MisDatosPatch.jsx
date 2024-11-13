@@ -4,6 +4,8 @@ import './misDatos.css';
 import { ContraseniaPatch } from "./ContraseniaPatch";
 
 export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
+
+  const [imagenes, setImagenes] = useState([]); 
   const [user, setUser] = useState({
     nombre: '',
     apellido: '',
@@ -13,7 +15,9 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
   });
 
   const [registro, setRegistro] = useState({
-    email: ''
+    email: '',
+    userName:'',
+    avatar: ''
   });
 
   const [error, setError] = useState("");
@@ -48,7 +52,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'email') {
+    if (name === 'email' || name === 'userName') {
       setRegistro((prevRegistro) => ({
         ...prevRegistro,
         [name]: value,
@@ -64,7 +68,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user.nombre || !user.apellido || !user.dni || !user.celular || !user.direccion) {
+    if (!user.nombre || !user.apellido || !user.dni || !user.celular || !user.direccion || !registro.userName) {
       setError("Existen campos sin completar");
       return;
     }
@@ -74,7 +78,9 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
     const { id, ...userData } = user;
 
-    const { email } = registro;
+    const { email, userName, avatar} = registro;
+
+    
 
     try {
       await fetch(`http://localhost:3000/usuario/${idUser}`, {
@@ -84,19 +90,42 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
         },
         body: JSON.stringify(userData),
       });
-
+      const aleatorio = imagenes[Math.floor(Math.random() * imagenes.length)]
+      
       await fetch(`http://localhost:3000/registro/${idUser}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, userName, avatar: aleatorio.url}),
       });
       onGuardado();
+      localStorage.setItem('user', email)
+      localStorage.setItem('userName', userName)
+      localStorage.setItem('avatar', aleatorio.url)
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
     }
   };
+  
+
+  useEffect(()=>{
+
+    const obtenerImagenes= async ()=>{
+      try {
+        const response = await fetch('http://localhost:3000/imagenes/')
+        if(!response.ok) throw new Error('No se pusieron obtener las imagenes')
+          const data = await response.json();
+        setImagenes(data)
+      } catch (error) {
+        console.log(error)        
+      }
+    }
+    obtenerImagenes();
+
+  },[])
+
+  console.log(imagenes)
 
   return (
     <Form className="flex_container" onSubmit={handleSubmit}>
@@ -178,6 +207,17 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
             type="text"
             name="direccion"
             value={user.direccion}
+            onChange={handleChange}
+            className="form_input_style"
+          />
+        </Form.Group>
+
+        <Form.Group className="divcont">
+          <p className="pform_style">UserName</p>
+          <Form.Control
+            type="text"
+            name="userName"
+            value={registro.userName}
             onChange={handleChange}
             className="form_input_style"
           />

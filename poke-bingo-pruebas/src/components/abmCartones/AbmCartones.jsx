@@ -2,6 +2,8 @@ import { format, parse } from 'date-fns';
 import React, { useEffect, useState } from 'react'
 import { Button, Row, Table } from 'react-bootstrap';
 import { CartonBingo } from '../cartonBingo/CartonBingo';
+import Loader from '../varios/Loader/Loader';
+import CustomAlert from '../varios/CustomAlert/CustomAlert';
 
 export const AbmCartones = () => {
     const [loading, setLoading] = useState(true);
@@ -17,12 +19,16 @@ export const AbmCartones = () => {
     const [casilleros, setCasilleros] = useState([])
     const [cartones, setCartones] = useState([])
     const [maxCarton, setMaxCarton]=useState(0)
-    const [maxFila, setMaxFila]=useState(0)
+    const [maxFila, setMaxFila]=useState(0)      
     const [visibleGenerar, setVisibleGenerar] = useState(false)
     const [visibleActualizar, setVisibleActualizar] = useState(false)
     const [cartonesComprados, setCartonesComprados] = useState(null)
+    const [loader, setLoader] = useState(false)
+    const [showAlert, setShowAlert] = useState(false);
+    const handleShowAlert = () => setShowAlert(true);
+    const handleCloseAlert = () => setShowAlert(false);
 
-
+    //Funcion para ordenar las partidas activas por el campo horaInicio
     const handleSort = () => {
         const sortedData = [...partidasActivas].sort((a, b) => {
           if (isAsc) {
@@ -36,23 +42,23 @@ export const AbmCartones = () => {
       };
 
       const handleSeleccionado = (fila)=>{
-        setSeleccionado(fila);
-        //console.log(fila)
-        const cartones = consultarCartones(fila.partidaId)
-        //console.log(cartones)
+        setSeleccionado(fila);       
+        const cartones = consultarCartones(fila.partidaId)        
         if(cartones>0) {
-            setCartonesDeSelec(cartones)
+            setCartonesDeSelec(cartones)            
             }
         consultarMaxIdCarton(fila.cantidadCartones);
         consultarMaxIdFila();
         fetchCartonesComprados(fila.partidaId)
         fetchCartones(fila.partidaId)
+        setCartonesDeSelec(cartones)//agregado - ver comportamiento
                 
     }
     const consultarCartones = (id)=>{
        const partida = cantidadCartones.find(item=>item.idPartida===id)
        const cantidad = partida ? partida.cantidad : 0
-            setCartonesDeSelec(cantidad);
+            //setCartonesDeSelec(cantidad);
+            return cantidad
     }
 
     const fetchCartonesComprados = async (partida)=>{
@@ -70,7 +76,8 @@ export const AbmCartones = () => {
 
     const fetchCartones = async (partida) => {
         try {
-          const response = await fetch(`http://localhost:3000/cartones/all?criterio=cartonId&orden=ASC&partida=${partida}`);  // URL de la API, modifícala según tu entorno
+          //const response = await fetch(`http://localhost:3000/cartones/all?criterio=cartonId&orden=ASC&partida=${partida}`);  // URL de la API, modifícala según tu entorno
+          const response = await fetch(`http://localhost:3000/cartones/todos/${partida}`);
           if (!response.ok) {
             throw new Error('Error al recuperar los cartones');
           }
@@ -126,7 +133,7 @@ export const AbmCartones = () => {
         },[partidasActivas])
 
     const addCartones = async (partida) => {
-        try {
+         try {
             for (let i = 0; i < seleccionado.cantidadCartones;i++){
                 await fetch('http://localhost:3000/cartones',{
                     method: 'POST',
@@ -138,7 +145,8 @@ export const AbmCartones = () => {
                     }),
                   });
             fetchPartidasActivas();
-            setVisibleGenerar(true);
+            setVisibleGenerar(true);            
+            handleShowAlert();
             
 
             }
@@ -150,61 +158,19 @@ export const AbmCartones = () => {
         }
       }
 
-      const obtenerImagenes = async () => {
-        try {
-          const response = await fetch('http://localhost:3000/imagenes'); 
-          if (!response.ok) {
-            //console.log(response)
-            throw new Error('Error al obtener las imágenes');
-          }
-          const data = await response.json();
-          setImagenes(data); 
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
-
-      const seleccionarImagenesAleatorias = (imagenes, cantidad) => {
-        
-       const imgseleccionadas = new Set();
-       while (imgseleccionadas.size < cantidad) {
-        const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-        imgseleccionadas.add(imagenes[indiceAleatorio]); 
-      }
-      return Array.from(imgseleccionadas);
-      };
-
-      const enviarSeleccionadas = async(partida)=>{
-        try {
-          for (const seleccionada of seleccionadas){
-            await fetch('http://localhost:3000/img-seleccionadas',{
-              method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        partidaId:partida,
-                        imagenId: seleccionada.imagenId,
-                    }),
-                  });
-                  console.log('Imagenes seleccionadas enviadas')
-    
-          }
-        } catch (error) {
-                  console.log('No se pudieron enviar las imagenes seleccionadas')
-          
-        }
-      }
+      
     
       const generarCasillerosYFilas = (imagenesSeleccionadas) => {
         const totalFilas = cartonesDeSelec * 3;
-        //let idAutoincrement = 1;
+        //let idFilaAutoincrement = maxFila + 1;
         let idFilaAutoincrement = maxFila + 1;
-        //let idCartonAutoincrement = 1;
+        let idCartonAutoincrement = maxCarton + 1;
         const cartones = [];  
         const filasGeneradas = [];
     
-        for (let carton = maxCarton; carton < (cartonesDeSelec+maxCarton); carton++) {
+        //for (let carton = maxCarton; carton < (cartonesDeSelec+maxCarton); carton++) {
+        for (let carton = 0; carton < (cartonesDeSelec); carton++) {
+          console.log(`este es el carton ${carton} de ${cartonesDeSelec} cartones`)
           const imagenesUsadasEnCarton = new Set();
     
           for (let fila = 0; fila < 3; fila++) {
@@ -218,31 +184,28 @@ export const AbmCartones = () => {
                 imagenesUsadasEnCarton.add(imagenAleatoria);
                 
                 cartones.push({
-                    //id: idAutoincrement++,
                     filaId: idFilaAutoincrement,
                     salio: false,
-                    imagenId: imagenAleatoria.imagenId,
+                    imagenId: imagenAleatoria.imagen.imagenId,
                   });
                 }
               }
       
               // Generar las filas
               filasGeneradas.push({
-                //id: idFilaAutoincrement,
-                cartonId: carton + 1, // Cada fila pertenece a un cartón
-                aciertos: 0, // Inicializado en 0
+                
+                cartonId: idCartonAutoincrement, // Cada fila pertenece a un cartón
+                aciertos: 0, 
               });
       
               idFilaAutoincrement++;
-            //idCartonAutoincrement++;
+            
           }
+          idCartonAutoincrement++;
         }
         console.log(`Estos son los cartones: ${JSON.stringify(cartones)}`)
         console.log(`Estas son las filas generadas:${JSON.stringify(filasGeneradas)}`)
-        //console.log(cartones)
-        //console.log(filasGeneradas)
-        //setCasilleros(casilleros);
-        //setFilas(filasGeneradas);
+        
         return { cartones, filasGeneradas };
         
         
@@ -318,35 +281,30 @@ export const AbmCartones = () => {
 
       useEffect(() => {
         const cargarYSeleccionar = async () => {
-        await  obtenerImagenes();
+        
         };
     
         cargarYSeleccionar();
       }, []);    
 
     
-    useEffect(() => {
-        if (imagenes.length > 0) {
-          const imagenesSeleccionadas = seleccionarImagenesAleatorias(imagenes, 90);
-          setSeleccionadas(imagenesSeleccionadas);
-        }
-      }, [imagenes]);
+      useEffect(()=>{
 
-      //console.log(`Estas son las imagenes seleccionadas ${ JSON.stringify(seleccionadas)}`)
-
-    /*/useEffect(() => {
-        if (seleccionadas.length > 0) {
-            
-            const { cartones, filasGeneradas } = generarCasillerosYFilas(seleccionadas);
-            setCasilleros(cartones);
-            setFilas(filasGeneradas);
-          console.log('aca deberia haber guardado en filas')
-          
-    
-          
+        const fetchImgPartida = async ()=>{
+            try {
+                const response = await fetch(`http://localhost:3000/img-seleccionadas/partida/${seleccionado.partidaId}`);
+                if(!response.ok) throw new Error ('Error al recuperar las imagenes')
+                const data = await response.json();
+              if(data.length>0){
+                setSeleccionadas(data)
+              }
+                
+            } catch (error) {
+                
+            }            
         }
-        
-      }, [seleccionadas]);*/
+        fetchImgPartida();
+    },[seleccionado])
 
       const crearCasillerosyFilas = ()=>{
         if (seleccionadas.length > 0) {
@@ -355,14 +313,13 @@ export const AbmCartones = () => {
             setCasilleros(cartones);
             setFilas(filasGeneradas);
             setVisibleGenerar(false);
-            setVisibleActualizar(true);
+            setVisibleActualizar(true);            
             
       }else{
         console.log('no hay seleccionadas?')
       }
     }
-      //console.log(`Estas son las filas generadas en "filas" ${filas}`)
-      //console.log(filas.length)
+      
       
       const addFilas = ()=>{
         enviarFilas(filas)
@@ -370,25 +327,22 @@ export const AbmCartones = () => {
 
       const addCasilleros = ()=>{
         enviarCasilleros(casilleros)
-      }
+      }      
 
-      const addSeleccionadas = ()=>{
-        enviarSeleccionadas(seleccionado.partidaId)
-      }
-
-      const CompletarDatosPartida = async ()=>{        
+      const CompletarDatosPartida = async ()=>{       
+        setLoader(true) 
         await enviarFilas(filas);
         await enviarCasilleros(casilleros);
-        await enviarSeleccionadas(seleccionado.partidaId);
+        setLoader(false)        
         setVisibleActualizar(false);
       } 
             
             
             
-    //console.log(JSON.stringify(partidasActivas))
-    //console.log(cantidadCartones)
-    //console.log(JSON.stringify(seleccionado))
-    //console.log(cartonesDeSelec)
+    
+    //console.log(`seleccionadas:${JSON.stringify(seleccionadas)}`)
+    //console.log(`filas:${JSON.stringify(filas)}`)
+    //console.log(`casilleros:${JSON.stringify(casilleros)}`)
   return (
     <div style={{display:'flex'}}>
         <div style={{width:'50%', textAlign:'center', padding:'10px'}}>
@@ -449,19 +403,17 @@ export const AbmCartones = () => {
             </Row>
             
             </ul>
-            
-
-            
-        {/*<div>
-        
-            <button onClick={crearCasillerosyFilas}>CrearCasilleros-filas</button>          
-            <button onClick={addFilas}>Enviar Filas</button>
-            <button onClick={addCasilleros}>Enviar Casilleros</button>
-            <button onClick={addSeleccionadas}>Enviar Seleccionadas</button>
-        </div>*/}
         
         </div>
-        
+        {loader ? <Loader mensaje={'Actualizando...'}/> : ''}
+        <CustomAlert
+      show={showAlert}
+      variant="primary"
+      message={`Agrego los cartones, seleccionela fila para generar sus filas y casilleros`}
+      showAcceptButton = {false}
+      onClose={handleCloseAlert}
+      titulo="Atención!!"/>
+
       
 
     </div>

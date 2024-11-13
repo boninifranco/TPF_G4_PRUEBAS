@@ -6008,42 +6008,46 @@ const pokes = [
 
 export const AddImages = () => {
     
-      const cargarPokemons = async (poke) => {
+      const cargarPokemons = async (pokes) => {
+        for(let i = 0; i < pokes.length; i++){
+          try {
+            const response = await fetch('http://localhost:3000/imagenes', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                id:pokes[i].id,
+                nombre: pokes[i].nombre,
+                url: pokes[i].url
+              }),
+              //body: pokes,
+              /*body:{
+                  id: "2",
+                  nombre: "ivysaur",
+                  url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
+              }*/
+            });
+            
+            if (!response.ok) {
+              throw new Error('Error al cargar los pokémons');
+            }
+            
+            //console.log('Pokémons cargados con éxito');
+          } catch (error) {
+            console.error('Error:', error);
+          }
+
+        }
         
-        try {
-          const response = await fetch('http://localhost:3000/imagenes', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(poke),
-            //body: pokes,
-            /*body:{
-                id: "2",
-                nombre: "ivysaur",
-                url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
-            }*/
-          });
-          
-          if (!response.ok) {
-            throw new Error('Error al cargar los pokémons');
-          }
-          
-          console.log('Pokémons cargados con éxito');
-        } catch (error) {
-          console.error('Error:', error);
+    }    
+    
+   
+    const subirPokes = ()=>{      
+      
+        cargarPokemons(pokes);
         }
-    }
-    /*useEffect(()=>{
-        for (const poke of pokes){
-          cargarPokemons(poke);
-          }
-    },[])*/
-    const subirPokes = ()=>{
-      for (const poke of pokes){
-        cargarPokemons(poke);
-        }
-    }
+    
         
      
   return (

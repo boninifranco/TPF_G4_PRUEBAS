@@ -59,6 +59,8 @@ export const Login = () => {
         localStorage.setItem('token', resp.access_token)
         localStorage.setItem('admin', resp.admin)
         localStorage.setItem('idLogin', resp.idLogin)
+        localStorage.setItem('userName', resp.userName)
+        localStorage.setItem('avatar', resp.avatar)
         
         window.dispatchEvent(new Event('storage'));
         navigate('/')    
