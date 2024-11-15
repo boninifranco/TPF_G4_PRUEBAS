@@ -9,7 +9,7 @@
     padding: 0; /* Remueve cualquier padding adicional */
     margin: 0; /* Remueve margen adicional */
     box-sizing: border-box; /* Incluye padding y borde en el ancho/alto */
-    background-color: #FFFAB3;
+    background-color: #fffccd;
   }
   
 .resultados_component{
@@ -22,9 +22,14 @@
 .resul_style{
     margin-left: 2em
 }
-@media (max-width: 989px) {
+@media (max-width: 1025px) {
     .resultados_component{
         display: flex;  
         flex-direction: column;
+    }
+}
+@media (min-width:1024px){
+    .resultados_component{
+        justify-content: space-evenly
     }
 }

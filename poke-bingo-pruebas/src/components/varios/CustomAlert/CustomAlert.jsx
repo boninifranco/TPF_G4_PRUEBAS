@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import './customAlert.css'; // Puedes agregar estilos personalizados aquí
 
-function CustomAlert({ show, variant, message, onClose, titulo }) {
+function CustomAlert({ show, variant, message, onClose, titulo, showAcceptButton = false, onAccept }) {
   
   if (!show) return null;
 
@@ -15,8 +15,14 @@ function CustomAlert({ show, variant, message, onClose, titulo }) {
             {titulo}
             </div>            
             </Alert.Heading>
-          <p style={{textAlign:'center'}}>{message}</p>
+          <div style={{display:'flex', justifyContent:'center', textAlign:'center'}}>
+            <p style={{color:'#FFFAB3', width:'70%'}}>{message}</p>
+          </div>
+          
           <div className="d-flex justify-content-end">
+          {showAcceptButton&&<Button onClick={onAccept} className="custom-close-btn">
+              Aceptar
+            </Button>}
             <Button onClick={onClose} className="custom-close-btn">
               Cerrar
             </Button>

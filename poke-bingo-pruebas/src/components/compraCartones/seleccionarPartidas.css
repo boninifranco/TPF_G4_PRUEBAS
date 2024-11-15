@@ -1,0 +1,46 @@
+.partidas-title {
+  color: #b11a17;
+}
+
+.partidas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.partida-item {
+  flex: 1 1 calc(33.33% - 20px);
+  max-width: 300px;
+  min-width: 250px;
+}
+
+.partida-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.partida-card-body {
+  text-align: center;
+}
+
+.partida-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.partida-card-text {
+  margin-bottom: 10px;
+}
+  
+  @media (min-width: 789px){
+    .container-partidas{
+      display: flex;
+      flex-direction: column;
+      margin: 5em 0 0 0;
+      padding: 15vh 0 20em 0;      
+    }
+    .partidas-title{
+      margin-bottom: 5vh;
+    }
+  }

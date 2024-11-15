@@ -65,7 +65,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
       seleccionarInstancia(instancia);
       fetchFilasOrdenadas(); // Llama a la función para actualizar las filas
       
-    }, 500); // Cada 500ms
+    }, 500000); // Cada 500ms
 
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(fetchInterval);

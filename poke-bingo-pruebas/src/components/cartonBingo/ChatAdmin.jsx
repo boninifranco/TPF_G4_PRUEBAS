@@ -4,10 +4,11 @@ import { Button, Col, Container, Form, InputGroup, ListGroup, Row } from 'react-
 import io from 'socket.io-client';
 import './chatAdmin.css'
 
-const user = localStorage.getItem('user');
+const user = localStorage.getItem('userName');
+const avatar = localStorage.getItem('avatar');
 // Conectar con el backend WebSocket
 const socket = io('http://localhost:3000', {
-  query: { user },
+  query: { user, avatar },
   reconnection: true,        // Habilitar reconexión automática
   reconnectionAttempts: 10,  // Número de intentos de reconexión
   reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
@@ -82,19 +83,28 @@ export const ChatAdmin = () => {
 
       {/* Mostrar la lista de mensajes */}
       <Container fluid style={{ height: '65vh', display: 'flex', flexDirection: 'column' }}>
-      <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '55vh', padding: '0.3rem', border: '1px solid #ccc', borderRadius: '8px' }}>
+      <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '55vh', border: '1px solid #ccc', borderRadius: '8px' }}>
       <Col>
-      <ListGroup variant="flush" style={{ overflowY: 'scroll' }}>
+      <ListGroup variant="flush" >
         {messages        
         .map((msg, index) => (
           <ListGroup.Item
            key={index}
            className={msg.user === user ? 'message my-message' : 'message other-message'}>
-            <strong>{msg.user}:</strong> {msg.message}
-            {/*<strong className="timestamp">
-            {format(new Date(msg.timestamp), 'dd/MM/yyyy HH:mm')}
-            </strong>*/}
+            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+              <div style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
+                <img src={msg.avatar} style={{width:'35px'}}/>
+                <strong style={{fontSize:'9px'}}>{msg.user}</strong>                 
+              </div>
+              <span>
+               : <strong style={{fontSize:'12px'}}>
+              {msg.message}            
+              </strong>
+              </span>             
+
+            </div>
             
+
           </ListGroup.Item>
         ))}
       </ListGroup>

@@ -1,0 +1,14 @@
+.adquirir_body{
+    background-color: #fffccd;
+    height: 100%;
+    padding: 6em 0 6em 0; 
+    
+}
+@media (min-width: 789px) { 
+    .box_adquirircarton{
+        padding: 15vh;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+}
