@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Form, Button, Modal } from 'react-bootstrap';
 import { UploadImage } from '../varios/UploadImage/UploadImage';
 import { ListaPremios } from '../varios/CarruselPremios/ListaPremios';
-import poke from '../../assets/altPoke.png'
-import {baseUrl} from '../../core/constant/constantes.ts';
 
-export const AbmPremio = ()=> {
+export const AbmPremio = ({ onSubmit })=> {
   const [description, setDescription] = useState('');
   const [credits, setCredits] = useState('');
   const [stock, setStock] = useState('');
@@ -17,83 +14,70 @@ export const AbmPremio = ()=> {
   const [premios, setPremios] = useState([]);
   const [selectedPremio, setSelectedPremio] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   
    // Manejar el premio seleccionado desde AbmPremios
    const handleSelectPremio = (premio) => {
     // Crear una copia independiente para editar sin mutar la lista original
     setSelectedPremio({ ...premio });
-    setDescription(premio.descripcion)
-    setCredits(premio.creditos)
-    setStock(premio.stock)
-    setSelectedImage(premio.imagen)
-  };  
+  };
+
+  // Actualizar los datos del premio seleccionado al editar el formulario
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedPremio((prev) => ({
+      ...prev,
+      [name]: value, // Actualiza el campo que se está editando
+    }));
+  };
 
  
   const fetchImages = async () => {
+    
+
     try {
-      const response = await fetch(`${baseUrl}/imagenes/premios`);
+      const response = await fetch(`http://localhost:3000/imagenes/premios`);
 
       if (response.ok) {
         const data = await response.json();
         setImages(data.map((image) => image.secureUrl));
       } else {
         console.error('Error al obtener las imágenes:', response.statusText);
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Ocurrió un error inesperado');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
-      navigate('/error', { state: { errorMessage: error.message } });
     }
   };
 
   useEffect(() => {
     fetchImages();
-    
   }, []);
 
   // Maneja el envío del formulario
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const saveResponse = await fetch(!selectedPremio ?
-        `${baseUrl}/premios/` : 
-        `${baseUrl}/premios/${selectedPremio.id}`, {
-       method: !selectedPremio ? 'POST': 'PATCH',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         descripcion:description,
-         creditos:credits,
-         imagen: selectedImage,
-         stock: stock
-         
-       }),
-     });
-     console.log(saveResponse)
-    if(saveResponse.status!==302) {
-      const errorData = await saveResponse.json();
-      throw new Error(errorData.message || 'Ocurrió un error inesperado');
-     }
 
-      const result = await saveResponse.json();
-      console.log('Datos actualizados:', result)
-     // Limpia los campos del formulario después de enviar
-      setDescription('');
-      setCredits('');
-      setStock('')
-      setSelectedImage(null);
-      setSelectedPremio();
-      setReload(!reload)
-    
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      navigate('/error', { state: { errorMessage: error.message } });
-      
-    }
-    
+    const saveResponse = await fetch('http://localhost:3000/premios/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        descripcion:description,
+        creditos:credits,
+        imagen: selectedImage,
+        stock: stock
+        
+      }),
+    });
+    const savedData = await saveResponse.json();
+      console.log('Imagen guardada en la tabla:', savedData);
+
+    // Limpia los campos del formulario después de enviar
+    setDescription('');
+    setCredits('');
+    setStock('')
+    setSelectedImage(null);
+    setReload(!reload)
   };
   const removeImage = () => {
     setSelectedImage(null);
@@ -103,49 +87,42 @@ export const AbmPremio = ()=> {
     
     const fetchPremios = async () => {
       try {
-        const response = await fetch(`${baseUrl}/premios`);
-        if(response.status!==302){
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Ocurrió un error inesperado');
-        }
+        const response = await fetch('http://localhost:3000/premios'); 
         const data = await response.json();
         setPremios(data); 
         setLoading(false);
-      } catch (error) {        
+      } catch (error) {
+        console.error('Error al obtener los premios:', error);
         setLoading(false);
-        console.error('Error en la solicitud:', error);
-        navigate('/error', { state: { errorMessage: error.message } });
       }
     };
+
     fetchPremios();
-  }, [reload]); 
+  }, [reload]);
+  
+  const handleUpdatePremio = async () => {
+    if (!selectedPremio) return;
 
-  const removePremio = async ()=>{
-    if (!selectedPremio.id) return;
     try {
-      await fetch(`${baseUrl}/premios/${selectedPremio.id}`,{
-        method: 'DELETE'
-      })
-      // Eliminar el premio localmente
-      setPremios((prev) => prev.filter((p) => p.id !== selectedPremio.id));
-      setSelectedPremio({
-        descripcion: '',
-        imagen: '',
-        creditos: 0,
-        stock: 0,
+      await fetch(`http://localhost/premios/${selectedPremio.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(selectedPremio),
       });
-      setDescription('');
-    setCredits('');
-    setStock('')
-    setSelectedImage(null);
-    setSelectedPremio();
-    setReload(!reload)
-    } catch (error) {
-      console.log(error)      
-    }
-    
 
-  }
+      setPremios((prev) =>
+        prev.map((p) =>
+          p.id === selectedPremio.id ? { ...p, ...selectedPremio } : p
+        )
+      );
+      alert('Premio actualizado correctamente');
+    } catch (error) {
+      console.error('Error al actualizar el premio:', error);
+      alert('Error al actualizar el premio');
+    }
+  };
 
   return (
     <div>
@@ -161,7 +138,7 @@ export const AbmPremio = ()=> {
               <Form.Control
                 type="text"
                 //placeholder="Descripción"
-                value={description}
+                value={selectedPremio ? selectedPremio.descripcion : description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 style={{width:'200px'}}
@@ -173,7 +150,7 @@ export const AbmPremio = ()=> {
               <Form.Control
                 type="number"
                 //placeholder="Créditos"
-                value={credits}
+                value={selectedPremio ? selectedPremio.creditos : credits}
                 onChange={(e) => setCredits(e.target.value)}
                 required
                 style={{width:'80px'}}
@@ -185,7 +162,7 @@ export const AbmPremio = ()=> {
               <Form.Control
                 type="number"
                 //placeholder="Stock"
-                value={stock}
+                value={selectedPremio ? selectedPremio.stock : stock}
                 onChange={(e) => setStock(e.target.value)}
                 required
                 style={{width:'80px'}}
@@ -204,7 +181,7 @@ export const AbmPremio = ()=> {
 
             {selectedImage ? (
               <div className="mt-2">
-                <img src={selectedImage} alt={poke} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                <img src={selectedImage} alt="Imagen seleccionada" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
                 <Button 
                 variant="danger" 
                 onClick={removeImage} 
@@ -259,7 +236,7 @@ export const AbmPremio = ()=> {
     </Form>
         </div>
         <div>
-        <ListaPremios reload={reload} premios={premios} onSelectPremio={handleSelectPremio} onRemovePremio={removePremio}/>
+        <ListaPremios reload={reload} premios={premios} onSelectPremio={handleSelectPremio}/>
         </div>
       </div>      
       
