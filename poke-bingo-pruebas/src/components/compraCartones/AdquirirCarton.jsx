@@ -167,18 +167,19 @@ export const AdquirirCarton = () => {
               Precio total: ${quantity * 1000} (por cada cartón de $1000)
             </h4>
           </div>
-
-          <Button className="button_reg" onClick={handleBuy}>
+          <div className="botones_div">
+          <Button className="button_reg button_only" onClick={handleBuy}>
             Comprar
           </Button>
 
           {preferenceId && <Wallet initialization={{ preferenceId }} />}
-          <Button className="button_reg" onClick={cambiarPartida}>
+          <Button className="button_reg button_only" onClick={cambiarPartida}>
             Cambiar Partida
           </Button>
-          <Button className="button_reg" onClick={handleRenderSala}>
+          <Button className="button_reg button_only" onClick={handleRenderSala}>
             Ir a la Sala de Juego
           </Button>
+         </div>
         </div>
       )}
     </div>
