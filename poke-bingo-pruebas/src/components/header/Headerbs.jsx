@@ -123,7 +123,7 @@ const handleLogout = async() => {
             </Nav.Item>
             <Nav.Item>
             {usuario ? (
-        <div style={{color:'#FFFAB3'}} onClick={handleLogout}>Bienvenido, {usuario}! <span><div><NavLink className="tamanioHeader separarInicio"  as={NavLink} to={'/'}>Cerrar Sesión</NavLink>{' '}</div></span></div>
+        <div style={{color:'#FFFAB3'}} onClick={handleLogout}>Bienvenido, {usuario}! <span><div><NavLink className="tamanioHeader cerrarSesion"  as={NavLink} to={'/'}>Cerrar Sesión</NavLink>{' '}</div></span></div>
         
         
       ) : (
