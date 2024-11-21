@@ -7,7 +7,7 @@ import { Login } from '../pages/loginPage/Login'
 import { SalaDeJuegos } from '../pages/salaDeJuegosPage/SalaDeJuegos'
 import { MiCuenta } from '../pages/MiCuentaPage/MiCuenta'
 import { AbmPage } from '../pages/abmPage/AbmPage'
-import ErrorPage from '../components/varios/ErrorPage'
+import {ErrorPage} from '../components/varios/error/ErrorPage'
 import { SaladeJuegoUser } from '../pages/salaDeJuegoUser/SaladeJuegoUser'
 
 export const RoutesList = () => {

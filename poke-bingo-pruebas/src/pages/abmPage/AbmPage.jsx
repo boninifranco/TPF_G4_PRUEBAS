@@ -11,6 +11,7 @@ import { AbmCartones } from '../../components/abmCartones/AbmCartones';
 import { AbmPokemones } from '../../components/abmPokemones/AbmPokemones';
 import Loader from '../../components/varios/Loader/Loader';
 import { AbmPremio } from '../../components/abmPremios/AbmPremio';
+import { AbmPremios1 } from '../../components/abmPremios/abmPremios1';
 
 export const AbmPage = ()=> {
   const [key, setKey] = useState('usuarios');

@@ -1,10 +1,12 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import pokeJson from '../../assets/pokemon.json'
 import { ImagenLogin } from '../../components/varios/ImagenLogin';
 import '../loginPage/login.css'
+import ojoAbierto from '../../assets/eye.png'
+import ojoCerrado from '../../assets/noeye.png'
+import CustomAlert from '../../components/varios/CustomAlert/CustomAlert';
 
 
 
@@ -12,9 +14,13 @@ export const Login = () => {
 
   const [data, setData] = useState({});
   const [error, setError] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const handleShowAlert = () => setShowAlert(true);
+  const handleCloseAlert = () => setShowAlert(false);
 
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
+  const [ver, setVer] = useState(true)
 
   const navigate = useNavigate();
 
@@ -53,8 +59,8 @@ export const Login = () => {
         setData(resp)
         console.log(`Esto es resp ${resp}`);
 
-        //localStorage.setItem('user', JSON.stringify(dataLocalStorage));
-        localStorage.setItem('user',resp.email) //user
+        
+        localStorage.setItem('user',resp.email) 
         localStorage.setItem('idUser', resp.id)
         localStorage.setItem('token', resp.access_token)
         localStorage.setItem('admin', resp.admin)
@@ -67,34 +73,25 @@ export const Login = () => {
        
         
       } else {
-        //const errorData = await response.json();
-        //console.log("Error en el login del usuario:", errorData);
-        setError('El usuario o la contraseña son inválidas')
+        
+        setError('El usuario o la contraseña son inválidas')        
         const errorData = await response.json();
           console.log(errorData.error)
-          //throw new Error(errorData.error || 'Error en la solicitud!!');
+          
           
       }
     } catch (error) {
-      //     console.error("Error en la solicitud:", error);
-      setError(error.message); // Almacenar el mensaje de error
-      console.log(error)
-        //navigate('/error', { state: { message: error.message } });
       
+      setError(error.message); // Almacenar el mensaje de error
+      handleShowAlert();      
+      console.log(error)
+        //navigate('/error', { state: { message: error.message } });      
     }
   };
-/*useEffect(async() => {
-  const userId = data.idUsuario;
-  const response = await fetch(`http://localhost:3000/registro/${userId}/userId`,{
 
+  const changeVer = ()=>{
+    setVer(!ver)
   }
-.then ((response) = response.json)
-.then (console.log(response))
-.then (localStorage.setItem('Admin',response.administrador))
-
-
-  
-)}, [data])*/
 
   
 
@@ -111,20 +108,29 @@ export const Login = () => {
         </Form.Group>
         <Form.Group style={{display:'flex', justifyContent:'end', width:'85%'}}>
           <Col sm="10" style={{marginRight:'2em'}} onChange={(e)=>handleUser(e)} onFocus={focusUser}>
-            <Form.Control type="email" placeholder="Email" />
+          <div style={{display:'flex', gap:'10px'}}>
+          <Form.Control type="email" placeholder="Email" />
+          <img style={{width:'32px', cursor:'pointer'}} src='' />
+          </div>
+            
           </Col>
         </Form.Group>
       </Form.Group>
 
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail" style={{paddingTop:'1em',display:'flex', width:'100%'}}>
-        <Form.Group style={{display:'flex', justifyContent:'start', width:'10%', marginLeft:'1em'}}>
-          <Form.Label column sm="2" style={{color:'#FFFAB3',marginRight:'5px'}} >
-            Password
-          </Form.Label>
+        <Form.Group style={{display:'flex', justifyContent:'start', width:'10%', marginLeft:'1em'}}>          
+            <Form.Label column sm="2" style={{color:'#FFFAB3',marginRight:'5px'}} >
+              Password
+            </Form.Label>
         </Form.Group>
         <Form.Group style={{display:'flex', justifyContent:'end', width:'85%'}}>
           <Col sm="10" style={{marginRight:'2em'}} onChange={(e)=>handlePass(e)}>
-            <Form.Control type="password" placeholder="Password" />
+            <div style={{display:'flex', gap:'10px'}}>
+              <Form.Control type={ver? "password" : "text"} placeholder="Password"  ></Form.Control>
+              <img onClick={changeVer}style={{width:'32px', cursor:'pointer'}}src={ver? ojoAbierto : ojoCerrado} />
+            </div>
+            
+            
           </Col>
         </Form.Group>
       </Form.Group>
@@ -133,7 +139,15 @@ export const Login = () => {
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}      
       <p style={{color:'#FFFAB3'}}>No tienes una cuenta? <span style={{fontStyle:'italic', textDecoration:'underline', fontWeight:'bold', cursor:'pointer'}}><Link style={{color:'#FFFAB3'}} to='/Registro'>Registrate aquí!!</Link></span></p>
     </Form>
-    
+    {error && (
+      <CustomAlert
+      show={showAlert}
+      variant="danger"
+      message={error}
+      showAcceptButton = {false}      
+      onClose={handleCloseAlert}
+      titulo="Ups!! Ha ocurrido un problema con su petición"/>
+    )}    
 
     </div>
     
