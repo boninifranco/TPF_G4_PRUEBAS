@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Row, Col, Spinner } from "react-bootstrap";
-import { AdquirirCarton } from "./AdquirirCarton";
 import "./seleccionarPartidas.css";
+import { useNavigate } from "react-router-dom";
 
 export const SeleccionarPartida = () => {
   const [partidas, setPartidas] = useState([]);
@@ -9,6 +9,8 @@ export const SeleccionarPartida = () => {
   const [partidaId, setPartidaId] = useState(
     localStorage.getItem("partidaId")
   );
+
+  const navigate = useNavigate();
 
   const fetchPartidasActivas = async () => {
     try {
@@ -34,7 +36,7 @@ export const SeleccionarPartida = () => {
   };
 
   if (partidaId) {
-    return <AdquirirCarton />;
+    navigate("/SalaJuegoUser");
   }
 
   return (
