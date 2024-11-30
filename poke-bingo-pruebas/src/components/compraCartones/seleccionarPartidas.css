@@ -1,3 +1,7 @@
+.container-partidas{
+  height: 90vh;
+  background-color: #FFFAB3;
+}
 .partidas-title {
   color: #b11a17;
 }

@@ -1,187 +1,114 @@
 import React, { useEffect, useState } from "react";
 import "./adquirircarton.css";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import { Button } from "react-bootstrap";
-import { RenderSalaDeJuego } from "../cartonUser/RenderSalaDeJuego";
+import { Button, Carousel } from "react-bootstrap";
+import { CartonUser } from "../cartonUser/CartonUser";
 
 export const AdquirirCarton = () => {
   const [cartones, setCartones] = useState([]);
   const [selectedCartones, setSelectedCartones] = useState([]);
   const [preferenceId, setPreferenceId] = useState(null);
-  const [quantity, setQuantity] = useState(0); // Cantidad de cartones seleccionados, inicializado en 0
-  const [showSalaDeJuego, setShowSalaDeJuego] = useState(false);
 
-  // Obtener cartones disponibles para la partida
+  // Inicializar MercadoPago
+  initMercadoPago("TEST-72ff2cc3-d32b-4a96-93df-ce88a8c80186", { locale: "es-AR" });
+
+  // Obtener cartones disponibles
   const fetchCartonByPartidaId = async () => {
     const partidaId = localStorage.getItem("partidaId");
-
     try {
-      const response = await fetch(
-        `http://localhost:3000/cartones/bypartida/${partidaId}`
-      );
-      if (!response.ok) {
-        throw new Error("Error al recuperar el cartón");
-      }
-      const data = await response.json();
-      setCartones(data);
+      const response = await fetch(`http://localhost:3000/cartones/no-comprados/${partidaId}`);
+      if (!response.ok) throw new Error("Error al recuperar los cartones");
+      setCartones(await response.json());
     } catch (error) {
-      console.error(error);
+      console.error("Error al cargar los cartones:", error);
     }
   };
 
-  // Función para asignar los cartones seleccionados al usuario
-  const asignarUsuario = async (cartonId, usuarioId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/cartones/asignar-usuario/${cartonId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ usuarioId }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Cartón asignado:", data);
-      } else {
-        console.error("Error al asignar el usuario al cartón");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  // Función para crear la preferencia de pago
+  // Crear preferencia de pago
   const createPreference = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/mercadopago/create_preference",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: "Cartón Bingo",
-            quantity: quantity,
-            unit_price: 1000, // Precio por cartón
-          }),
-        }
-      );
+    const usuarioId = localStorage.getItem("idUser");
+    if (selectedCartones.length === 0) {
+      alert("Debes seleccionar al menos un cartón.");
+      return null;
+    }
 
-      if (response.ok) {
-        const data = await response.json();
-        const { id } = data;
-        return id;
-      } else {
-        console.error("Error al registrar carton Id:", await response.json());
-        return null;
-      }
+    try {
+      const response = await fetch("http://localhost:3000/mercadopago/create_preference", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: "Cartón Bingo",
+          quantity: selectedCartones.length,
+          unit_price: 1000,
+          usuarioId,
+          cartones: selectedCartones,
+        }),
+      });
+
+      const { id } = await response.json();
+      return id;
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+      console.error("Error al crear preferencia:", error);
       return null;
     }
   };
 
   // Manejar la compra
   const handleBuy = async () => {
-    setQuantity(selectedCartones.length); // Actualiza la cantidad antes de la compra
     const id = await createPreference();
-    if (id) {
-      setPreferenceId(id);
-      const usuarioId = localStorage.getItem("idUser"); // Obtener el usuario desde localStorage
-      if (usuarioId) {
-        // Asignar los cartones seleccionados al usuario
-        for (const cartonId of selectedCartones) {
-          await asignarUsuario(cartonId, usuarioId);
-        }
-      }
-    }
+    if (id) setPreferenceId(id);
   };
 
-  // Configuración de MercadoPago
-  initMercadoPago("TEST-72ff2cc3-d32b-4a96-93df-ce88a8c80186", {
-    locale: "es-AR",
-  });
-
-  // Cambiar partida (eliminar y recargar)
-  const cambiarPartida = () => {
-    localStorage.removeItem("partidaId");
-    setTimeout(() => {
-      window.location.reload();
-    }, 750);
-  };
-
-  // useEffect para obtener cartones y configurar intervalo
+  // Cargar cartones al iniciar
   useEffect(() => {
-    fetchCartonByPartidaId(); // Cargar cartones inicialmente
-
-    const intervalId = setInterval(() => {
-      fetchCartonByPartidaId(); // Refrescar cartones cada 5 segundos
-    }, 5000); // Intervalo de 5 segundos
-
-    return () => clearInterval(intervalId); // Limpiar intervalo cuando el componente se desmonte
+    fetchCartonByPartidaId();
   }, []);
 
-  // Función para seleccionar o deseleccionar un cartón
+  // Manejar selección de cartones
   const handleSelectCarton = (cartonId) => {
-    setSelectedCartones((prevSelectedCartones) => {
-      const updatedCartones = prevSelectedCartones.includes(cartonId)
-        ? prevSelectedCartones.filter((id) => id !== cartonId)
-        : [...prevSelectedCartones, cartonId];
-      setQuantity(updatedCartones.length); // Actualiza `quantity` al seleccionar o deseleccionar
-      return updatedCartones;
-    });
-  };
-
-  // Función para mostrar RenderSalaDeJuego
-  const handleRenderSala = () => {
-    setShowSalaDeJuego(true);
+    setSelectedCartones((prev) =>
+      prev.includes(cartonId)
+        ? prev.filter((id) => id !== cartonId)
+        : [...prev, cartonId]
+    );
   };
 
   return (
-    <div>
-      {showSalaDeJuego ? (
-        <RenderSalaDeJuego /> // Mostrar RenderSalaDeJuego si showSalaDeJuego es true
-      ) : (
-        <div className="box_adquirircarton">
-          <div>Adquirir Carton</div>
-          <div>
-            <h4>Selecciona los cartones que deseas comprar:</h4>
+    <div className="box_adquirircarton">
+      <h3>Comprar tus Cartones</h3>
+      <div>
+        <h4>Selecciona los cartones que deseas comprar:</h4>
+        {cartones.length > 0 ? (
+          <Carousel interval={null}>
             {cartones.map((carton) => (
-              <div key={carton.cartonId}>
-                <input
-                  type="checkbox"
-                  onChange={() => handleSelectCarton(carton.cartonId)}
-                  checked={selectedCartones.includes(carton.cartonId)}
-                />
-                Cartón ID: {carton.cartonId}
-              </div>
+              <Carousel.Item key={carton.cartonId}>
+                <div className="carton-container">
+                  <CartonUser carton={carton} />
+                  <div className="checkbox-container">
+                    <label>Seleccionar</label>
+                    <input
+                      type="checkbox"
+                      checked={selectedCartones.includes(carton.cartonId)}
+                      onChange={() => handleSelectCarton(carton.cartonId)}
+                    />
+                  </div>
+                </div>
+              </Carousel.Item>
             ))}
-          </div>
-
-          <div>
-            <h4>Cantidad de cartones seleccionados: {quantity}</h4>
-            <h4>
-              Precio total: ${quantity * 1000} (por cada cartón de $1000)
-            </h4>
-          </div>
-          <div className="botones_div">
-          <Button className="button_reg button_only" onClick={handleBuy}>
-            Comprar
-          </Button>
-
-          {preferenceId && <Wallet initialization={{ preferenceId }} />}
-          <Button className="button_reg button_only" onClick={cambiarPartida}>
-            Cambiar Partida
-          </Button>
-          <Button className="button_reg button_only" onClick={handleRenderSala}>
-            Ir a la Sala de Juego
-          </Button>
-         </div>
-        </div>
-      )}
+          </Carousel>
+        ) : (
+          <p>No hay cartones disponibles.</p>
+        )}
+      </div>
+      <div>
+        <h4>Total: ${selectedCartones.length * 1000}</h4>
+      </div>
+      <div className="botones_div">
+        <Button className="button_reg" onClick={handleBuy}>
+          Comprar
+        </Button>
+        {preferenceId && <Wallet initialization={{ preferenceId }} />}
+      </div>
     </div>
   );
 };
