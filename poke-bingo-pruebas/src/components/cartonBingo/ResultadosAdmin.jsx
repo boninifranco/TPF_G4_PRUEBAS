@@ -9,27 +9,26 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   const [gano, setGano] = useState(false);
   //const [instancia, setInstancia] = useState(instanciaJuego)
   //const [filasFiltradas, setFilasFiltradas] = useState([])
-  //const [instanciaJuego, setInstanciaJuego] = useState(instancia)
-  
+  //const [instanciaJuego, setInstanciaJuego] = useState(instancia) 
  
   
   
   const seleccionarInstancia =(i)=>{
   let aciertosNecesarios = 1;
   switch (i) {
-    case 'ambo':
+    case 1:
       aciertosNecesarios = 2;
       break;
-    case 'terno':
+    case 2:
       aciertosNecesarios = 3;
       break;
-    case 'cuaterno':
+    case 3:
       aciertosNecesarios = 4;
       break;
-    case 'linea':
+    case 4:
       aciertosNecesarios = 5;
       break;
-    case 'bingo':
+    case 5:
       aciertosNecesarios = 15;
       break;
     default:
@@ -62,10 +61,10 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
     
     
     const fetchInterval = setInterval(() => {
-      seleccionarInstancia(instancia);
+      seleccionarInstancia(instancia.id);
       fetchFilasOrdenadas(); // Llama a la función para actualizar las filas
       
-    }, 500000); // Cada 500ms
+    }, 500); // Cada 500ms
 
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(fetchInterval);
@@ -76,7 +75,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
 
   useEffect(()=>{
     //const interval = setInterval(()=>{
-      seleccionarInstancia(instancia)
+      seleccionarInstancia(instancia.id)
       
     //},500)
     //return () => clearInterval(interval)
@@ -86,7 +85,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
     if(filas.length===0) return;
     const filasQueCumplen = filas.filter(fila => fila.aciertos >= aciertos);
     if (filasQueCumplen.length > 0) {
-      console.log(`¡Tenemos ${instancia} con ${aciertos} aciertos!`);
+      console.log(`¡Tenemos ${instancia.descripcion} con ${aciertos} aciertos!`);
       setGano(true)
       
     }else{
@@ -121,7 +120,7 @@ export const FilasOrdenadas = () => {
   return (
     <div >
       
-      <h5 style={{textAlign:'center',color:'#B11A17'}}>{!gano ? `Aciertos por fila` : `¡Tenemos ${instancia} !` }</h5>
+      <h5 style={{textAlign:'center',color:'#B11A17'}}>{!gano ? `Aciertos por fila` : `¡Tenemos ${instancia.descripcion} !` }</h5>
            
       <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '25vh', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '8px' }}>
       {filas.length == undefined ? (

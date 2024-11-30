@@ -1,11 +1,14 @@
 import { Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import "./misDatos.css";
+import { useNavigate } from "react-router-dom";
+import { MiDesempenio } from "./MiDesempenio";
 
 export const MisDatos = ({ onModify }) => {
   const [user, setUser] = useState({});
   const [mail, setMail] = useState("");
   const [datosRegistro, setDatosRegistro] = useState({})
+  const navigate = useNavigate();
 
   useEffect(() => {
     const idUser = localStorage.getItem("idUser");
@@ -40,6 +43,11 @@ export const MisDatos = ({ onModify }) => {
     };
     fetchRegister();
   }, []);
+
+  const miDesempenio = ()=>{
+    //e.preventDefault();
+    navigate('/centroCanje')
+  }
 
   return (
    <div className="data_style">
@@ -82,13 +90,23 @@ export const MisDatos = ({ onModify }) => {
       </div>
     </div>
     
-    <div>
+    <div style={{display:'flex',justifyContent:'center', gap:'50px', width:'100wh'}}>
       <Button
         className="button_reg"
         onMouseUp={(e) => e.currentTarget.blur()}
         onClick={onModify}
+        style={{width:'160px'}}
       >
         Modificar
+      </Button>
+
+      <Button
+        className="button_reg"
+        onMouseUp={(e) => e.currentTarget.blur()}
+        onClick={()=> miDesempenio()}
+        style={{width:'160px'}}
+      >
+        Centro de Canjes
       </Button>
     </div>
   </div>

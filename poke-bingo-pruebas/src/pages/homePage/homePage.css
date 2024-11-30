@@ -1,5 +1,5 @@
-@media (max-width: 401px) {
-    .contieneBody {
+@media (max-width: 412px) {
+    .contiene-Body {
         display: flex;
         flex-direction: column;
         background-color: #FFFAB3;
@@ -7,42 +7,55 @@
         //height: 100px;
         //box-shadow: 2px 5px 5px 0px #7A170C;
 }
-
-}
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* La altura del body es 100% del viewport */
+    .contieneCarrousel {
+        
     background-color: #FFFAB3;
-}
-h3, h4, h5{
-    color: #7A170C;    
-}
-p {
-    margin-left: 5px;
-}
-.contieneBody {
-        display: grid;
-        grid-template-columns:50% 50%;
-        grid-template-rows: 100%;
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
-        background-color: #FFFAB3;
-        //margin-bottom: 1%;
-        //height: 100px;
-        //box-shadow: 2px 5px 5px 0px #7A170C;
-}
-.contieneCarrousel {
-    
-    background-color: #FFFAB3;
-    min-height: 100vh;
+    //min-height: 100vh;
     //align-content:top;
     padding-top: 100px;
 
 }
-.contieneDescripcion {
-    background-color: #FFFAB3;
-    min-height: 100vh;
-    padding-top: 100px;
-    padding-bottom: 100px;
+
+}
+
+@media (min-width: 413px){
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* La altura del body es 100% del viewport */
+        background-color: #FFFAB3;
+    }
+    h3, h4, h5{
+        color: #7A170C;    
+    }
+    p {
+        margin-left: 5px;
+    }
+    .contiene-Body {
+            display: grid;
+            grid-template-columns:50% 50%;
+            grid-template-rows: 100%;
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            background-color: #FFFAB3;
+            //margin-bottom: 1%;
+            //height: 100px;
+            //box-shadow: 2px 5px 5px 0px #7A170C;
+    }
+    .contieneCarrousel {
+        
+        background-color: #FFFAB3;
+        min-height: 100vh;
+        //align-content:top;
+        padding-top: 100px;
+    
+    }
+    .contieneDescripcion {
+        background-color: #FFFAB3;
+        min-height: 100vh;
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
 }

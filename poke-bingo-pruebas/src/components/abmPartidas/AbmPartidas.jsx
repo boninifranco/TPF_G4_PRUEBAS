@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Table } from 'react-bootstrap'
 import { format,parse} from 'date-fns';
 import '../abmPartidas/abmPartidas.css'
+import {baseUrl} from '../../core/constant/constantes.ts';
+import CustomAlert from '../varios/CustomAlert/CustomAlert.jsx';
 
 
 
@@ -23,6 +25,14 @@ export const AbmPartidas = () => {
     const [imagenes, setImagenes] = useState([]);
     const [seleccionadas, setSeleccionadas] = useState([]);
     const [partidasImagenes, setPartidasImagenes] = useState({});
+    const [showAlert, setShowAlert] = useState(false);
+    const navigate = useNavigate();
+
+    const handleShowAlert = () => setShowAlert(true);
+    const handleCloseAlert = () => setShowAlert(false);
+    const handleAccept = () => {
+      handleDelete()
+    };     
     
 
 
@@ -31,16 +41,11 @@ export const AbmPartidas = () => {
     setFecha(date);
   };
 
-  //const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  
 
-  const handleRowClick = (fecha) => {
-    // Convertir la fecha desde el formato ISO al tipo Date
-    //const parsedDate = parse(fecha, "dd/MM/yyyy HH:mm", new Date());;
-    //setSelectedDate(parsedDate);
-    //console.log(fecha)
-    //console.log(parsedDate)
+  const handleRowClick = (fecha) => {   
     setFecha(fecha)
-    //console.log(fecha)
+    
   };
   
   const handleSort = () => {
@@ -80,9 +85,9 @@ export const AbmPartidas = () => {
     }
 
     const existeSala = async()=>{
-      const response = await fetch('http://localhost:3000/sala/1')
+      const response = await fetch(`${baseUrl}/sala/1`)
       if(!response.ok){
-        await fetch ('http://localhost:3000/sala',{
+        await fetch (`${baseUrl}/sala`,{
           method:'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -98,7 +103,7 @@ export const AbmPartidas = () => {
       e.preventDefault();
               
         //console.log("Datos enviados:", form);
-        await fetch(`http://localhost:3000/partidas/`,{
+        await fetch(`${baseUrl}/partidas/`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,30 +116,47 @@ export const AbmPartidas = () => {
                 
               }), // Enviar los nuevos datos
         })
-        .then((response) => response.json())
-        //.then((response)=> console.log(`response en handleAdd: ${response}`))
-        
-      .then((updatedRecor) => {        
-        setRenderizar(!renderizar)
+        .then((response) => {
+          if(!response.ok){
+            console.error('No se pudo agregar la partida:', response.statusText);              
+            const errorMessage = {              
+              errorMessage: `Error: ${response.status} - ${response.statusText}`,
+            };                        
+            throw new Error(errorMessage.errorMessage || 'Ocurrió un error inesperado');
+          }
+          return response.json()})
+        .then((updatedRecor) => {        
+          setRenderizar(!renderizar)
         
       })
-      .then(
+        .then(
         setSeleccionado(null), // Deselecciona el registro una vez actualizado
         setForm({}),
         setFinalizada(null),
         setFecha(null),
       )
-      .catch((error) => console.error('Error agregando data:', error));
+      .catch((error) => {
+        console.error('Error en la solicitud:', error.message);
+        navigate('/error', { state: { errorMessage: error.message } });
+      });
 
     }
 
-    const handleDelete = async (e)=>{
-      e.preventDefault();
-        //console.log("Datos enviados:", form);
-        await fetch(`http://localhost:3000/partidas/${seleccionado.partidaId}`,{
+    const handleDelete = async ()=>{
+      //e.preventDefault();        
+        await fetch(`${baseUrl}/partidas/${seleccionado.partidaId}`,{
             method: 'DELETE',            
         })
-        
+        .then((response)=>{
+          if(!response.ok){
+            console.error('No se pudo eliminar la partida:', response.statusText);              
+            const errorMessage = {              
+              errorMessage: `Error: ${response.status} - ${response.statusText}`,
+            };                        
+            throw new Error(errorMessage.errorMessage || 'Ocurrió un error inesperado');
+          }
+
+        })
         .then(()=>{
           setRenderizar(!renderizar)
         }       
@@ -144,16 +166,20 @@ export const AbmPartidas = () => {
           setForm({}),
           setFinalizada(null),
           setFecha(null),
+          setShowAlert(false)
       )
-        .catch((error) => console.error('Error updating data:', error));
+        .catch((error) => {
+          console.error('Error en la solicitud:', error.message);
+          navigate('/error', { state: { errorMessage: error.message } });
+        });
 
     }
 
     const handleUpdate = async (e)=>{
 
       e.preventDefault();
-        //console.log("Datos enviados:", form);
-        await fetch(`http://localhost:3000/partidas/${seleccionado.partidaId}`,{
+        
+        await fetch(`${baseUrl}/partidas/${seleccionado.partidaId}`,{
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -165,17 +191,16 @@ export const AbmPartidas = () => {
                 
               }), // Enviar los nuevos datos
         })
-        .then((response) => response.json())
-      .then((updatedRecor) => {
-        // Actualiza el estado con el registro actualizado
-        /*setPartidas((prevData) =>
-          prevData.map((item) =>
-            item.partidaId === updatedRecor.partidaId ?
-          {...updatedRecor} : item
-          )
-          
-        );
-        console.log(`estas son las partidas actualizadas: ${JSON.stringify(partidas)}`)*/
+        .then((response) => {
+          if(!response.ok){
+            console.error('No se pudo eliminar la partida:', response.statusText);              
+            const errorMessage = {              
+              errorMessage: `Error: ${response.status} - ${response.statusText}`,
+            };                        
+            throw new Error(errorMessage.errorMessage || 'Ocurrió un error inesperado');
+          }
+          return response.json()})
+        .then((updatedRecor) => {        
         setRenderizar(!renderizar)
         
       })
@@ -185,21 +210,26 @@ export const AbmPartidas = () => {
         setFinalizada(null),
         setFecha(null),
       )
-      .catch((error) => console.error('Error updating data:', error));
+      .catch((error) => {
+          console.error('Error en la solicitud:', error.message);
+          navigate('/error', { state: { errorMessage: error.message } });
+      });
 
     }
 
     const obtenerImagenes = async () => {
       try {
-        const response = await fetch('http://localhost:3000/imagenes'); 
+        const response = await fetch(`${baseUrl}/imagenes`); 
         if (!response.ok) {
-          //console.log(response)
-          throw new Error('Error al obtener las imágenes');
+          console.error('No se pudieron obtener las imagenes:', response.statusText);              
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Ocurrió un error inesperado');
         }
         const data = await response.json();
         setImagenes(data); 
       } catch (error) {
-        console.error('Error:', error);
+          console.error('Error en la solicitud:', error);
+          navigate('/error', { state: { errorMessage: error.message } });
       }
     };
 
@@ -217,16 +247,21 @@ export const AbmPartidas = () => {
       
       try {
         for (const seleccionada of seleccionadas){
-          await fetch('http://localhost:3000/img-seleccionadas',{
+          const response = await fetch(`${baseUrl}/img-seleccionadas`,{
             method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
                       partidaId:partida,
-                      imagenId: seleccionada.imagenId,//imagenId
+                      imagenId: seleccionada.imagenId,
                   }),
                 });
+                if (!response.ok) {
+                    console.error('No se pudieron enviar las imagenes seleccionadas:', response.statusText);              
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Ocurrió un error inesperado');
+                }
                 console.log('Imagenes seleccionadas enviadas')  
         }
         setPartidasImagenes((prevPartidasImagenes) =>
@@ -237,7 +272,8 @@ export const AbmPartidas = () => {
         setForm({})
         setFecha(null)
       } catch (error) {
-                console.log('No se pudieron enviar las imagenes seleccionadas')
+        console.error('Error en la solicitud:', error);
+        navigate('/error', { state: { errorMessage: error.message } });
         
       }
     }
@@ -272,23 +308,27 @@ export const AbmPartidas = () => {
     useEffect(()=>{
         const fetchPartidas = async ()=>{
             try {
-                const response =  await fetch(`http://localhost:3000/partidas`)
-                if(!response.ok) throw new Error (`no se obtuvieron partidas de la base de datos`);
+                const response =  await fetch(`${baseUrl}/partidas`)
+                if(!response.ok) {
+                    console.error('No se pudieron obtener las partidas:', response.statusText);              
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Ocurrió un error inesperado');
+                };
                 const data = await response.json();
                 if(Array.isArray(data)){
                   const dataConvertida = data.map((item) => ({
                     ...item,
                     horaInicio: parse(item.horaInicio, "dd/MM/yyyy HH:mm", new Date()), // Conversión a Date
-                  }));
-              
-                  //setData(datosConvertidos);
+                  }));             
+                 
                   setPartidas(dataConvertida)
                 }else{
                   console.log('data no es un array')
                 }
                 
             } catch (error) {
-                console.log(error)
+              console.error('Error en la solicitud:', error);
+              navigate('/error', { state: { errorMessage: error.message } });
             }
         }        
         fetchPartidas();
@@ -303,24 +343,30 @@ export const AbmPartidas = () => {
         partidasFiltradas = partidas.filter((partida) => partida.estadoPartida === true);
       }
       setPartidasFiltradas(partidasFiltradas);
-    }, [estadoFiltro, partidas]);
-    //console.log(partidas)
+    }, [estadoFiltro, partidas]);    
 
     useEffect(()=>{
 
       const fetchImgPartida = async ()=>{
           try {
-              const response = await fetch(`http://localhost:3000/img-seleccionadas/partida/${seleccionado.partidaId}`);
-              if(!response.ok) throw new Error ('Error al recuperar las imagenes')
+            if(seleccionado){
+              const response = await fetch(`${baseUrl}/img-seleccionadas/partida/${seleccionado.partidaId}`);
+              if(!response.ok) {
+                    console.error('No se pudieron obtener las imagenes de la partida:', response.statusText);              
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Ocurrió un error inesperado');
+              };
               const data = await response.json();
             if(data.length>0){
               setTieneImagenes(true)
             }else{
               setTieneImagenes(false)
             }
+          }
               
           } catch (error) {
-              
+            console.error('Error en la solicitud:', error);
+            navigate('/error', { state: { errorMessage: error.message } });
           }            
       }
       fetchImgPartida();
@@ -330,15 +376,17 @@ export const AbmPartidas = () => {
 
     const fetchPartidasConImagenes = async ()=>{
         try {
-            const response = await fetch(`http://localhost:3000/partidas/conImagenes/`);
-            if(!response.ok) throw new Error ('Error al recuperar las partidas con imagenes')
+            const response = await fetch(`${baseUrl}/partidas/conImagenes/`);
+            if(!response.ok) {
+              console.error('No se pudieron obtener las partidas con imagenes:', response.statusText);              
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Ocurrió un error inesperado');
+        };
             const data = await response.json();
-          setPartidasImagenes(data);
-         
-          
-            
+          setPartidasImagenes(data);            
         } catch (error) {
-            
+          console.error('Error en la solicitud:', error);
+          navigate('/error', { state: { errorMessage: error.message } });
         }            
     }
     fetchPartidasConImagenes();
@@ -348,9 +396,9 @@ const conImagenes = (partidaId) => {
   const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
   return partida ? partida.hasImages : false;
 };
-  console.log(`tiene imagenes?:${tieneImagenes}`)
+  /*console.log(`tiene imagenes?:${tieneImagenes}`)
   console.log(`seleccionadas:${seleccionadas.length}`)
-  console.log(`Partidas con imagenes: ${JSON.stringify(partidasImagenes)}`)
+  console.log(`Partidas con imagenes: ${JSON.stringify(partidasImagenes)}`)*/
 
   return (
     <div style={{display:'flex', justifyContent:'center'}}>
@@ -458,10 +506,19 @@ const conImagenes = (partidaId) => {
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                 <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleAdd} type='submit'>Agregar</Button>{' '}
                 <Button variant="success" style={{backgroundColor:'#E5AA11', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleUpdate} type='submit'>Modificar</Button>{' '}
-                <Button variant="success" style={{backgroundColor:'#B11A17', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleDelete} type='submit'>Eliminar</Button>{' '}
+                <Button variant="success" style={{backgroundColor:'#B11A17', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleShowAlert} >Eliminar</Button>{' '}
                 </div>
             </Form>
         </div>
+        <CustomAlert
+            show={showAlert}
+            variant="danger"
+            message='Esta seguro que desea eliminar?'
+            showAcceptButton = {true}      
+            onClose={handleCloseAlert}
+            onAccept={handleAccept}
+            titulo="Eliminar Partida"
+        />
     
 
     </div>
