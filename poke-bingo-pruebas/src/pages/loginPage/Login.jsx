@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { ImagenLogin } from '../../components/varios/ImagenLogin';
-import '../loginPage/login.css'
-import ojoAbierto from '../../assets/eye.png'
-import ojoCerrado from '../../assets/noeye.png'
+import '../loginPage/login.css';
+import ojoAbierto from '../../assets/eye.png';
+import ojoCerrado from '../../assets/noeye.png';
+import {baseUrl} from '../../core/constant/constantes.ts';
 import CustomAlert from '../../components/varios/CustomAlert/CustomAlert';
 
 
@@ -43,7 +44,7 @@ export const Login = () => {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:3000/logueo/login', {
+      const response = await fetch(`${baseUrl}/logueo/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

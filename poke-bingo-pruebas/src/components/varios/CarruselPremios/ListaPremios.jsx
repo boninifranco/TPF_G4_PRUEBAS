@@ -43,7 +43,7 @@ export const ListaPremios = ({reload, premios, onSelectPremio, onRemovePremio })
                       alt={`Imagen de ${premio.descripcion}`}
                       className="premio-card-img"
                     />
-                    <Button 
+                    {/*<Button 
                 variant="danger" 
                 onClick={onRemovePremio} 
                 style={{ 
@@ -55,7 +55,7 @@ export const ListaPremios = ({reload, premios, onSelectPremio, onRemovePremio })
                   fontSize: '0.8rem'}}
               >
                 ×
-              </Button>
+              </Button>*/}
                     <Card.Body className="premio-card-body">
                       <Card.Title>{premio.descripcion}</Card.Title>
                       <Card.Text>

@@ -33,7 +33,7 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
   return (
     <div style={{backgroundColor: "#B11A17"}}>
         
-        <div className='contieneBody'>
+        <div className='contiene-Body'>
           <section className='contieneCarrousel'>
             <Carrousel/>
           </section>

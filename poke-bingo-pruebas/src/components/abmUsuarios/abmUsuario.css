@@ -1,0 +1,14 @@
+@media screen and (max-width: 412px){
+    .contiene-abmUsuario{
+        display:flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 413px){
+    .contiene-abmUsuario{
+        display:flex;
+        padding: 10px;
+        background-color: #FFFAB3
+    }
+}

@@ -20,6 +20,7 @@ const handleGuardado= () => {
         {editando ? (
           <MisDatosPatch onGuardado={handleGuardado} />
         ) : (
+                    
           <MisDatos onModify={handleModificar}/>
         )}
         </div>

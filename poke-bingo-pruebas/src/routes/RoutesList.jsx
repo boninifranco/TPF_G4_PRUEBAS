@@ -9,6 +9,11 @@ import { MiCuenta } from '../pages/MiCuentaPage/MiCuenta'
 import { AbmPage } from '../pages/abmPage/AbmPage'
 import {ErrorPage} from '../components/varios/error/ErrorPage'
 import { SaladeJuegoUser } from '../pages/salaDeJuegoUser/SaladeJuegoUser'
+import { MiDesempenio } from '../components/miCuenta/MiDesempenio'
+import { CentroCanje } from '../components/miCuenta/CentroCanje'
+
+
+
 
 export const RoutesList = () => {
   return (
@@ -23,6 +28,8 @@ export const RoutesList = () => {
             <Route path='/ABMPage' element={<AbmPage/>}>Administración del Sitio</Route>
             <Route path='/error' element={<ErrorPage/>}>Error</Route>
             <Route path='/SalaJuegoUser' element={<SaladeJuegoUser/>}>Sala de Juegos User</Route>
+            <Route path='/MiDesempenio' element={<MiDesempenio/>}>Mi Desempenio</Route>
+            <Route path='/CentroCanje' element={<CentroCanje/>}>Centro de Canje</Route>
         </Routes>        
     </>
   )

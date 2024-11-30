@@ -5,6 +5,7 @@ import { UploadImage } from '../varios/UploadImage/UploadImage';
 import { ListaPremios } from '../varios/CarruselPremios/ListaPremios';
 import poke from '../../assets/altPoke.png'
 import {baseUrl} from '../../core/constant/constantes.ts';
+import CustomAlert from '../varios/CustomAlert/CustomAlert.jsx';
 
 export const AbmPremio = ()=> {
   const [description, setDescription] = useState('');
@@ -17,6 +18,7 @@ export const AbmPremio = ()=> {
   const [premios, setPremios] = useState([]);
   const [selectedPremio, setSelectedPremio] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   
    // Manejar el premio seleccionado desde AbmPremios
@@ -27,7 +29,13 @@ export const AbmPremio = ()=> {
     setCredits(premio.creditos)
     setStock(premio.stock)
     setSelectedImage(premio.imagen)
-  };  
+  };
+  
+  const handleShowAlert = () => setShowAlert(true);
+    const handleCloseAlert = () => setShowAlert(false);
+    const handleAccept = () => {
+      removePremio()
+    };  
 
  
   const fetchImages = async () => {
@@ -73,7 +81,7 @@ export const AbmPremio = ()=> {
        }),
      });
      console.log(saveResponse)
-    if(saveResponse.status!==302) {
+    if(!saveResponse.ok) {
       const errorData = await saveResponse.json();
       throw new Error(errorData.message || 'Ocurrió un error inesperado');
      }
@@ -104,7 +112,7 @@ export const AbmPremio = ()=> {
     const fetchPremios = async () => {
       try {
         const response = await fetch(`${baseUrl}/premios`);
-        if(response.status!==302){
+        if(!response.ok){
           const errorData = await response.json();
           throw new Error(errorData.message || 'Ocurrió un error inesperado');
         }
@@ -140,6 +148,7 @@ export const AbmPremio = ()=> {
     setSelectedImage(null);
     setSelectedPremio();
     setReload(!reload)
+    setShowAlert(false)
     } catch (error) {
       console.log(error)      
     }
@@ -226,9 +235,15 @@ export const AbmPremio = ()=> {
                 
               </div>)
             }
+            <div style={{display:'flex', flexDirection:'column', gap:'10px'}}>
               <Button variant="success" type="submit" >
                 {selectedPremio ? 'Editar': 'Agregar'}
               </Button>
+              <Button variant="danger" onClick={handleShowAlert} >
+                Eliminar
+              </Button>
+            </div>
+              
         </div>        
       </Form.Group>
 
@@ -261,7 +276,16 @@ export const AbmPremio = ()=> {
         <div>
         <ListaPremios reload={reload} premios={premios} onSelectPremio={handleSelectPremio} onRemovePremio={removePremio}/>
         </div>
-      </div>      
+      </div>
+      <CustomAlert
+            show={showAlert}
+            variant="danger"
+            message='Esta seguro que desea eliminar?'
+            showAcceptButton = {true}      
+            onClose={handleCloseAlert}
+            onAccept={handleAccept}
+            titulo="Eliminar Premio"
+        />
       
     </div>
     
