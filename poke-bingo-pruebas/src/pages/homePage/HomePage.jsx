@@ -62,10 +62,11 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
           </p>
         <h5>Instancias del Juego:</h5>
         <ul>
-          <li>Terno: Marca tres Pokémon en tu cartón.</li>
-          <li>Cuaterno: Completa cuatro Pokémon en una línea.</li>
-          <li>Línea: Llena una línea completa en cualquier dirección.</li>
-          <li>Bingo: ¡Marca todos los Pokémon y gana el gran premio!</li>
+          <li style={{color:'#353333'}}>Ambo: Con dos Pokémon en tu cartón ya estás ganando.</li>
+          <li style={{color:'#353333'}}>Terno: Marca tres Pokémon en tu cartón.</li>
+          <li style={{color:'#353333'}}>Cuaterno: Completa cuatro Pokémon en una línea.</li>
+          <li style={{color:'#353333'}}>Línea: Llena una línea completa en cualquier dirección.</li>
+          <li style={{color:'#353333'}}>Bingo: ¡Marca todos los Pokémon y gana el gran premio!</li>
         </ul>          
         <h5>Premios y Créditos:</h5>
         <p>
