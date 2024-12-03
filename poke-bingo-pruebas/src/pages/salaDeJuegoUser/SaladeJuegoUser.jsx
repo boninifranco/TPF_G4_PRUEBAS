@@ -3,6 +3,7 @@ import { Resultados } from "../../components/resultados/Resultados";
 import "./salaUser.css";
 import { ListarCartonUser } from "../../components/cartonUser/ListarCartonUser";
 import { useNavigate } from "react-router-dom";
+import { YaSalieron } from "../../components/resultados/YaSalieron";
 
 export const SaladeJuegoUser = () => {
   const navigate = useNavigate();
@@ -12,7 +13,9 @@ export const SaladeJuegoUser = () => {
 
   const fetchCartonesUsuario = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/cartones/usuario/${idUser}/partida/${partidaId}`);
+      const response = await fetch(
+        `http://localhost:3000/cartones/usuario/${idUser}/partida/${partidaId}`
+      );
       if (!response.ok) {
         console.error("Error al recuperar los cartones:", response.status);
         return 0;
@@ -27,7 +30,6 @@ export const SaladeJuegoUser = () => {
 
   useEffect(() => {
     const checkData = async () => {
-
       if (!partidaId) {
         navigate("/SeleccionarPartida");
         return;
@@ -37,16 +39,19 @@ export const SaladeJuegoUser = () => {
       if (cartonesCount === 0) {
         navigate("/AdquirirCartones");
         return;
-      } 
+      }
     };
 
     checkData();
   }, [navigate, partidaId, idUser]);
 
   return (
-    <div>
-      <div className="adquirir_body">
+    <div className="adquirir_body">
+      <div className="listarCarton">
         <ListarCartonUser />
+      </div>
+      <div className="resultados">
+        <YaSalieron />
         <Resultados />
       </div>
     </div>

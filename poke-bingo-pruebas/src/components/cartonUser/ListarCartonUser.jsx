@@ -46,7 +46,7 @@ export const ListarCartonUser = () => {
     <div>
       <div>
         {cartones.length > 0 ? (
-          <Accordion className="cartones" defaultActiveKey={[0]} alwaysOpen>
+          <Accordion className="cartones" defaultActiveKey={[0]}>
             {cartones.map((carton, index) => (
               <Accordion.Item eventKey={index} key={carton.cartonId} >
                 <Accordion.Header>Cartón #{index + 1}</Accordion.Header>
@@ -62,7 +62,7 @@ export const ListarCartonUser = () => {
           <div>No se encontraron cartones.</div>
         )}
       </div>
-      <div>
+      <div className="reclamar">
         <Reclamar />
       </div>
     </div>
