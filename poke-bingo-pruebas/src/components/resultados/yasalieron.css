@@ -1,0 +1,59 @@
+.fichasUser{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.salio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.salieron{
+    display: flex;
+    align-items: center;
+}
+.fichasUser .casillero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centrar en el eje vertical */
+    justify-content: center; /* Centrar en el eje horizontal */
+    border: 1px solid #000;
+    background-color: #f0f0f0;
+    overflow: hidden; /* Evitar que contenido se desborde */
+  }
+  
+.fichasUser .casillero img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain; /* Asegura que la imagen se ajuste sin distorsionarse */
+  }
+  
+.fichasUser .casillero p {
+    margin: 5px 0 0 0;
+    font-weight: bold;
+    color: red; /* Color para marcar casilleros "salidos" */
+    text-align: center;
+  }
+  @media (max-width: 769px){
+    .salio .casillero{
+        width: 100px; 
+        height: 100px;
+    }
+    .salieron .casillero{
+        width: 70px; 
+        height: 70px;
+        margin-right: 2px;
+    }
+  }
+  @media (min-width: 769px){
+    .salio .casillero{
+        width: 140px; 
+        height: 140px;
+    }
+    .salieron .casillero{
+        width: 90px; 
+        height: 90px;
+        margin-right: 2px;
+    }
+  }

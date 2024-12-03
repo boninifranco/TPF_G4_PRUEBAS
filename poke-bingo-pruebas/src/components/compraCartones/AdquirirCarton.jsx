@@ -76,7 +76,7 @@ export const AdquirirCarton = () => {
   return (
     <div className="box_adquirircarton">
       <h3>Comprar tus Cartones</h3>
-      <div>
+      <div className="carousel-margin">
         <h4>Selecciona los cartones que deseas comprar:</h4>
         {cartones.length > 0 ? (
           <Carousel interval={null}>
