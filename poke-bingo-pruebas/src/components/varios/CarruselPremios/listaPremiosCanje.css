@@ -1,5 +1,5 @@
 /* Contenedor principal para el desplazamiento horizontal */
-.premios-list-container {
+.premios-list-container-canje {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;

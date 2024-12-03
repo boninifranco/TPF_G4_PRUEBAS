@@ -175,7 +175,7 @@ const confirmarCanje = async () => {
         </div>
         </div>
         
-        <div className="premios-list-container">
+        <div className="premios-list-container-canje">
         <ListGroup className="premios-list-group">
             <Card className='premio-card'>
 

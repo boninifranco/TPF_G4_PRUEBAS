@@ -15,15 +15,22 @@ export const Login = () => {
 
   const [data, setData] = useState({});
   const [error, setError] = useState('');
+  const [envioEmail, setEnvioEmail] = useState(false);
+  const [messageEmail, setMessageEmail] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const handleShowAlert = () => setShowAlert(true);
-  const handleCloseAlert = () => setShowAlert(false);
-
+  
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
-  const [ver, setVer] = useState(true)
+  const [ver, setVer] = useState(true);
+  const [datosRecuperar, setDatosRecuperar]= useState('')
 
   const navigate = useNavigate();
+
+  const handleShowAlert = () => setShowAlert(true);
+  const handleCloseAlert = () => {
+    setShowAlert(false)
+    setEnvioEmail(false)
+    setMessageEmail('')};
 
   const handleUser = (e)=>{    
     setUser(e.target.value)
@@ -39,7 +46,88 @@ export const Login = () => {
     setError('')
   }
 
+  const olvidePass = async ()=>{
+    if(!user){
+      alert('indique un email')
+    }else{
+      const response = await fetch(`${baseUrl}/logueo/buscar/`,{
+        method:'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user,          
+        }),
+      })
+      if (response.ok) {
+        const resp = await response.json()
+        console.log(resp.email)
+        setDatosRecuperar(resp)
+        enviarCorreo()
+        
+      }
+    }
+  }
+  console.log(datosRecuperar)
+  function generarContrasenia() {
+    // Generar la primera letra en mayúscula
+    const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const primeraLetra = letras[Math.floor(Math.random() * letras.length)];
+  
+    // Generar las siguientes 5 letras en minúscula
+    const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
+    const otrasLetras = Array.from({ length: 5 }, () =>
+      letrasMinusculas[Math.floor(Math.random() * letrasMinusculas.length)]
+    ).join('');
+  
+    // Generar 4 números
+    const numeros = '0123456789';
+    const numerosAleatorios = Array.from({ length: 4 }, () =>
+      numeros[Math.floor(Math.random() * numeros.length)]
+    ).join('');
+  
+    // Combinar y devolver la contraseña
+    return primeraLetra + otrasLetras + numerosAleatorios;
+  }
 
+  const recuperarContrasenia = async (contrasenia)=>{
+    const response = await fetch(`${baseUrl}/registro/recuperar-contrasenia/${datosRecuperar.id}`,{
+      method:'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          newPassword: contrasenia
+        }),
+    });
+    const data = response.json();
+
+  }
+  const enviarCorreo = async () => {
+    const contrasenia = generarContrasenia();
+    try {
+      const response = await fetch(`${baseUrl}/correo/enviar`,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          destinatario: datosRecuperar.email,
+          asunto: 'Recuperación de Contraseña - PokeBingo',
+          mensaje: `Hola ${datosRecuperar.userName}, su nueva contraseña es: ${contrasenia}.
+          Sugerimos cambiarla luego del primer ingreso `,
+        }),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        setShowAlert(true);
+        setEnvioEmail(true);
+        setMessageEmail('Hemos enviado una nueva contraseña a su email')
+        recuperarContrasenia(contrasenia)
+      } else {
+        setShowAlert(true);
+        setEnvioEmail(true);
+        setMessageEmail('No se pudo enviar el correo, intente nuevamente')
+      }
+    } catch (error) {
+      console.error('Error al enviar correo:', error);
+    }
+  };
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
@@ -139,6 +227,7 @@ export const Login = () => {
       {/*<NavLink as={NavLink} to={'./'}><Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}</NavLink>*/}
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}      
       <p style={{color:'#FFFAB3'}}>No tienes una cuenta? <span style={{fontStyle:'italic', textDecoration:'underline', fontWeight:'bold', cursor:'pointer'}}><Link style={{color:'#FFFAB3'}} to='/Registro'>Registrate aquí!!</Link></span></p>
+      <p style={{color:'#FFFAB3', cursor:'pointer'}} onClick={()=>olvidePass()}>Olvide mi contraseña (indique su email de autenticación)</p>
     </Form>
     {error && (
       <CustomAlert
@@ -148,7 +237,16 @@ export const Login = () => {
       showAcceptButton = {false}      
       onClose={handleCloseAlert}
       titulo="Ups!! Ha ocurrido un problema con su petición"/>
-    )}    
+    )}
+
+    {envioEmail && ( <CustomAlert
+    show={showAlert}
+    variant="danger"
+    message={messageEmail}
+    showAcceptButton = {false}      
+    onClose={handleCloseAlert}
+    titulo="Recuperación de contraseña"
+    />)}    
 
     </div>
     

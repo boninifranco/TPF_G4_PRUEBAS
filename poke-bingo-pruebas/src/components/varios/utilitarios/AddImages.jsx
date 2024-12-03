@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import pokeImages from '../../../assets/pokemon.json'
+
 
 const pokes = [
     {
@@ -6021,12 +6021,7 @@ export const AddImages = () => {
                 nombre: pokes[i].nombre,
                 url: pokes[i].url
               }),
-              //body: pokes,
-              /*body:{
-                  id: "2",
-                  nombre: "ivysaur",
-                  url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
-              }*/
+              
             });
             
             if (!response.ok) {

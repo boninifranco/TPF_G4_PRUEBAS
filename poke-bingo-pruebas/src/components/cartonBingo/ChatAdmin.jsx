@@ -31,6 +31,9 @@ export const ChatAdmin = () => {
   const salaId = 1;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [reclamo, setReclamo] = useState();
+  const [reclamos, setReclamos] = useState([]);
+  const [reload, setReload] = useState(false)
   //const messageCounter = useRef(0); 
   
   
@@ -49,13 +52,26 @@ export const ChatAdmin = () => {
       [newMessage, ...prevMessages]    
       );
   };
+
+  const handleReceiveReclamo = (newReclamo) => {
+    console.log('Reclamo recibido en el cliente:', newReclamo);
+    //messageCounter.current += 1;
+    //setMessages((prevMessages) => 
+      //[newMessage, ...prevMessages]    
+      //);
+      //setReclamo((newReclamo)=>[newReclamo, ...reclamo])
+      setReclamo(newReclamo)
+  };
     // Escuchar nuevos mensajes desde el servidor
     socket.on('receiveMessage', handleReceiveMessage);
+
+    socket.on('receiveReclamo', handleReceiveReclamo);
     
 
     // Desconectar el socket cuando el componente se desmonta
     return () => {
       socket.off('receiveMessage', handleReceiveMessage);
+      socket.off('receiveReclamo', handleReceiveReclamo);
       socket.disconnect();
     };
   }, []);
@@ -76,11 +92,20 @@ export const ChatAdmin = () => {
       setMessage('');
     }
   };
+  useEffect(()=>{
+    if(reclamo){
+      setReclamos([...reclamos, reclamo])
+    }
+    
+  },[reclamo])
+  
+  console.log(reclamos)
   console.log(messages)
   return (
     <div style={{ maxWidth: '60%', margin: '0 auto' }}>
       <h3 style={{textAlign:'center',color:'#B11A17'}}>Chat de la Sala</h3>
-
+      {reclamos.length>0 && reclamos.map((item,index)=><h5 key={index} style={{backgroundColor:'#B11A17', color:'#FFFAB3'}} onClick={()=>setReclamos([])}>{`${item.user}: ${item.message}`}</h5>)}
+      {/*{reclamo &&<h5 style={{backgroundColor:'#B11A17', color:'#FFFAB3'}} onClick={()=>setReclamo('')}>{`${reclamo.user}: ${reclamo.message}`}</h5>}*/}
       {/* Mostrar la lista de mensajes */}
       <Container fluid style={{ height: '65vh', display: 'flex', flexDirection: 'column' }}>
       <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '55vh', border: '1px solid #ccc', borderRadius: '8px' }}>
