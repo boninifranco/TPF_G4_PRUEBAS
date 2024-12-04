@@ -1,11 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import './yasalieron.css'
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000', {
+  //query: { user},
+  reconnection: true,        // Habilitar reconexión automática
+  reconnectionAttempts: 10,  // Número de intentos de reconexión
+  reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
+});
+// Manejo de eventos
+socket.on('connect', () => {
+  console.log('Conectado al servidor WebSocket');
+});
+
+socket.on('disconnect', () => {
+  console.log('Desconectado del servidor WebSocket');
+});
+
+socket.on('connect_error', (error) => {
+  console.error('Error en la conexión:', error);
+});
 
 export const YaSalieron = () => {
-  const [fichaSalio, setFichaSalio] = useState('');
+  const [fichaSalio, setFichaSalio] = useState({
+    salio:{
+      id:'',
+      url:''
+    }
+    
+  });
   const [salieronTodos, setSalieronTodos] = useState([]);
+  const salieronReverse = [...salieronTodos].reverse()
+  
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchSalieron = async () => {
       try {
         const response = await fetch('http://localhost:3000/casilleros/salieron');
@@ -17,7 +45,7 @@ export const YaSalieron = () => {
 
         // Actualiza la última ficha salida
         if (data.length > 0) {
-          setFichaSalio(data[0]); // Última ficha que salió
+          //setFichaSalio(data[0]); // Última ficha que salió
         }
       } catch (err) {
         console.error(err);
@@ -28,27 +56,45 @@ export const YaSalieron = () => {
     fetchSalieron();
 
     // Configura un intervalo para llamar a la función cada 5 segundos
-    const intervalId = setInterval(fetchSalieron, 500);
+    const intervalId = setInterval(fetchSalieron, 500000);
 
     // Limpia el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
-  }, []);
+  }, []);*/
+
+  const handleReceiveFicha = (newFicha) => {
+    console.log('Ficha recibida en el cliente:', newFicha);
+     
+      setFichaSalio(newFicha)
+      
+  };
+
+  useEffect(()=>{
+    setSalieronTodos([...salieronTodos, fichaSalio])
+  },[fichaSalio])
+  
+    // Escuchar nuevos mensajes desde el servidor
+    socket.on('receiveFicha', handleReceiveFicha);
+    console.log('ficha salio es:', fichaSalio)
+    console.log('salieron todos', salieronTodos)
 
   return (
     <div className='fichasUser'>
-       {fichaSalio && (
+       {fichaSalio.salio.id != '' && (
         <div className='salio'>
           <h4>Última ficha salida:</h4>
           <div className="casillero">
-            <img src={fichaSalio.imagen_url} alt={`Última ficha ${fichaSalio.casillero_imagenId}`} />
+            <img src={ fichaSalio.salio.url} alt={`Última ficha ${''}`} />
+            <p>{fichaSalio.salio.id}</p>
           </div>
         </div>
       )}
       <h4>Ya salieron:</h4>
       <div className='salieron'>
-        {salieronTodos.map((ficha) => (
-          <div key={ficha.casillero_imagenId} className="casillero">
-            <img src={ficha.imagen_url} alt={`Ficha ${ficha.casillero_imagenId}`} />
+        {salieronReverse && fichaSalio.salio.id != '' && salieronReverse.slice(0, salieronReverse.length-1).map((ficha) => (
+          <div key={ficha.salio.id} className="casillero">
+            <img src={ficha.salio.url} alt={`Ficha ${'hola'}`} />
+            <p>{ficha.salio.id}</p>
           </div>
         ))}
       </div>
