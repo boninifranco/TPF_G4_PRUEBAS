@@ -1,8 +1,30 @@
 import React, { useEffect, useState } from 'react'
+import io from 'socket.io-client';
 import '../cartonBingo/juego.css'
 import { FilasOrdenadas } from './ResultadosAdmin';
 import { CartonBingo } from './CartonBingo';
 import { Dropdown, Row } from 'react-bootstrap';
+
+// Conectar con el backend WebSocket
+const socket = io('http://localhost:3000', {
+  //query: { user},
+  reconnection: true,        // Habilitar reconexión automática
+  reconnectionAttempts: 10,  // Número de intentos de reconexión
+  reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
+});
+// Manejo de eventos
+socket.on('connect', () => {
+  console.log('Conectado al servidor WebSocket');
+});
+
+socket.on('disconnect', () => {
+  console.log('Desconectado del servidor WebSocket');
+});
+
+socket.on('connect_error', (error) => {
+  console.error('Error en la conexión:', error);
+});
+
 export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -127,6 +149,13 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
         fetchSalieron();
         nuevoFetchCartones();
       }
+
+      useEffect(()=>{
+        if(salio){
+          socket.emit('sendFicha', {salio});
+        }
+        
+      },[salio])
 
      
       /*useEffect(()=>{
