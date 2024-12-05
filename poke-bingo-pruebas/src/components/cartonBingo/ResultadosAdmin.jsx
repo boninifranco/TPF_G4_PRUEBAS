@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button, Row, Table } from 'react-bootstrap';
-import io from 'socket.io-client';
-import CustomAlert from '../varios/CustomAlert/CustomAlert';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   const [filas, setFilas] = useState([]);
@@ -44,7 +43,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   const fetchFilasOrdenadas = async () => {
     //console.log(`Aciertos necesarios: ${aciertosNecesarios}`)
     if(!aciertos)return
-    const response = await fetch(`http://localhost:3000/filas/ordenadas-desc/${aciertos}/${partida}`);
+    const response = await fetch(`${baseUrl}/filas/ordenadas-desc/${aciertos}/${partida}`);
     if(response.ok){
       const data = await response.json();
     setFilas(data); // Guardar las filas en el estado
@@ -97,7 +96,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
 
   console.log(JSON.stringify(filas))
 
-/*const socket = io('http://localhost:3000'); // Conéctate al servidor WebSocket de NestJS
+/*const socket = io(`${baseUrl}); // Conéctate al servidor WebSocket de NestJS
 
 export const FilasOrdenadas = () => {
   const [filas, setFilas] = useState([]);

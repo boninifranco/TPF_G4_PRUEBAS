@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./misDatos.css";
 import { useNavigate } from "react-router-dom";
 import { MiDesempenio } from "./MiDesempenio";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const MisDatos = ({ onModify }) => {
   const [user, setUser] = useState({});
@@ -17,7 +18,7 @@ export const MisDatos = ({ onModify }) => {
       const fetchUser = async () => {
         try {
           const response = await fetch(
-            `http://localhost:3000/usuario/${idUser}`
+            `${baseUrl}/usuario/${idUser}`
           );
           const data = await response.json();
           setUser(data);
@@ -29,7 +30,7 @@ export const MisDatos = ({ onModify }) => {
     }
     const fetchRegister = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/registro/${idUser}`)
+        const response = await fetch(`${baseUrl}/registro/${idUser}`)
         const data = await response.json();
         setMail(data);
         setDatosRegistro({

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Row, Col, Spinner } from "react-bootstrap";
 import "./seleccionarPartidas.css";
 import { useNavigate } from "react-router-dom";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const SeleccionarPartida = () => {
   const [partidas, setPartidas] = useState([]);
@@ -14,7 +15,7 @@ export const SeleccionarPartida = () => {
 
   const fetchPartidasActivas = async () => {
     try {
-      const response = await fetch("http://localhost:3000/partidas/activas");
+      const response = await fetch(`${baseUrl}/partidas/activas`);
       const data = await response.json();
       setPartidas(data);
     } catch (error) {

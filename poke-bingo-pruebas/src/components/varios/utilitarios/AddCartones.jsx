@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {baseUrl} from '../../../core/constant/constantes.ts';
 
 export const AddCartones = () => {
 
@@ -20,7 +21,7 @@ export const AddCartones = () => {
     
   const crearPartida = async()=>{
     try {
-        await fetch('http://localhost:3000/sala',{
+        await fetch(`${baseUrl}/sala`,{
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ export const AddCartones = () => {
         
     }
     try {
-        await fetch('http://localhost:3000/partidas',{
+        await fetch(`${baseUrl}/partidas`,{
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ export const AddCartones = () => {
 
     try {
         for (let i = 0; i < totalCartones;i++){
-            await fetch('http://localhost:3000/cartones',{
+            await fetch(`${baseUrl}/cartones`,{
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ export const AddCartones = () => {
     // Función para obtener imágenes desde el backend
   const obtenerImagenes = async () => {
     try {
-      const response = await fetch('http://localhost:3000/imagenes'); // Asegúrate de que esta URL sea correcta
+      const response = await fetch(`${baseUrl}/imagenes`); // Asegúrate de que esta URL sea correcta
       if (!response.ok) {
         console.log(response)
         throw new Error('Error al obtener las imágenes');
@@ -105,7 +106,7 @@ export const AddCartones = () => {
   const enviarSeleccionadas = async()=>{
     try {
       for (const seleccionada of seleccionadas){
-        await fetch('http://localhost:3000/img-seleccionadas',{
+        await fetch(`${baseUrl}/img-seleccionadas`,{
           method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -177,7 +178,7 @@ export const AddCartones = () => {
     let filasGuardadas = [];
     for (const fila of filas){
         try {
-            const responseFilas = await fetch('http://localhost:3000/filas', {
+            const responseFilas = await fetch(`${baseUrl}/filas`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -206,7 +207,7 @@ export const AddCartones = () => {
   const enviarCasilleros = async (casilleros)=>{
     for( const casillero of casilleros){
         try {
-            const responseCasilleros = await fetch('http://localhost:3000/casilleros', {
+            const responseCasilleros = await fetch(`${baseUrl}/casilleros`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

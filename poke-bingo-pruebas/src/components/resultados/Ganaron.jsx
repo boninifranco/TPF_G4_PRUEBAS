@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const Ganaron = () => {
     const [ganadores, setGanadores] = useState([])
@@ -6,7 +7,7 @@ export const Ganaron = () => {
   const partidaId = localStorage.getItem('partidaId');
   const fetchResultados = async () =>{
     try {
-      const response = await fetch(`http://localhost:3000/resultado/bypartida/${partidaId}`);
+      const response = await fetch(`${baseUrl}/resultado/bypartida/${partidaId}`);
       const data = await response.json();
       setGanadores(data);
     } catch (error) {

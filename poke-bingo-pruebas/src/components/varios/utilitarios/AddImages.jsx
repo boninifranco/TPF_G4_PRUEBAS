@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-
+import {baseUrl} from '../../../core/constant/constantes.ts';
 
 const pokes = [
     {
@@ -6011,7 +6011,7 @@ export const AddImages = () => {
       const cargarPokemons = async (pokes) => {
         for(let i = 0; i < pokes.length; i++){
           try {
-            const response = await fetch('http://localhost:3000/imagenes', {
+            const response = await fetch(`${baseUrl}/imagenes`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

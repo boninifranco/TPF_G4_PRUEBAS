@@ -3,6 +3,7 @@ import "../cartonBingo/cartonBingo.css";
 import { Row, Accordion } from "react-bootstrap"; 
 import { CartonUser } from "./CartonUser";
 import { Reclamar } from "./Reclamar";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const ListarCartonUser = () => {
   const [cartones, setCartones] = useState([]); 
@@ -16,7 +17,7 @@ export const ListarCartonUser = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3000/cartones/usuario/${idUser}/partida/${partidaId}`
+          `${baseUrl}/cartones/usuario/${idUser}/partida/${partidaId}`
         );
         if (!response.ok) {
           throw new Error("Error al recuperar los cartones");

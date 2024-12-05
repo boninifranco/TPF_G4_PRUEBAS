@@ -5,7 +5,7 @@ import { FilasOrdenadas } from './ResultadosAdmin';
 import {ChatAdmin} from './ChatAdmin';
 import { ButtonGroup, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 import { Resultados } from '../resultados/Resultados';
-//import '../cartonBingo/listaCartonBingo.css';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 
 export const ListaCartonBingo = () => {
@@ -32,7 +32,7 @@ export const ListaCartonBingo = () => {
   useEffect(()=>{
     const fetchPartidas = async ()=> {
       try {      
-        const response = await fetch ('http://localhost:3000/partidas/activas')
+        const response = await fetch (`${baseUrl}/partidas/activas`)
         //if(!response.ok){
           //throw new Error('Error al recuperar las partidas activas');
         //}
@@ -55,7 +55,7 @@ export const ListaCartonBingo = () => {
   useEffect(() => {
     const fetchCartones = async () => {
       try {
-        const response = await fetch('http://localhost:3000/cartones/all?criterio=cartonId&orden=ASC');  // URL de la API, modifícala según tu entorno
+        const response = await fetch(`${baseUrl}/cartones/all?criterio=cartonId&orden=ASC`);  // URL de la API, modifícala según tu entorno
         if (!response.ok) {
           throw new Error('Error al recuperar los cartones');
         }
@@ -70,7 +70,7 @@ export const ListaCartonBingo = () => {
     
     const fetchSeleccionadas = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/img-seleccionadas/partida/${1}`);  // ${partidaSelec? partidaSelec.partidaId:partidas[0].partidaId}`)
+        const response = await fetch(`${baseUrl}/img-seleccionadas/partida/${1}`);  // ${partidaSelec? partidaSelec.partidaId:partidas[0].partidaId}`)
         if (!response.ok) {
           throw new Error('Error al recuperar las img-seleccionadas');
         }
@@ -124,7 +124,7 @@ export const ListaCartonBingo = () => {
   // Función para hacer el PATCH con el imagenId al backend
   const marcarCasillerosPorImagen = async (imagenId) => {
     try {
-      const response = await fetch(`http://localhost:3000/casilleros/salir-por-imagen/${imagenId}`, {
+      const response = await fetch(`${baseUrl}/casilleros/salir-por-imagen/${imagenId}`, {
         method: 'PATCH',
       });
 
@@ -143,7 +143,7 @@ export const ListaCartonBingo = () => {
   };
 
   const fetchSalieron = async()=>{
-    const response = await fetch('http://localhost:3000/casilleros/salieron')
+    const response = await fetch(`${baseUrl}/casilleros/salieron`)
     try{
     if (!response.ok) {
       throw new Error('Error al recuperar los cartones');
@@ -160,7 +160,7 @@ export const ListaCartonBingo = () => {
   
   const nuevoFetchCartones = async()=>{
     try{
-    const response = await fetch(`http://localhost:3000/cartones/all?criterio=${criterioOrden.criterio}&orden=${criterioOrden.orden}`);
+    const response = await fetch(`${baseUrl}/cartones/all?criterio=${criterioOrden.criterio}&orden=${criterioOrden.orden}`);
     // URL de la API, modifícala según tu entorno
   if (!response.ok) {
     throw new Error('Error al recuperar los cartones');
@@ -181,12 +181,12 @@ export const ListaCartonBingo = () => {
       const cartonId = carton.cartonId
       try {
         // Obtener la suma de aciertos de las filas
-        const response = await fetch(`http://localhost:3000/filas/aciertos/${cartonId}`);
+        const response = await fetch(`${baseUrl}/filas/aciertos/${cartonId}`);
         const aciertosTotales = await response.json();
         console.log(`Aciertos totales: ${aciertosTotales}`)
     
         // Enviar PATCH para actualizar los aciertos del cartón
-        await fetch(`http://localhost:3000/cartones/actualizar-aciertos/${cartonId}`, {
+        await fetch(`${baseUrl}/cartones/actualizar-aciertos/${cartonId}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ aciertos: aciertosTotales })
@@ -239,7 +239,7 @@ console.log(`cartones ordenandos: ${JSON.stringify(cartones)}`)
 const consultarGanador = async (fila)=>{
   console.log(fila)
   try {
-    const response = await fetch(`http://localhost:3000/filas/${fila}`)
+    const response = await fetch(`${baseUrl}/filas/${fila}`)
     if(!response.ok){
       throw new Error(" Error al recuperar el ganador");      
     }
@@ -251,7 +251,7 @@ const consultarGanador = async (fila)=>{
       instancia: instancia
     }
     setGanadores([...ganadores,ganador])
-    await fetch('http://localhost:3000/resultado/', {
+    await fetch(`${baseUrl}/resultado/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
