@@ -3,6 +3,7 @@ import "./adquirircarton.css";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { Button, Carousel } from "react-bootstrap";
 import { CartonUser } from "../cartonUser/CartonUser";
+import { baseUrl } from "../../core/constant/constantes.ts"
 
 export const AdquirirCarton = () => {
   const [cartones, setCartones] = useState([]);
@@ -16,7 +17,7 @@ export const AdquirirCarton = () => {
   const fetchCartonByPartidaId = async () => {
     const partidaId = localStorage.getItem("partidaId");
     try {
-      const response = await fetch(`http://localhost:3000/cartones/no-comprados/${partidaId}`);
+      const response = await fetch(`${baseUrl}/cartones/no-comprados/${partidaId}`);
       if (!response.ok) throw new Error("Error al recuperar los cartones");
       setCartones(await response.json());
     } catch (error) {
@@ -33,7 +34,7 @@ export const AdquirirCarton = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/mercadopago/create_preference", {
+      const response = await fetch(`${baseUrl}/mercadopago/create_preference`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

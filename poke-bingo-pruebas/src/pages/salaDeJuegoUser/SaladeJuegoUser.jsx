@@ -4,6 +4,7 @@ import "./salaUser.css";
 import { ListarCartonUser } from "../../components/cartonUser/ListarCartonUser";
 import { useNavigate } from "react-router-dom";
 import { YaSalieron } from "../../components/resultados/YaSalieron";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const SaladeJuegoUser = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const SaladeJuegoUser = () => {
   const fetchCartonesUsuario = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/cartones/usuario/${idUser}/partida/${partidaId}`
+        `${baseUrl}/cartones/usuario/${idUser}/partida/${partidaId}`
       );
       if (!response.ok) {
         console.error("Error al recuperar los cartones:", response.status);

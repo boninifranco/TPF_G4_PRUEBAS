@@ -6,6 +6,7 @@ import "../header/header.css"
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import CustomAlert from '../varios/CustomAlert/CustomAlert';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const Headerbs = () => {
 
@@ -80,7 +81,7 @@ const handleLogout = async() => {
     const id = localStorage.getItem('idLogin')
     
     const logout = new Date();
-    const response = await fetch(`http://localhost:3000/logueo/${id}`, {
+    const response = await fetch(`${baseUrl}/logueo/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json', // Especificamos que el body es JSON

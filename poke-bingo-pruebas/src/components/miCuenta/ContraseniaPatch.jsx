@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import "./contraseniapatch.css";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const ContraseniaPatch = () => {
   const [datos, setDatos] = useState({
@@ -54,7 +55,7 @@ export const ContraseniaPatch = () => {
     const idUser = localStorage.getItem("idUser");
     try {
       const response = await fetch(
-        `http://localhost:3000/registro/cambiar-contrasenia/${idUser}`,
+        `${baseUrl}/registro/cambiar-contrasenia/${idUser}`,
         {
           method: "PATCH",
           headers: {

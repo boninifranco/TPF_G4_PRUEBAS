@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../homePage/homePage.css"
 import { Carrousel } from '../../components/varios/Carrousel'
 import { ModalUser } from '../../components/modalUser/ModalUser';
-
+import {baseUrl} from '../../core/constant/constantes.ts';
 
  export const HomePage = () => {
 
@@ -14,7 +14,7 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
     if (idUser) {
       const fetchUser = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/usuario/${idUser}`);
+          const response = await fetch(`${baseUrl}/usuario/${idUser}`);
           const data = await response.json();
           if (!data.nombre || !data.apellido || !data.dni || !data.celular || !data.direccion) {
             setShowModal(true);

@@ -4,9 +4,10 @@ import '../cartonBingo/juego.css'
 import { FilasOrdenadas } from './ResultadosAdmin';
 import { CartonBingo } from './CartonBingo';
 import { Dropdown, Row } from 'react-bootstrap';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 // Conectar con el backend WebSocket
-const socket = io('http://localhost:3000', {
+const socket = io(`${baseUrl}`, {
   //query: { user},
   reconnection: true,        // Habilitar reconexión automática
   reconnectionAttempts: 10,  // Número de intentos de reconexión
@@ -64,7 +65,7 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       // Función para hacer el PATCH con el imagenId al backend
       const marcarCasillerosPorImagen = async (imagenId) => {
         try {
-          const response = await fetch(`http://localhost:3000/casilleros/salir-por-imagen/${imagenId}`, {
+          const response = await fetch(`${baseUrl}/casilleros/salir-por-imagen/${imagenId}`, {
             method: 'PATCH',
           });
     
@@ -83,7 +84,7 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       };
     
       const fetchSalieron = async()=>{
-        const response = await fetch('http://localhost:3000/casilleros/salieron')
+        const response = await fetch(`${baseUrl}/casilleros/salieron`)
         try{
         if (!response.ok) {
           throw new Error('Error al recuperar los cartones');
@@ -102,12 +103,12 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
           const cartonId = carton.cartonId
           try {
             // Obtener la suma de aciertos de las filas
-            const response = await fetch(`http://localhost:3000/filas/aciertos/${cartonId}`);
+            const response = await fetch(`${baseUrl}/filas/aciertos/${cartonId}`);
             const aciertosTotales = await response.json();
             console.log(`Aciertos totales: ${aciertosTotales}`)
         
             // Enviar PATCH para actualizar los aciertos del cartón
-            await fetch(`http://localhost:3000/cartones/actualizar-aciertos/${cartonId}`, {
+            await fetch(`${baseUrl}/cartones/actualizar-aciertos/${cartonId}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ aciertos: aciertosTotales })
@@ -125,7 +126,7 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       };
       const nuevoFetchCartones = async()=>{
         try{
-        const response = await fetch(`http://localhost:3000/cartones/all?criterio=${criterioOrden.criterio}&orden=${criterioOrden.orden}&partida=${partida}`);
+        const response = await fetch(`${baseUrl}/cartones/all?criterio=${criterioOrden.criterio}&orden=${criterioOrden.orden}&partida=${partida}`);
         // URL de la API, modifícala según tu entorno
       if (!response.ok) {
         throw new Error('Error al recuperar los cartones');

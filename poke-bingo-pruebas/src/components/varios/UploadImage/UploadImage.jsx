@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
+import {baseUrl} from '../../../core/constant/constantes.ts';
 
 export const UploadImage = () => {
 
@@ -43,7 +44,7 @@ export const UploadImage = () => {
           const data = await response.json();
           console.log('Imagen subida:', data.secure_url);
           const imageUrl = data.secure_url
-          const saveResponse = await fetch('http://localhost:3000/imagenes/premios/', {
+          const saveResponse = await fetch(`${baseUrl}/imagenes/premios/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

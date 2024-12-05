@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 //import AbmPremios from './AbmPremios';
 import { Form, Button } from 'react-bootstrap';
 import { ListaPremios } from '../varios/CarruselPremios/ListaPremios';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const AbmPremios1 = ()=> {
   const [premios, setPremios] = useState([]);
@@ -16,7 +17,7 @@ export const AbmPremios1 = ()=> {
   useEffect(() => {
     const fetchPremios = async () => {
       try {
-        const response = await fetch('http://localhost:3000/premios');
+        const response = await fetch(`${baseUrl}/premios`);
         const data = await response.json();
         setPremios(data);
       } catch (error) {
@@ -45,7 +46,7 @@ export const AbmPremios1 = ()=> {
     if (!selectedPremio.id) return;
 
     try {
-      await fetch(`http://localhost:3000/premios/${selectedPremio.id}`, {
+      await fetch(`${baseUrl}/premios/${selectedPremio.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ export const AbmPremios1 = ()=> {
     if (!selectedPremio.id) return;
 
     try {
-      await fetch(`http://localhost:3000/premios/${selectedPremio.id}`, {
+      await fetch(`${baseUrl}/premios/${selectedPremio.id}`, {
         method: 'DELETE',
       });
 

@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Col, Container, Form, InputGroup, ListGroup, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
 import './chatAdmin.css'
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 const user = localStorage.getItem('userName');
 const avatar = localStorage.getItem('avatar');
 // Conectar con el backend WebSocket
-const socket = io('http://localhost:3000', {
+const socket = io(`${baseUrl}`, {
   query: { user, avatar },
   reconnection: true,        // Habilitar reconexión automática
   reconnectionAttempts: 10,  // Número de intentos de reconexión

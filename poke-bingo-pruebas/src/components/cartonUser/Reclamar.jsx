@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import io from 'socket.io-client';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 const user = localStorage.getItem('user');
 
 // Conectar con el backend WebSocket
-const socket = io('http://localhost:3000', {
+const socket = io(`${baseUrl}`, {
   query: { user},
   reconnection: true,        // Habilitar reconexión automática
   reconnectionAttempts: 10,  // Número de intentos de reconexión
@@ -32,7 +33,7 @@ export const Reclamar = () => {
     click.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:3000/partidas/ultima-partida"
+        `${baseUrl}/partidas/ultima-partida`
       );
       if (response.ok) {
         const data = await response.json();
@@ -53,7 +54,7 @@ export const Reclamar = () => {
   
       const fetchResultados = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/resultado/bypartida/${partidaId}`);
+          const response = await fetch(`${baseUrl}/resultado/bypartida/${partidaId}`);
           const resultados = await response.json();
   
           const resultadosTexto = resultados.map((r) => r.resultado);
