@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, Dropdown, DropdownButton, DropdownGroup } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Button, ButtonGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 import '../abmPokemones/abmPokemones.css'
+import {baseUrl} from '../../core/constant/constantes.ts';
+
+
 
 export const AbmPokemones = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [partidas, setPartidas] = useState([])
     const [partidaSelec,setPartidaSelec] = useState(null)
     const [seleccionadas, setSeleccionadas] = useState([])
@@ -14,17 +16,27 @@ export const AbmPokemones = () => {
     const [imgDisp, setImgDisp] = useState(null)
     const [cambiar, setCambiar] = useState(false)
     const [renderizar, setRenderizar] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
         const fetchImgPartida = async ()=>{
+          
             try {
-                const response = await fetch(`http://localhost:3000/img-seleccionadas/partida/${partidaSelec.partidaId}`);
-                if(!response.ok) throw new Error ('Error al recuperar las imagenes')
+              if(partidaSelec){
+                const response = await fetch(`${baseUrl}/img-seleccionadas/partida/${partidaSelec.partidaId}`);
+                if(!response.ok) {
+                  console.error('No se pudieron obtener las imagenes de la partida:', response.statusText);              
+                  const errorData = await response.json();
+                  throw new Error(errorData.message || 'Ocurrió un error inesperado');
+                }
                 const data = await response.json();
                 setSeleccionadas(data)
-            } catch (error) {
+              }
                 
+            } catch (error) {
+              console.error('Error en la solicitud:', error);
+              navigate('/error', { state: { errorMessage: error.message } });
             }            
         }
         fetchImgPartida();
@@ -34,12 +46,17 @@ export const AbmPokemones = () => {
 
         const fetchImagenes = async ()=>{
             try {
-                const response = await fetch(`http://localhost:3000/imagenes/`);
-                if(!response.ok) throw new Error ('Error al recuperar las imagenes')
+                const response = await fetch(`${baseUrl}/imagenes/`);
+                if(!response.ok) {
+                  console.error('No se pudieron obtener las imagenes:', response.statusText);              
+                  const errorData = await response.json();
+                  throw new Error(errorData.message || 'Ocurrió un error inesperado');
+                }
                 const data = await response.json();
                 setImagenes(data)
             } catch (error) {
-                
+              console.error('Error en la solicitud:', error);
+              navigate('/error', { state: { errorMessage: error.message } });
             }            
         }
         fetchImagenes();
@@ -56,25 +73,21 @@ export const AbmPokemones = () => {
           setImagenesDisponibles(noSeleccionadas)
           
     }
-    
-    
-    console.log(`imagen elegida en seleccionadas: ${JSON.stringify(imgSelec)}`)
-    console.log(`imagen elegida en disponibles: ${JSON.stringify(imgDisp)}`)
-    console.log(`partida: ${JSON.stringify(partidaSelec)}`)
 
     useEffect(()=>{
         const fetchPartidas = async ()=> {
           try {      
-            const response = await fetch ('http://localhost:3000/partidas/sinCartones')
+            const response = await fetch (`${baseUrl}/partidas/sinCartones`)
             if(!response.ok){
-              throw new Error('Error al recuperar las partidas activas');
+                  console.error('No se pudieron obtener las partidas:', response.statusText);              
+                  const errorData = await response.json();
+                  throw new Error(errorData.message || 'Ocurrió un error inesperado');
             }
             const data = await response.json()
             setPartidas(data) 
-          } catch (err) {
-            setError(err.message);
-            } finally {
-              setLoading(false);
+          } catch (error) {
+              console.error('Error en la solicitud:', error);
+              navigate('/error', { state: { errorMessage: error.message } });
             }
           };
           fetchPartidas();
@@ -99,20 +112,23 @@ export const AbmPokemones = () => {
 
       const eliminarSeleccionada = async()=>{
         try {
-            await fetch(`http://localhost:3000/img-seleccionadas/${imgSelec.idSeleccionada}`,{
+            const response = await fetch(`${baseUrl}/img-seleccionadas/${imgSelec.idSeleccionada}`,{
                 method:'DELETE'
             },            
         )
-        //if(!response.ok) throw new Error('Error al eliminar la imagen')
-        //const data = await response.json()
-
+        if(!response.ok) {
+          console.error('No se pudo eliminar la imagen seleccionada:', response.statusText);              
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Ocurrió un error inesperado');
+        }
         } catch (error) {
-            console.log(error)            
+          console.error('Error en la solicitud:', error);
+          navigate('/error', { state: { errorMessage: error.message } });            
         }
       }
       const agregarSeleccionada = async ()=>{
         try {
-        const response = await fetch(`http://localhost:3000/img-seleccionadas/`,{
+        const response = await fetch(`${baseUrl}/img-seleccionadas/`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -122,11 +138,16 @@ export const AbmPokemones = () => {
                 imagenId: imgDisp.id
             }),
                   });
-            if(!response.ok) throw new Error ('No se pudo agregar la imagen')
+            if(!response.ok) {
+              console.error('No se pudo agregar la imagen seleccionada:', response.statusText);              
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Ocurrió un error inesperado');
+            }
             const data = await response.json()
             
         } catch (error) {
-            console.log(error)
+            console.error('Error en la solicitud:', error);
+            navigate('/error', { state: { errorMessage: error.message } }); 
         }
       }
 
@@ -160,7 +181,6 @@ export const AbmPokemones = () => {
         <div style={{display:'flex'}}>
             <div class="container">
                 <div style={{display:'flex', flexDirection:'column'}}>
-                    {/*<h5>Imagenes seleccionadas</h5>*/}
                     <div class="image-grid">
                     {seleccionadas.map((seleccionada)=>(
                         <div key={seleccionada.idSeleccionada}  >

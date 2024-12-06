@@ -1,12 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import io from 'socket.io-client';
+import {baseUrl} from '../../core/constant/constantes.ts';
+
+const user = localStorage.getItem('user');
+
+// Conectar con el backend WebSocket
+const socket = io(`${baseUrl}`, {
+  query: { user},
+  reconnection: true,        // Habilitar reconexión automática
+  reconnectionAttempts: 10,  // Número de intentos de reconexión
+  reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
+});
+// Manejo de eventos
+socket.on('connect', () => {
+  console.log('Conectado al servidor WebSocket');
+});
+
+socket.on('disconnect', () => {
+  console.log('Desconectado del servidor WebSocket');
+});
+
+socket.on('connect_error', (error) => {
+  console.error('Error en la conexión:', error);
+});
 
 export const Reclamar = () => {
+  const [reclamo, setReclamo] = useState('');
+  const [reload, setReload] = useState(false)
+
   const handleOnClick = async (click) => {//Funcion iniciar Partida
     click.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:3000/partidas/ultima-partida"
+        `${baseUrl}/partidas/ultima-partida`
       );
       if (response.ok) {
         const data = await response.json();
@@ -27,7 +54,7 @@ export const Reclamar = () => {
   
       const fetchResultados = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/resultado/bypartida/${partidaId}`);
+          const response = await fetch(`${baseUrl}/resultado/bypartida/${partidaId}`);
           const resultados = await response.json();
   
           const resultadosTexto = resultados.map((r) => r.resultado);
@@ -49,11 +76,28 @@ export const Reclamar = () => {
       };
   
       fetchResultados();
+
     }, []);
+
+    const ganoInstancia = ()=>{
+
+      setReclamo(`Gane la instancia ${buttonText}`)
+      setReload(!reload)
+      
+    }
+    useEffect(()=>{
+      if(reclamo){
+        socket.emit('sendReclamo', {reclamo});
+      }
+      
+    },[reload])
+    
+    
+    
+    console.log(reclamo)
   return (
-    <div>
-      {/* <Button className="button_reg" onClick={handleOnClick}>Iniciar Partida</Button> */}
-      <Button className="button_reg" onMouseUp={(e) => e.currentTarget.blur()}>Reclamar {buttonText}</Button>
+    <div>      
+      <Button className="button_reg" onMouseUp={(e) => e.currentTarget.blur()} onClick={()=>ganoInstancia()}>Reclamar {buttonText}</Button>
     </div>
   );
 };

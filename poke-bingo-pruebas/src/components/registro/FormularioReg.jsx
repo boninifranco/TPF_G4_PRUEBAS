@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
 import "./formularioReg.css";
 import { Link, useNavigate } from "react-router-dom";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const FormularioReg = () => {
   const [datosReg, setDatosReg] = useState({
@@ -59,7 +60,7 @@ export const FormularioReg = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/registro/", {
+      const response = await fetch(`${baseUrl}/registro/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

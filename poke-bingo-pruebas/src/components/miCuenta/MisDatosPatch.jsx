@@ -2,6 +2,7 @@ import { Button, Form } from "react-bootstrap";
 import React, { useEffect, useState } from 'react';
 import './misDatos.css';
 import { ContraseniaPatch } from "./ContraseniaPatch";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
@@ -28,7 +29,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
     if (idUser) {
       const fetchUser = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/usuario/${idUser}`);
+          const response = await fetch(`${baseUrl}/usuario/${idUser}`);
           const data = await response.json();
           setUser(data);
         } catch (error) {
@@ -39,7 +40,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
       const fetchRegister = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/registro/${idUser}`)
+          const response = await fetch(`${baseUrl}/registro/${idUser}`)
           const data = await response.json();
           setRegistro(data);
         } catch (error) {
@@ -83,7 +84,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
     
 
     try {
-      await fetch(`http://localhost:3000/usuario/${idUser}`, {
+      await fetch(`${baseUrl}/usuario/${idUser}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -92,7 +93,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
       });
       const aleatorio = imagenes[Math.floor(Math.random() * imagenes.length)]
       
-      await fetch(`http://localhost:3000/registro/${idUser}`, {
+      await fetch(`${baseUrl}/registro/${idUser}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +114,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
     const obtenerImagenes= async ()=>{
       try {
-        const response = await fetch('http://localhost:3000/imagenes/')
+        const response = await fetch(`${baseUrl}/imagenes/`)
         if(!response.ok) throw new Error('No se pusieron obtener las imagenes')
           const data = await response.json();
         setImagenes(data)
@@ -124,8 +125,6 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
     obtenerImagenes();
 
   },[])
-
-  console.log(imagenes)
 
   return (
     <Form className="flex_container" onSubmit={handleSubmit}>

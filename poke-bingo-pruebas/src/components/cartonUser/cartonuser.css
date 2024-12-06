@@ -1,14 +1,8 @@
-.carton-user {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1em;
-  max-width: 100%;
-  width: 100%;
-  border: 2px solid #000;
-  padding: 0.2em;
-  margin: 0.5em 0 0.5em 0.5em
-}
 
+
+.cartones .accordion-button:focus {
+  box-shadow: none;
+}
 .fila-user {
   display: contents;
 }
@@ -16,10 +10,10 @@
   background-color: #f0f0f0;
 }
 
-.casilleroToggle {
+.fila-user .casilleroToggle {
   background-color: #5180578c;
 }
-.casilleroUser, .casilleroToggle {
+.fila-user .casilleroUser,.fila-user .casilleroToggle {
   aspect-ratio: 1 / 1; /* Mantiene los casilleros cuadrados */
   display: flex;
   align-items: center;
@@ -28,10 +22,17 @@
   cursor: pointer;
 }
 
-.casilleroUser img, .casilleroToggle img {
+.fila-user .casilleroUser img,.fila-user .casilleroToggle img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.reclamar{
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin-top: 1vh;
 }
 
 /* Estilos responsivos */
@@ -45,4 +46,39 @@
   .carton-user {
     gap: 8px;
   }
+  .carton-user {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Mantiene 5 columnas */
+    gap: 1em;
+    max-width: 100%; /* Evita que exceda el ancho disponible */
+    width: 100%; /* Se adapta al ancho del contenedor */
+    border: 2px solid #000;
+    padding: 0.2em;
+    margin: 0 auto; /* Centra el cartón horizontalmente */
+    background-color: #fffccd;
+  }
+  .cartones{
+    width: 60vw;
+  }
+  .cartones .accordion-button {
+    width: 60vw; /* Ajusta el ancho deseado */
+    height: 5vh; /* Ajusta el alto deseado */
+    background-color: #f0ea90;
+    border: 2px solid #fbf9cb;
+  }
+
+  .cartones .accordion-button:collapsed {
+    width: 55vw; /* Ajusta el ancho deseado */
+    height: 5vh;
+  }
+  
+  .cartones .accordion-body {
+    padding: 0.5em; /* Asegúrate de que no sea excesivo */
+    margin: 0; /* Elimina márgenes extra */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fefac1;
+  }
+  
 }

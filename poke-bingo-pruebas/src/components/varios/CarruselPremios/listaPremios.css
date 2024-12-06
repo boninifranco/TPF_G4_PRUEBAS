@@ -1,0 +1,47 @@
+/* Contenedor principal para el desplazamiento horizontal */
+.premios-list-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 10px;
+    width:850px;
+    margin-bottom:10px;
+    //max-width: 80%;
+  }
+  
+  /* ListGroup como contenedor de filas */
+  .premios-list-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Espaciado horizontal entre las tarjetas */
+  }
+  
+  /* Estilo de las tarjetas en el ListGroup */
+  .premio-list-item {
+    flex: 0 0 auto; /* Mantiene el tamaño de las tarjetas sin que se reduzcan */
+    width: 200px; /* Ajusta el ancho de cada tarjeta */
+    height: 200px;
+    padding: 0; /* Remueve el padding extra del ListGroup.Item */
+    border: none;
+  }
+  
+  .premio-card {
+    height: 100%;
+    text-align: center;
+  }
+  /* Ajuste de altura para el cuerpo de la tarjeta */
+.premio-card-body {
+    flex-grow: 1;
+  }
+  
+  /* Asegura que las imágenes tengan una altura uniforme y se mantengan centradas */
+.premio-card-img {
+    width: auto;
+    max-width: 100%;
+    height: 100px;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+  
+
+  

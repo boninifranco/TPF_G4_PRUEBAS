@@ -5,31 +5,22 @@ import Pokebingo from '../../assets/PokeBingo.png'
 import "../header/header.css"
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import CustomAlert from '../varios/CustomAlert/CustomAlert';
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const Headerbs = () => {
 
-  const navigate = useNavigate();
+  
   const [usuario, setUsuario] = useState(localStorage.getItem('userName') || '');
   const [isAdmin, setIsAdmin] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);  
   const handleShowAlert = () => setShowAlert(true);
   const handleCloseAlert = () => setShowAlert(false);
   
 
-  const handleNavClick = () => {
-    //if (isAdmin === true) {
-      //navigate('/ABMPage'); // Si es admin, ir a ABM Usuarios
-    //} else if (isAdmin === false) {
-      //navigate('/MiCuenta'); // Si no es admin, ir a Mi Cuenta
-    //} else {
-      // Si admin es null, mostrar un mensaje
-      if(isAdmin!=null)return;
+  const handleNavClick = () => {   
+      if(isAdmin!=null)return;      
       handleShowAlert();
-      //alert('No tienes permisos para acceder a esta sección. Por favor, inicia sesión.');
-
-    //}
   };
 
   // Función para actualizar el usuario del localStorage
@@ -90,7 +81,7 @@ const handleLogout = async() => {
     const id = localStorage.getItem('idLogin')
     
     const logout = new Date();
-    const response = await fetch(`http://localhost:3000/logueo/${id}`, {
+    const response = await fetch(`${baseUrl}/logueo/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json', // Especificamos que el body es JSON
@@ -102,7 +93,6 @@ const handleLogout = async() => {
       }),
     });
     const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.error('Error al hacer la solicitud:', error);
   }
@@ -125,42 +115,29 @@ const handleLogout = async() => {
             <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/Nosotros'}>Nosotros</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={isAdmin===true ? '/SalaDeJuegos' : isAdmin===false ? '/SalaJuegoUser' : '/'}>Sala de Juegos</Nav.Link>
+            <Nav.Link className="tamanioHeader separarInicio" as={NavLink} onClick={handleNavClick} to={isAdmin===true ? '/SalaDeJuegos' : isAdmin===false ? '/SalaJuegoUser' : '/Login'}>Sala de Juegos</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            {/*<Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  to={isAdmin ? '/ABMPage' : '/MiCuenta'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>*/}
-            <Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  onClick={handleNavClick} to={isAdmin===true ? '/ABMPage' : isAdmin===false ? '/MiCuenta':'/'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>            
+            <Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  onClick={handleNavClick} to={isAdmin===true ? '/ABMPage' : isAdmin===false ? '/MiCuenta':'/Login'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>            
             </Nav.Item>
             <Nav.Item>
             {usuario ? (
-        <div style={{color:'#FFFAB3'}} onClick={handleLogout}>Bienvenido, {usuario}! <span><div><NavLink className="tamanioHeader separarInicio"  as={NavLink} to={'/'}>Cerrar Sesión</NavLink>{' '}</div></span></div>
+        <div style={{color:'#FFFAB3'}} onClick={handleLogout}>Bienvenido, {usuario}! <span><div><NavLink className="tamanioHeader cerrarSesion"  as={NavLink} to={'/'}>Cerrar Sesión</NavLink>{' '}</div></span></div>
         
         
       ) : (
         <Nav.Link className="tamanioHeader separarInicio" as={NavLink} to={'/Login'}>Ingresar</Nav.Link>
       )}
             </Nav.Item>
-            <Nav.Item>
-
-            </Nav.Item>
-            {/*<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>*/}
+            
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
       <CustomAlert
       show={showAlert}
       variant="primary"
-      message="Para ingresar a su cuenta debe loguearse."
+      message="Debe loguearse para ingresar"
       showAcceptButton = {false}      
       onClose={handleCloseAlert}
       titulo="Atención!!"/>

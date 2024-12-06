@@ -1,4 +1,4 @@
-.casilleroUser, .casilleroToggle {
+.fila-user .casilleroUser,.fila-user .casilleroToggle {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,11 +13,11 @@
   background-color: #f0f0f0;
 }
 
-.casilleroToggle {
+.fila-user .casilleroToggle {
   background-color: #5180578c;
 }
 
-.casilleroUser img, .casilleroToggle img {
+.fila-user .casilleroUser img,.fila-user .casilleroToggle img {
   width: 80%;
   height: auto;
   max-width: 100%;
@@ -25,34 +25,41 @@
   object-fit: contain;
 }
 
-.casilleroUser p,
-.casilleroToggle p {
+.fila-user .casilleroUser p,
+.fila-user .casilleroToggle p {
   margin-top: 5px; /* Ajusta el espaciado entre imagen y texto */
   margin-bottom: 0;
   font-weight: bold;
   text-align: center;
 }
+@media (max-width: 499px) {
+  .fila-user .casilleroUser,.fila-user .casilleroToggle {
+    width: 16vw; /* Reduce el tamaño relativo */
+    height: 16vw; /* Mantiene la proporción */
+  }
 
-/* Para pantallas pequeñas como móviles */
-@media (max-width: 600px) {
-  .casilleroUser, .casilleroToggle {
-    width: 30vw;
-    height: 30vw;
+  .carton-user {
+    gap: 0.3em; /* Reduce el espacio entre casilleros */
+  }
+  .cartones .accordion-button {
+    width: 90vw !important;
+  }
+  .cartones p{
+    margin-top: 0px;
   }
 }
-
-/* Para pantallas medianas como tabletas */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .casilleroUser, .casilleroToggle {
-    width: 15vw;
-    height: 15vw;
+/* Para pantallas pequeñas como móviles */
+@media (min-width: 500px) and (max-width: 779px) {
+  .fila-user .casilleroUser,.fila-user .casilleroToggle {
+    width: 7rem;
+    height: 7rem;
   }
 }
 
 /* Para pantallas grandes como desktops */
-@media (min-width: 1025px) {
-  .casilleroUser, .casilleroToggle {
-    width: 10vw;
-    height: 10vw;
+@media (min-width: 780px) {
+  .fila-user .casilleroUser,.fila-user .casilleroToggle {
+    width: 8vw;
+    height: 8vw;
   }
 }

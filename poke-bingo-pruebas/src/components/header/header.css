@@ -1,4 +1,4 @@
-@media screen and (min-width: 401px) {
+@media screen and (max-width: 412px){
     body{
         background-color: #B11A17;
     }
@@ -36,6 +36,100 @@
     }
     .separarInicio:hover {
         scale: 1.3;
+        color: #7A170C;
+    }
+    .separarInicio:active, .separarInicio:focus {
+        color: #7A170C;
+    }
+    
+    .parentHeader .tamanioHeader.separarInicio.active {
+        color: #7A170C;
+        transform: scale(1.3);
+        font-style: italic;
+        transition: none; /* Sin transición */
+    }
+    
+    /* Deshabilitar el efecto hover solo en el enlace activo */
+    .parentHeader .tamanioHeader.separarInicio.active:hover {
+        transform: none;
+        pointer-events: none;
+    }
+    
+    /* Efecto hover solo en enlaces no activos */
+    .parentHeader .tamanioHeader.separarInicio:not(.active):hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease;
+    }
+    .tamanioHeader {
+        font-size: 24px;
+        color: #7A170C;
+        font-weight: bold;
+        text-decoration: none;
+        justify-content: left;
+        
+    }
+
+    .nav-justify {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+    .cerrarSesion{
+        font-size: 3vh;
+        font-weight: normal;
+        display: flex;
+        justify-content: center;
+    }
+
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgb(255, 250, 179)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+
+
+
+
+@media screen and (min-width: 413px) {
+    body{
+        background-color: #B11A17;
+    }
+    .parentHeader {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 100%;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        background-color: #B11A17;
+        margin-bottom: 1%;
+        height: 100px;
+        box-shadow: 2px 5px 5px 2px #7A170C;
+        
+    }
+    .logoHeader {
+        width:300px;
+        height:120px;
+    }
+
+    .link-pages {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 75%;
+    }
+
+    
+
+    .separarInicio {
+        display: flex;
+        justify-content: center;
+        padding-left: 10%;
+        transition: all .5s ease;
+
+    }
+    .separarInicio:hover {
+        scale: 1.3;
         color: rgb(255, 250, 179)
     }
     .separarInicio:active, .separarInicio:focus {
@@ -43,7 +137,7 @@
     }
     
     .parentHeader .tamanioHeader.separarInicio.active {
-        color: #ede34f !important;
+        color: rgb(255, 250, 179);
         transform: scale(1.3);
         font-style: italic;
         transition: none; /* Sin transición */
@@ -74,6 +168,12 @@
         width: 100%;
       }
 
+    .cerrarSesion{
+        font-size: 3vh;
+        font-weight: normal;
+        display: flex;
+        justify-content: center;
+    }
 
 }
 .navbar-toggler-icon {

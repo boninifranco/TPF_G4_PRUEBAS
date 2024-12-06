@@ -11,7 +11,7 @@ function CustomAlert({ show, variant, message, onClose, titulo, showAcceptButton
       <div className="alert-centered">
         <Alert variant={variant} className="custom-alert" onClose={onClose} >
           <Alert.Heading >          
-            <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center', width:'50%', marginLeft:'25%', textAlign:'center'}}>
             {titulo}
             </div>            
             </Alert.Heading>

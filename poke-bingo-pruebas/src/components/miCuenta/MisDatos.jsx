@@ -1,11 +1,14 @@
 import { Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import "./misDatos.css";
+import { useNavigate } from "react-router-dom";
+import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const MisDatos = ({ onModify }) => {
   const [user, setUser] = useState({});
   const [mail, setMail] = useState("");
   const [datosRegistro, setDatosRegistro] = useState({})
+  const navigate = useNavigate();
 
   useEffect(() => {
     const idUser = localStorage.getItem("idUser");
@@ -14,7 +17,7 @@ export const MisDatos = ({ onModify }) => {
       const fetchUser = async () => {
         try {
           const response = await fetch(
-            `http://localhost:3000/usuario/${idUser}`
+            `${baseUrl}/usuario/${idUser}`
           );
           const data = await response.json();
           setUser(data);
@@ -26,7 +29,7 @@ export const MisDatos = ({ onModify }) => {
     }
     const fetchRegister = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/registro/${idUser}`)
+        const response = await fetch(`${baseUrl}/registro/${idUser}`)
         const data = await response.json();
         setMail(data);
         setDatosRegistro({
@@ -40,6 +43,10 @@ export const MisDatos = ({ onModify }) => {
     };
     fetchRegister();
   }, []);
+
+  const miDesempenio = ()=>{
+    navigate('/centroCanje')
+  }
 
   return (
    <div className="data_style">
@@ -82,13 +89,23 @@ export const MisDatos = ({ onModify }) => {
       </div>
     </div>
     
-    <div>
+    <div style={{display:'flex',justifyContent:'center', gap:'50px', width:'100wh'}}>
       <Button
         className="button_reg"
         onMouseUp={(e) => e.currentTarget.blur()}
         onClick={onModify}
+        style={{width:'160px'}}
       >
         Modificar
+      </Button>
+
+      <Button
+        className="button_reg"
+        onMouseUp={(e) => e.currentTarget.blur()}
+        onClick={()=> miDesempenio()}
+        style={{width:'160px'}}
+      >
+        Centro de Canjes
       </Button>
     </div>
   </div>

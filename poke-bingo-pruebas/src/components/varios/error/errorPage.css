@@ -1,0 +1,76 @@
+/* General */
+  .contiene-error-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #B11A17;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Contenedor principal */
+  .error-page {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #FFFAB3;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Título */
+  .error-page h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #e63946;
+  }
+  
+  /* Mensaje de error */
+  .error-page p {
+    font-size: 1.1em;
+    color: #7A170C;
+    margin-bottom: 20px;
+  }
+  
+  /* Botón */
+  .error-page button {
+    background-color: #FFFCCD;
+    color: #B11A17;
+    border: solid 1pt;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .error-page button:hover {
+    background-color: #B11A17;
+    color: #FFFCCD
+  }
+  
+  /* Responsivo */
+  @media (max-width: 600px) {
+    .error-page {
+      padding: 15px;
+    }
+  
+    .error-page h1 {
+      font-size: 2em;
+    }
+  
+    .error-page p {
+      font-size: 1em;
+    }
+  
+    .error-page button {
+      padding: 8px 16px;
+      font-size: 0.9em;
+    }
+  }
+  

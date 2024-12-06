@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import pokeImages from '../../../assets/pokemon.json'
+import {baseUrl} from '../../../core/constant/constantes.ts';
 
 const pokes = [
     {
@@ -6011,7 +6011,7 @@ export const AddImages = () => {
       const cargarPokemons = async (pokes) => {
         for(let i = 0; i < pokes.length; i++){
           try {
-            const response = await fetch('http://localhost:3000/imagenes', {
+            const response = await fetch(`${baseUrl}/imagenes`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -6021,12 +6021,7 @@ export const AddImages = () => {
                 nombre: pokes[i].nombre,
                 url: pokes[i].url
               }),
-              //body: pokes,
-              /*body:{
-                  id: "2",
-                  nombre: "ivysaur",
-                  url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"
-              }*/
+              
             });
             
             if (!response.ok) {

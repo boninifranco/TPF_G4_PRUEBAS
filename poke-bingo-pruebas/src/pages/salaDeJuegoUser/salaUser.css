@@ -12,7 +12,10 @@
     background-color: #fffccd;
   }
   
-.resultados_component{
+  .listarCarton{
+    margin-top: 2vh;
+  }
+.resultados{
     height: 100%;
     width: 100%;
     display: flex;  
@@ -23,13 +26,17 @@
     margin-left: 2em
 }
 @media (max-width: 1025px) {
-    .resultados_component{
+    .resultados{
         display: flex;  
         flex-direction: column;
     }
 }
 @media (min-width:1024px){
-    .resultados_component{
+    .resultados{
         justify-content: space-evenly
+    }
+    .resultados{
+        display: flex;  
+        flex-direction: column;
     }
 }

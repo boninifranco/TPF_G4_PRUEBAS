@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "../homePage/homePage.css"
 import { Carrousel } from '../../components/varios/Carrousel'
 import { ModalUser } from '../../components/modalUser/ModalUser';
-
+import {baseUrl} from '../../core/constant/constantes.ts';
 
  export const HomePage = () => {
 
@@ -14,7 +14,7 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
     if (idUser) {
       const fetchUser = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/usuario/${idUser}`);
+          const response = await fetch(`${baseUrl}/usuario/${idUser}`);
           const data = await response.json();
           if (!data.nombre || !data.apellido || !data.dni || !data.celular || !data.direccion) {
             setShowModal(true);
@@ -33,7 +33,7 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
   return (
     <div style={{backgroundColor: "#B11A17"}}>
         
-        <div className='contieneBody'>
+        <div className='contiene-Body'>
           <section className='contieneCarrousel'>
             <Carrousel/>
           </section>
@@ -62,10 +62,11 @@ import { ModalUser } from '../../components/modalUser/ModalUser';
           </p>
         <h5>Instancias del Juego:</h5>
         <ul>
-          <li>Terno: Marca tres Pokémon en tu cartón.</li>
-          <li>Cuaterno: Completa cuatro Pokémon en una línea.</li>
-          <li>Línea: Llena una línea completa en cualquier dirección.</li>
-          <li>Bingo: ¡Marca todos los Pokémon y gana el gran premio!</li>
+          <li >Ambo: Con dos Pokémon en tu cartón ya estás ganando.</li>
+          <li >Terno: Marca tres Pokémon en tu cartón.</li>
+          <li >Cuaterno: Completa cuatro Pokémon en una línea.</li>
+          <li >Línea: Llena una línea completa en cualquier dirección.</li>
+          <li >Bingo: ¡Marca todos los Pokémon y gana el gran premio!</li>
         </ul>          
         <h5>Premios y Créditos:</h5>
         <p>
