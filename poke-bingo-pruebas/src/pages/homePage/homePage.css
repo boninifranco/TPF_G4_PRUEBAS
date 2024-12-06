@@ -2,16 +2,11 @@
     .contiene-Body {
         display: flex;
         flex-direction: column;
-        background-color: #FFFAB3;
-        //margin-bottom: 1%;
-        //height: 100px;
-        //box-shadow: 2px 5px 5px 0px #7A170C;
+        background-color: #FFFAB3;        
 }
     .contieneCarrousel {
         
-    background-color: #FFFAB3;
-    //min-height: 100vh;
-    //align-content:top;
+    background-color: #FFFAB3;    
     padding-top: 100px;
 
 }
@@ -39,16 +34,12 @@
             grid-template-rows: 100%;
             grid-column-gap: 0px;
             grid-row-gap: 0px;
-            background-color: #FFFAB3;
-            //margin-bottom: 1%;
-            //height: 100px;
-            //box-shadow: 2px 5px 5px 0px #7A170C;
+            background-color: #FFFAB3;            
     }
     .contieneCarrousel {
         
         background-color: #FFFAB3;
-        min-height: 100vh;
-        //align-content:top;
+        min-height: 100vh;        
         padding-top: 100px;
     
     }

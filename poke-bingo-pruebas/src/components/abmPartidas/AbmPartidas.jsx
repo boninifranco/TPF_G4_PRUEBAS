@@ -36,16 +36,12 @@ export const AbmPartidas = () => {
     
 
 
-  const handleDateChange = (date) => {
-    
+  const handleDateChange = (date) => {    
     setFecha(date);
   };
 
-  
-
   const handleRowClick = (fecha) => {   
-    setFecha(fecha)
-    
+    setFecha(fecha)    
   };
   
   const handleSort = () => {
@@ -101,8 +97,6 @@ export const AbmPartidas = () => {
 
     const handleAdd = async(e)=>{
       e.preventDefault();
-              
-        //console.log("Datos enviados:", form);
         await fetch(`${baseUrl}/partidas/`,{
             method: 'POST',
             headers: {
@@ -143,7 +137,7 @@ export const AbmPartidas = () => {
     }
 
     const handleDelete = async ()=>{
-      //e.preventDefault();        
+             
         await fetch(`${baseUrl}/partidas/${seleccionado.partidaId}`,{
             method: 'DELETE',            
         })
@@ -176,9 +170,7 @@ export const AbmPartidas = () => {
     }
 
     const handleUpdate = async (e)=>{
-
-      e.preventDefault();
-        
+      e.preventDefault();        
         await fetch(`${baseUrl}/partidas/${seleccionado.partidaId}`,{
             method: 'PATCH',
             headers: {
@@ -286,11 +278,9 @@ export const AbmPartidas = () => {
         setForm({});
         setFinalizada(null);
         setFecha(null);
-        setTieneImagenes(true);
-        
+        setTieneImagenes(true);        
       }
-    }
-  
+    }  
 
     useEffect(()=>{
       existeSala();
@@ -300,8 +290,7 @@ export const AbmPartidas = () => {
     useEffect(()=>{
       if(seleccionado){
         enviarSeleccionadas(seleccionado.partidaId);
-      }
-      
+      }      
     },[seleccionadas])
 
 
@@ -396,9 +385,7 @@ const conImagenes = (partidaId) => {
   const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
   return partida ? partida.hasImages : false;
 };
-  /*console.log(`tiene imagenes?:${tieneImagenes}`)
-  console.log(`seleccionadas:${seleccionadas.length}`)
-  console.log(`Partidas con imagenes: ${JSON.stringify(partidasImagenes)}`)*/
+  
 
   return (
     <div style={{display:'flex', justifyContent:'center'}}>
@@ -453,11 +440,7 @@ const conImagenes = (partidaId) => {
                     </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                     <Form.Label>Inicio</Form.Label>
-                        {/*<Form.Control 
-                        type="text" 
-                        name="horaInicio"
-                        value = {form.horaInicio || ''}
-                        onChange={handleForm} />*/}
+                        
                         <DatePicker 
                         selected={fecha}
                         onChange={handleDateChange}
@@ -499,9 +482,8 @@ const conImagenes = (partidaId) => {
                     checked={finalizada === true} // Solo checked si es false
                     onChange={() => handleFinalizada(true)} // Marca como false
                     />
-
                     </div>
-                    {/*<Button variant={tieneImagenes ? "danger":"success"} style={{marginTop:'1em', marginBottom:'1em',width:'50%'}} onClick={(e)=>generarImagenes(e)} type='submit' disabled={!seleccionado ? true : tieneImagenes ? true : false}>{tieneImagenes ? 'Partida con imágenes' : 'Generar imágenes'}</Button>{' '}*/}                
+                    
                 </Form.Group>
                 <div style={{display:'flex', justifyContent:'space-around'}}>
                 <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em',width:'30%'}} onClick={handleAdd} type='submit'>Agregar</Button>{' '}
@@ -519,8 +501,6 @@ const conImagenes = (partidaId) => {
             onAccept={handleAccept}
             titulo="Eliminar Partida"
         />
-    
-
     </div>
   )
 }

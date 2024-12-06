@@ -2,7 +2,6 @@ import { Button } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import "./misDatos.css";
 import { useNavigate } from "react-router-dom";
-import { MiDesempenio } from "./MiDesempenio";
 import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const MisDatos = ({ onModify }) => {

@@ -1,8 +1,6 @@
 import { Children, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ListaCartonBingo } from '../../components/cartonBingo/ListaCartonBingo'
 import { AddImages } from '../../components/varios/utilitarios/AddImages'
-import { AddCartones } from '../../components/varios/utilitarios/AddCartones'
 import { Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap';
 import { Juego } from '../../components/cartonBingo/Juego';
 import '../salaDeJuegosPage/salaDeJuegos.css'
@@ -65,7 +63,7 @@ export const SalaDeJuegos = () => {
     fetchPuntajes();
   },[instancia])
 console.log(puntajes)
-  //useEffect(()=>{
+  
     const fetchCartones = async () => {
       try {
         const response = await fetch(`${baseUrl}/cartones/all?criterio=cartonId&orden=ASC&partida=${partidaSelec.partidaId}`);  // URL de la API, modifícala según tu entorno
@@ -101,20 +99,10 @@ console.log(puntajes)
       }
         
     }
-      useEffect(()=>{
-        //const fetchInterval = setInterval(() => {
+      useEffect(()=>{        
           fetchCartones();
           fetchSeleccionadas();
-        //}, 500); // Cada 500ms
-    
-        // Limpia el intervalo cuando el componente se desmonta
-        //return () => clearInterval(fetchInterval);        
-        
       },[partidaSelec])
-      
-      
-
-//},[partidaSelec])
 
 const consultarGanador = async (fila)=>{
   console.log(fila)
@@ -125,8 +113,7 @@ const consultarGanador = async (fila)=>{
             const errorData = await response.json();
             throw new Error(errorData.message || 'Ocurrió un error inesperado')      
     }
-    const data = await response.json()
-    //console.log(data.carton.idUsuario.email)
+    const data = await response.json()    
     const ganador = {
       jugador: data.carton.idUsuario.email,
       partida: partidaSelec.partidaId,
@@ -149,16 +136,11 @@ const consultarGanador = async (fila)=>{
       body: JSON.stringify({
         puntos: instancia.puntos,        
       }),
-
-    })
-    
+    })    
   } catch (error) {
           console.error('Error en la solicitud:', error);
           navigate('/error', { state: { errorMessage: error.message } });
-      }
-    
-      
-    
+      }  
 }
   const seleccionarInstancia = (id,descripcion,puntos)=>{
     setInstancia({
@@ -167,9 +149,7 @@ const consultarGanador = async (fila)=>{
       puntos: puntos
     })
   }
-  //console.log(partidaSelec)
-  //console.log(JSON.stringify(seleccionadas))
-  //console.log(instancia)
+  
   return (
     <div style={{marginTop:'90px', backgroundColor:'#FFFCCD', display:'flex', width:'100vw'}}>
     <div style={{marginTop:'5px',backgroundColor:'#FFFCCD', display:'flex', flexDirection:'column',gap:'10%'}}>
@@ -180,11 +160,7 @@ const consultarGanador = async (fila)=>{
             ))}
           </DropdownButton>
           <DropdownButton as={ButtonGroup}  title={instancia? `Jugamos ${instancia.descripcion}`: 'Seleccionar instancia'} id="bg-nested-dropdown" variant="danger" style={{width:'200px', borderRadius:'10px'}} >
-            {/*<Dropdown.Item onClick={() => setInstancia(1)}>Ambo</Dropdown.Item>
-            <Dropdown.Item onClick={() => setInstancia(2)}>Terno</Dropdown.Item>
-            <Dropdown.Item onClick={() => setInstancia(3)}>Cuaterno</Dropdown.Item>
-            <Dropdown.Item onClick={() => setInstancia(4)}>Linea</Dropdown.Item>
-            <Dropdown.Item onClick={() => setInstancia(5)}>Bingo</Dropdown.Item>*/}
+            
             {puntajes.map((puntaje)=>(
               <Dropdown.Item key={puntaje.id} onClick={()=>seleccionarInstancia(puntaje.id, puntaje.descripcion, puntaje.puntos)}>{puntaje.descripcion}</Dropdown.Item>
             ))}
@@ -212,13 +188,7 @@ const consultarGanador = async (fila)=>{
     <ChatAdmin/>
     </div>
             
-  )
- /*return(
-  <div style={{marginTop:'90px', backgroundColor:'#FFFCCD', display:'flex', height:'75vh', width:'100vw'}}>
-    <ListaCartonBingo/>
-  </div>
-  
- )*/
+  ) 
 }
 
 

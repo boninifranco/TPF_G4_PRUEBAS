@@ -144,13 +144,9 @@ export const UploadImage = () => {
                   );
                 })
               }
-            </div>
-                
-            </div>
-            
+            </div>                
+            </div>            
           </Form.Group>
-    
-          
         </Form>
       );
 }

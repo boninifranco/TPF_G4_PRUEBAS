@@ -5,13 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './abmPage.css'
 import { AbmUsuario } from '../../components/abmUsuarios/AbmUsuario';
 import { AddImages } from '../../components/varios/utilitarios/AddImages';
-import { AddCartones } from '../../components/varios/utilitarios/AddCartones';
 import { AbmPartidas } from '../../components/abmPartidas/AbmPartidas';
 import { AbmCartones } from '../../components/abmCartones/AbmCartones';
 import { AbmPokemones } from '../../components/abmPokemones/AbmPokemones';
 import Loader from '../../components/varios/Loader/Loader';
 import { AbmPremio } from '../../components/abmPremios/AbmPremio';
-import { AbmPremios1 } from '../../components/abmPremios/abmPremios1';
 
 export const AbmPage = ()=> {
   const [key, setKey] = useState('usuarios');

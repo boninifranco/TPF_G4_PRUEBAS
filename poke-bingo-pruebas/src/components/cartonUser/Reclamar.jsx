@@ -96,8 +96,7 @@ export const Reclamar = () => {
     
     console.log(reclamo)
   return (
-    <div>
-      {/* <Button className="button_reg" onClick={handleOnClick}>Iniciar Partida</Button> */}
+    <div>      
       <Button className="button_reg" onMouseUp={(e) => e.currentTarget.blur()} onClick={()=>ganoInstancia()}>Reclamar {buttonText}</Button>
     </div>
   );
