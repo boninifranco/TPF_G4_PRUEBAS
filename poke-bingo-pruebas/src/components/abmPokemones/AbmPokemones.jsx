@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Button, ButtonGroup, Dropdown, DropdownButton, DropdownGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 import '../abmPokemones/abmPokemones.css'
 import {baseUrl} from '../../core/constant/constantes.ts';
 
 
 
 export const AbmPokemones = () => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [partidas, setPartidas] = useState([])
     const [partidaSelec,setPartidaSelec] = useState(null)
     const [seleccionadas, setSeleccionadas] = useState([])
@@ -75,11 +73,6 @@ export const AbmPokemones = () => {
           setImagenesDisponibles(noSeleccionadas)
           
     }
-    
-    
-    console.log(`imagen elegida en seleccionadas: ${JSON.stringify(imgSelec)}`)
-    console.log(`imagen elegida en disponibles: ${JSON.stringify(imgDisp)}`)
-    console.log(`partida: ${JSON.stringify(partidaSelec)}`)
 
     useEffect(()=>{
         const fetchPartidas = async ()=> {
@@ -145,7 +138,6 @@ export const AbmPokemones = () => {
                 imagenId: imgDisp.id
             }),
                   });
-            console.log(response)
             if(!response.ok) {
               console.error('No se pudo agregar la imagen seleccionada:', response.statusText);              
               const errorData = await response.json();
@@ -189,7 +181,6 @@ export const AbmPokemones = () => {
         <div style={{display:'flex'}}>
             <div class="container">
                 <div style={{display:'flex', flexDirection:'column'}}>
-                    {/*<h5>Imagenes seleccionadas</h5>*/}
                     <div class="image-grid">
                     {seleccionadas.map((seleccionada)=>(
                         <div key={seleccionada.idSeleccionada}  >

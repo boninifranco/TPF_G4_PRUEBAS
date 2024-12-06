@@ -3,7 +3,6 @@ import '../cartonBingo/cartonBingo.css'
 export const FilaCartonBingo = ({ fila }) => {
     return (
       <div className="fila">
-        {/*<p>Aciertos: {fila.aciertos}</p>*/}
         
         {fila.casillero.map(casiller => (          
           
@@ -21,9 +20,7 @@ export const FilaCartonBingo = ({ fila }) => {
               style={{marginTop:'15px', marginRight:'5px'}}
             />
             <p style={{marginBottom:'10px'}}>{casiller.imagenId.imagenId}</p>
-            {/*<p>{casiller.salio ? 'X' : ''}</p>*/}
           </div>
-          
           
         ))}
       </div>

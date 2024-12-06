@@ -16,7 +16,6 @@
   /* Cambiar el fondo del contenido de las pestañas */
   .tab-content-custom {
     background-color: #FFFAB3; /* Fondo del contenido de las pestañas */
-    //padding: 20px;
     border-radius: 4px;
     border: 1px solid #f7ea38;
     margin-top: 5px;

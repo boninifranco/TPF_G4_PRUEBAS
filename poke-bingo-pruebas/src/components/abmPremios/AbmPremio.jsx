@@ -80,14 +80,12 @@ export const AbmPremio = ()=> {
          
        }),
      });
-     console.log(saveResponse)
     if(!saveResponse.ok) {
       const errorData = await saveResponse.json();
       throw new Error(errorData.message || 'Ocurrió un error inesperado');
      }
 
       const result = await saveResponse.json();
-      console.log('Datos actualizados:', result)
      // Limpia los campos del formulario después de enviar
       setDescription('');
       setCredits('');
@@ -169,7 +167,6 @@ export const AbmPremio = ()=> {
               <Form.Label>Descripción</Form.Label>
               <Form.Control
                 type="text"
-                //placeholder="Descripción"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
@@ -181,7 +178,6 @@ export const AbmPremio = ()=> {
               <Form.Label>Créditos</Form.Label>
               <Form.Control
                 type="number"
-                //placeholder="Créditos"
                 value={credits}
                 onChange={(e) => setCredits(e.target.value)}
                 required
@@ -193,7 +189,6 @@ export const AbmPremio = ()=> {
               <Form.Label>Stock</Form.Label>
               <Form.Control
                 type="number"
-                //placeholder="Stock"
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
                 required
@@ -205,7 +200,6 @@ export const AbmPremio = ()=> {
           
 
           <Form.Group controlId="image">
-            {/*<Form.Label>Imagen</Form.Label>*/}
             <div style={{display:'flex', justifyContent:'space-around', alignItems:'center'}}>
             <Button variant="success" onClick={() => setShowModal(true)}>
               Imagen
@@ -219,8 +213,6 @@ export const AbmPremio = ()=> {
                 onClick={removeImage} 
                 style={{ 
                   position: 'absolute',
-                  //top: '15px',
-                  //right: '15px',
                   borderRadius: '50%',
                   padding: '2px 5px',
                   fontSize: '0.8rem'}}

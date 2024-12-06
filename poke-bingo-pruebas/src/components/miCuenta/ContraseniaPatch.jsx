@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import "./contraseniapatch.css";
 import {baseUrl} from '../../core/constant/constantes.ts';
 
@@ -82,7 +81,6 @@ export const ContraseniaPatch = () => {
         }, 2000);
       } else {
         const errorData = await response.json();
-        console.log("Error al cambiar la contraseña:", errorData);
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);

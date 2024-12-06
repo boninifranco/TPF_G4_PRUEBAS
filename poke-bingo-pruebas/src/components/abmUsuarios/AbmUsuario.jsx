@@ -27,11 +27,9 @@ export const AbmUsuario =()=> {
     const handleEsAdmin = (value)=>{
         setEsAdmin(value)
     }
-    console.log(eliminar)
     useEffect(() => {
         fetch(`${baseUrl}/usuario/`)
           .then((response) => {
-            console.log(response)
             if(!response.ok){
               console.error('No se pudieron obtener los usuarios:', response.statusText);              
               const errorMessage = {              
@@ -71,7 +69,6 @@ export const AbmUsuario =()=> {
         setSeleccionado(fila);
         setForm(fila);
     }
-    console.log(seleccionado)
     const handleForm = (event)=>{
         const {name,value} = event.target;
         setForm((prevValues)=>({
@@ -79,16 +76,12 @@ export const AbmUsuario =()=> {
         }))
     }
     const handleDelete = async ()=>{
-        //e.preventDefault();
         if (!seleccionado) return;
-       
-        //if (window.confirm('¿Estás seguro de que deseas eliminar este registro?'))
         await fetch(`${baseUrl}/usuario/${seleccionado.id}`,{
             method: 'DELETE',
         })
         .then(() => {
             // Actualiza el estado eliminando el registro de la tabla
-            console.log(seleccionado)
             setData((prevData) => prevData.filter((item) => item.id !== seleccionado.id));
             setSeleccionado(null); // Deselecciona el registro después de eliminarlo
             setForm({}); // Limpia el formulario después de eliminar
@@ -106,7 +99,6 @@ export const AbmUsuario =()=> {
 
     const handleUpdate = async (e)=>{
         e.preventDefault();
-        //console.log("Datos enviados:", form);
         await fetch(`${baseUrl}/usuario/${seleccionado.id}`,{
             method: 'PATCH',
             headers: {
@@ -146,8 +138,6 @@ export const AbmUsuario =()=> {
           console.error('Error en la solicitud:', error.message);
           navigate('/error', { state: { errorMessage: error.message } });
       });
-
-      //console.log(`para el usuario ${seleccionado.id} es admin es ${esAdmin}`)
       await fetch(`${baseUrl}/registro/${seleccionado.id}/admin`,{
         method: 'PATCH',
         headers: {
@@ -192,7 +182,6 @@ const dataFiltrada = data.filter((item) => {
   return (
     <div style={{display:'flex', padding:'10px', backgroundColor:'#FFFAB3'}}>
         <div style={{width:'70%'}}>
-        {/* Formulario de búsqueda con Button and Dropdown */}
       <Form inline className="mb-3" style={{display:'flex', justifyContent:'center'}}>
         <ButtonGroup className="ml-2">
           <Button variant="danger" >{`Buscar en: ${campoBusqueda.charAt(0).toUpperCase()}${campoBusqueda.slice(1)}`}</Button>
@@ -218,7 +207,6 @@ const dataFiltrada = data.filter((item) => {
             <th>Dni</th>
             <th>Direccion</th>
             <th>Celular</th>
-            {/* Otros campos */}
           </tr>
         </thead>
         <tbody>
@@ -229,7 +217,6 @@ const dataFiltrada = data.filter((item) => {
               <td>{item.dni}</td>
               <td>{item.direccion}</td>
               <td>{item.celular}</td>
-              {/* Otros campos */}
             </tr>
           ))}
         </tbody>

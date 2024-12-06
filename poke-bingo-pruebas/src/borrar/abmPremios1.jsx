@@ -93,11 +93,8 @@ export const AbmPremios1 = ()=> {
   return (
     <div>
       <h1>Gestión de Premios</h1>
-
-      {/* Renderizar lista de premios */}
       <ListaPremios premios={premios} onSelectPremio={handleSelectPremio} />
-
-      {/* Formulario */}
+      
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Descripción</Form.Label>

@@ -93,7 +93,6 @@ const handleLogout = async() => {
       }),
     });
     const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.error('Error al hacer la solicitud:', error);
   }
@@ -119,7 +118,6 @@ const handleLogout = async() => {
             <Nav.Link className="tamanioHeader separarInicio" as={NavLink} onClick={handleNavClick} to={isAdmin===true ? '/SalaDeJuegos' : isAdmin===false ? '/SalaJuegoUser' : '/Login'}>Sala de Juegos</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            {/*<Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  to={isAdmin ? '/ABMPage' : '/MiCuenta'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>*/}
             <Nav.Link className="tamanioHeader separarInicio"  as={NavLink}  onClick={handleNavClick} to={isAdmin===true ? '/ABMPage' : isAdmin===false ? '/MiCuenta':'/Login'}>{isAdmin ? 'ABM del sitio' : 'Mi Cuenta'}</Nav.Link>            
             </Nav.Item>
             <Nav.Item>
