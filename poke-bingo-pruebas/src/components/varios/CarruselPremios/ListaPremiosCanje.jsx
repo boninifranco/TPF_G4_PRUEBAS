@@ -156,15 +156,15 @@ const confirmarCanje = async () => {
         <h1 style={{color:'#FFFAB3'}}>Centro de Canje</h1>
         <div style={{display:'flex', justifyContent:'space-around'}}>
         <div style={{display:'flex', flexDirection:'column'}}>
-        <h3>Puntos disponibles: {puntosDisponibles}</h3>
+        <h3 className='color-canje'>Puntos disponibles: {puntosDisponibles}</h3>
         </div>
         
         <div style={{display:'flex', flexDirection:'column'}}>
-        <h3>Premios seleccionados para canje:</h3>
-<ul style={{textAlign:'left'}}>
+        <h3 className='color-canje'>Premios seleccionados para canje:</h3>
+<ul className='color-canje' style={{textAlign:'left'}}>
   {listaCanje.length > 0 ? (
     listaCanje.map((item) => (
-      <li key={item.id}>
+      <li className='color-canje' key={item.id}>
         {item.cantidad} - {item.descripcion}  
       </li>
     ))

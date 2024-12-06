@@ -11,7 +11,6 @@ import {ErrorPage} from '../components/varios/error/ErrorPage'
 import { SaladeJuegoUser } from '../pages/salaDeJuegoUser/SaladeJuegoUser'
 import { SeleccionarPartida } from '../components/compraCartones/SeleccionarPartida'
 import { AdquirirCarton } from '../components/compraCartones/AdquirirCarton'
-import { MiDesempenio } from '../components/miCuenta/MiDesempenio'
 import { CentroCanje } from '../components/miCuenta/CentroCanje'
 
 
@@ -31,8 +30,7 @@ export const RoutesList = () => {
             <Route path='/error' element={<ErrorPage/>}>Error</Route>
             <Route path='/SalaJuegoUser' element={<SaladeJuegoUser/>}>Sala de Juegos User</Route>
             <Route path='/SeleccionarPartida' element={<SeleccionarPartida/>}>Seleccionar Partidar</Route>
-            <Route path='/AdquirirCartones' element={<AdquirirCarton/>}>Adquirir Cartones</Route>
-            <Route path='/MiDesempenio' element={<MiDesempenio/>}>Mi Desempenio</Route>
+            <Route path='/AdquirirCartones' element={<AdquirirCarton/>}>Adquirir Cartones</Route>            
             <Route path='/CentroCanje' element={<CentroCanje/>}>Centro de Canje</Route>
         </Routes>        
     </>

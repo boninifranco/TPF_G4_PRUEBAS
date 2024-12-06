@@ -155,31 +155,25 @@ export const AbmCartones = () => {
                         idPartida: partida
                     }),
                   });
-                  /*if(response.status !==302){
-                      console.error('No se pudieron agregar los cartones:', response.statusText);              
-                      const errorData = await response.json();
-                      throw new Error(errorData.message || 'Ocurrió un error inesperado');
-                  }*/      
+                     
             fetchPartidasActivas();
             setVisibleGenerar(true);            
             handleShowAlert();
             }
         } catch (error) {
           console.error('Error en la solicitud:', error);
-          /*navigate('/error', { state: { errorMessage: error.message } });*/
-            
         }
       }
     
       const generarCasillerosYFilas = (imagenesSeleccionadas) => {
         const totalFilas = cartonesDeSelec * 3;
-        //let idFilaAutoincrement = maxFila + 1;
+        
         let idFilaAutoincrement = maxFila + 1;
         let idCartonAutoincrement = maxCarton + 1;
         const cartones = [];  
         const filasGeneradas = [];
     
-        //for (let carton = maxCarton; carton < (cartonesDeSelec+maxCarton); carton++) {
+        
         for (let carton = 0; carton < (cartonesDeSelec); carton++) {
           console.log(`este es el carton ${carton} de ${cartonesDeSelec} cartones`)
           const imagenesUsadasEnCarton = new Set();
@@ -226,7 +220,7 @@ export const AbmCartones = () => {
       const enviarFilas = async (filas)=>{
         let filasGuardadas = [];
         try {
-          //const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+          
         for (const fila of filas){
                 const responseFilas = await fetch(`${baseUrl}/filas`, {
                     method: 'POST',
@@ -258,7 +252,7 @@ export const AbmCartones = () => {
       const enviarCasilleros = async (casilleros)=>{
         
         try {
-          //const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+          
         for( const casillero of casilleros){
            
                 const responseCasilleros = await fetch(`${baseUrl}/casilleros`, {
@@ -275,7 +269,7 @@ export const AbmCartones = () => {
                       throw new Error(errorData.message || 'Ocurrió un error inesperado');
                   }
                   console.log('Casilleros enviados correctamente');
-                  //await delay(1000); // 5 segundos
+                  
                 }  
             } catch (error) {
               console.error('Error en la solicitud:', error);
@@ -357,15 +351,7 @@ export const AbmCartones = () => {
       }else{
         console.log('no hay seleccionadas?')
       }
-    }
-      
-      /*const addFilas = ()=>{
-        enviarFilas(filas)
-      }
-
-      const addCasilleros = ()=>{
-        enviarCasilleros(casilleros)
-      }*/
+    } 
 
       const CompletarDatosPartida = async ()=>{       
         setLoader(true) 
@@ -373,14 +359,8 @@ export const AbmCartones = () => {
         await enviarCasilleros(casilleros);
         setLoader(false)        
         setVisibleActualizar(false);
-      } 
-            
-            
-            
+      }
     
-    //console.log(`seleccionadas:${JSON.stringify(seleccionadas)}`)
-    //console.log(`filas:${JSON.stringify(filas)}`)
-    //console.log(`casilleros:${JSON.stringify(casilleros)}`)
   return (
     <div style={{display:'flex'}}>
         <div style={{width:'50%', textAlign:'center', padding:'10px'}}>
@@ -412,20 +392,16 @@ export const AbmCartones = () => {
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em',width:'33%'}} onClick={crearCasillerosyFilas} type='submit' disabled={!visibleGenerar}>Agregar filas y casilleros</Button>
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em',width:'33%'}} onClick={CompletarDatosPartida} type='submit' disabled={!visibleActualizar}>Actualizar Base de Datos</Button>
 
-      <div style={{display:'flex', justifyContent:'space-around', alignItems:'center'}}>
-            
+          <div style={{display:'flex', justifyContent:'space-around', alignItems:'center'}}>
             <ul><h5>Informacion de la partida {seleccionado ? seleccionado.partidaId : ''}</h5>
                 <li>Cartones generados: {cartonesDeSelec}</li>
                 <li>Cartones comprados: {cartonesComprados}</li>
                 
             </ul>
-        {/*<h5>{cartonesDeSelec>0 ? `Existen ${cartonesDeSelec} cartones generados para la partida ${seleccionado.partidaId}` : `No existen cartones para la partida ${seleccionado.partidaId}`}</h5>}*/}
+          </div>
+      </div>
         
-            </div>
-        </div>
-
-        
-        <div style={{width:'50%'}}>
+      <div style={{width:'50%'}}>
         <ul>
             <h5>Listado de cartones</h5>
             <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '80vh', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '8px', marginTop:'5px' }}>  
@@ -433,15 +409,13 @@ export const AbmCartones = () => {
             <ul style={{listStyleType:'none', alignItems:'center'}}>
               {cartones.map(carton => (
               <>
-              {/*<h5 style={{textAlign:'left',color:'#B11A17'}}>Cartón ID: {carton.cartonId} - Usuario ID: {carton.usuarioId} - Aciertos: {carton.aciertos}</h5>*/}
+              
             <CartonBingo key={carton.cartonId} carton={carton} />
               </>
               ))}
             </ul>
             </Row>
-            
             </ul>
-        
         </div>
         {loader ? <Loader mensaje={'Actualizando...'}/> : ''}
         <CustomAlert
@@ -451,9 +425,6 @@ export const AbmCartones = () => {
       showAcceptButton = {false}
       onClose={handleCloseAlert}
       titulo="Atención!!"/>
-
-      
-
     </div>
   )
 }

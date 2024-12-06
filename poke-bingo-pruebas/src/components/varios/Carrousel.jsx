@@ -14,12 +14,7 @@ export const Carrousel = () => {
       };
 
     // Cargar datos desde el archivo JSON
-    useEffect(() => {
-      /*fetch({pokeJson}) // Ruta del archivo JSON
-        .then((response) => response.json())
-        .then((data) => setSlides(data))
-        .catch((error) => console.error('Error al cargar los datos:', error));
-        console.log(pokeJson)*/
+    useEffect(() => {      
         const slidesAleatorias = imagenesAleatorias(pokeJson, 10);
         setSlides(slidesAleatorias)
     }, []);

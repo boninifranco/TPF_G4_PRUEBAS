@@ -9,12 +9,7 @@
     display: flex;  /*Coloca las imágenes en fila */
     flex-direction: row;  /*Asegura que las imágenes estén alineadas en una fila horizontal */
   }
-/*   
-  .slide {
-    display: inline-block; Hace que los divs de las imágenes se comporten en fila 
-    margin-right: 10px;  Espacio entre imágenes 
-  } */
-  
+    
   .slide img {
     width: 100px; /* Ajusta el ancho de las imágenes */
     height: auto; /* Mantiene la proporción de las imágenes */
