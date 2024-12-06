@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Button, Row, Table } from 'react-bootstrap';
+import { Row, Table } from 'react-bootstrap';
 import {baseUrl} from '../../core/constant/constantes.ts';
 
 export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   const [filas, setFilas] = useState([]);
   const [aciertos, setAciertos] = useState(1);
   const [gano, setGano] = useState(false);
-  //const [instancia, setInstancia] = useState(instanciaJuego)
-  //const [filasFiltradas, setFilasFiltradas] = useState([])
-  //const [instanciaJuego, setInstanciaJuego] = useState(instancia) 
  
   
   
@@ -41,7 +38,6 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   
   // Función para obtener las filas ordenadas
   const fetchFilasOrdenadas = async () => {
-    //console.log(`Aciertos necesarios: ${aciertosNecesarios}`)
     if(!aciertos)return
     const response = await fetch(`${baseUrl}/filas/ordenadas-desc/${aciertos}/${partida}`);
     if(response.ok){
@@ -55,10 +51,6 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
   };
 
   useEffect(() => {
-    //fetchFilasOrdenadas(); // Llamar a la función cuando el componente se monte
-    
-    
-    
     const fetchInterval = setInterval(() => {
       seleccionarInstancia(instancia.id);
       fetchFilasOrdenadas(); // Llama a la función para actualizar las filas
@@ -68,23 +60,15 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(fetchInterval);
   }, [aciertos]);
-  //console.log(instancia);
-  //console.log(aciertos);
-  //console.log(filas.length)
 
   useEffect(()=>{
-    //const interval = setInterval(()=>{
       seleccionarInstancia(instancia.id)
-      
-    //},500)
-    //return () => clearInterval(interval)
   },[instancia])
 
   useEffect(()=>{
     if(filas.length===0) return;
     const filasQueCumplen = filas.filter(fila => fila.aciertos >= aciertos);
     if (filasQueCumplen.length > 0) {
-      console.log(`¡Tenemos ${instancia.descripcion} con ${aciertos} aciertos!`);
       setGano(true)
       
     }else{
@@ -93,28 +77,6 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
     }
    
   },[filas,instancia])
-
-  console.log(JSON.stringify(filas))
-
-/*const socket = io(`${baseUrl}); // Conéctate al servidor WebSocket de NestJS
-
-export const FilasOrdenadas = () => {
-  const [filas, setFilas] = useState([]);
-
-  useEffect(() => {
-    // Al montar el componente, escuchamos el evento "updateFilas"
-    socket.on('updateFilas', (data) => {
-      setFilas(data);
-    });
-
-    // Limpiar el socket cuando el componente se desmonte
-    return () => {
-      socket.off('updateFilas');
-    };
-  }, []);*/
-  
-  
-  console.log(instancia)
 
   return (
     <div >

@@ -15,6 +15,7 @@ const socket = io(`${baseUrl}`, {
   reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
 });
 // Manejo de eventos
+
 socket.on('connect', () => {
   console.log('Conectado al servidor WebSocket');
 });
@@ -34,33 +35,21 @@ export const ChatAdmin = () => {
   const [messages, setMessages] = useState([]);
   const [reclamo, setReclamo] = useState();
   const [reclamos, setReclamos] = useState([]);
-  const [reload, setReload] = useState(false)
-  //const messageCounter = useRef(0); 
-  
-  
+  const [reload, setReload] = useState(false);
   
   // Escuchar mensajes cuando el componente se monta
   useEffect(() => {
     if (!socket.connected) {
       socket.connect();
-      console.log('tuve que conectar')
     }
     // Función para manejar mensajes recibidos
   const handleReceiveMessage = (newMessage) => {
-    console.log('Mensaje recibido en el cliente:', newMessage);
-    //messageCounter.current += 1;
     setMessages((prevMessages) => 
       [newMessage, ...prevMessages]    
       );
   };
 
   const handleReceiveReclamo = (newReclamo) => {
-    console.log('Reclamo recibido en el cliente:', newReclamo);
-    //messageCounter.current += 1;
-    //setMessages((prevMessages) => 
-      //[newMessage, ...prevMessages]    
-      //);
-      //setReclamo((newReclamo)=>[newReclamo, ...reclamo])
       setReclamo(newReclamo)
   };
     // Escuchar nuevos mensajes desde el servidor
@@ -78,16 +67,10 @@ export const ChatAdmin = () => {
   }, []);
 
   const sendMessage = () => {
-    //const user = localStorage.getItem('user')
     if (message.trim()) {
       
       // Enviar el mensaje al servidor WebSocket
       socket.emit('sendMessage', { message});
-      
-
-      //alert('hola')
-      console.log(message)
-      
       
       // Limpiar el input
       setMessage('');
@@ -100,13 +83,10 @@ export const ChatAdmin = () => {
     
   },[reclamo])
   
-  console.log(reclamos)
-  console.log(messages)
   return (
     <div style={{ maxWidth: '60%', margin: '0 auto' }}>
       <h3 style={{textAlign:'center',color:'#B11A17'}}>Chat de la Sala</h3>
       {reclamos.length>0 && reclamos.map((item,index)=><h5 key={index} style={{backgroundColor:'#B11A17', color:'#FFFAB3'}} onClick={()=>setReclamos([])}>{`${item.user}: ${item.message}`}</h5>)}
-      {/*{reclamo &&<h5 style={{backgroundColor:'#B11A17', color:'#FFFAB3'}} onClick={()=>setReclamo('')}>{`${reclamo.user}: ${reclamo.message}`}</h5>}*/}
       {/* Mostrar la lista de mensajes */}
       <Container fluid style={{ height: '65vh', display: 'flex', flexDirection: 'column' }}>
       <Row style={{ flex: '1 1 auto', overflowY: 'auto', maxHeight: '55vh', border: '1px solid #ccc', borderRadius: '8px' }}>

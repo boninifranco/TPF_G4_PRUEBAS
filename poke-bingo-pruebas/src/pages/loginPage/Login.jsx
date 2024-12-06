@@ -34,12 +34,10 @@ export const Login = () => {
 
   const handleUser = (e)=>{    
     setUser(e.target.value)
-    console.log(user)
   }
 
   const handlePass = (e)=>{
     setPass(e.target.value)
-    console.log(pass)
   }
 
   const focusUser = ()=>{
@@ -59,14 +57,12 @@ export const Login = () => {
       })
       if (response.ok) {
         const resp = await response.json()
-        console.log(resp.email)
         setDatosRecuperar(resp)
         enviarCorreo()
         
       }
     }
   }
-  console.log(datosRecuperar)
   function generarContrasenia() {
     // Generar la primera letra en mayúscula
     const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -140,15 +136,10 @@ export const Login = () => {
           password: pass,// Enviar el valor de administrador
         }),
       });
-       console.log(user)
-       console.log(pass)
-       console.log(response.statusText)
       if (response.ok) {
         const resp = await response.json()
         setData(resp)
-        console.log(`Esto es resp ${resp}`);
 
-        
         localStorage.setItem('user',resp.email) 
         localStorage.setItem('idUser', resp.id)
         localStorage.setItem('token', resp.access_token)
@@ -160,21 +151,15 @@ export const Login = () => {
         window.dispatchEvent(new Event('storage'));
         navigate('/')    
        
-        
       } else {
         
         setError('El usuario o la contraseña son inválidas')        
         const errorData = await response.json();
-          console.log(errorData.error)
-          
-          
       }
     } catch (error) {
       
       setError(error.message); // Almacenar el mensaje de error
       handleShowAlert();      
-      console.log(error)
-        //navigate('/error', { state: { message: error.message } });      
     }
   };
 
@@ -187,7 +172,6 @@ export const Login = () => {
   return (
     <div className='form-container'>
       <Form className='form-login' style={{display:'flex', flexDirection:'column', alignItems:'center',marginTop:'100px',height:'75vh', minWidth:'400px',maxWidth:'780px',borderRadius:'20px', backgroundColor:'#B11A17'}} onSubmit={handleSubmit}>
-      {/*<h2 style={{paddingTop:'1em', color:'#FFFAB3'}}></h2>*/}
       <ImagenLogin/>
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail" style={{paddingTop:'2em',display:'flex', width:'100%'}}>
         <Form.Group style={{display:'flex', justifyContent:'start', width:'10%', marginLeft:'1em'}}>
@@ -224,7 +208,6 @@ export const Login = () => {
         </Form.Group>
       </Form.Group>
       <p style={{color:'#FFFAB3'}}>{error}</p>
-      {/*<NavLink as={NavLink} to={'./'}><Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}</NavLink>*/}
       <Button variant="success" style={{backgroundColor:'#5BB117', marginTop:'1em', marginBottom:'1em'}} type='submit'>Iniciar Sesión</Button>{' '}      
       <p style={{color:'#FFFAB3'}}>No tienes una cuenta? <span style={{fontStyle:'italic', textDecoration:'underline', fontWeight:'bold', cursor:'pointer'}}><Link style={{color:'#FFFAB3'}} to='/Registro'>Registrate aquí!!</Link></span></p>
       <p style={{color:'#FFFAB3', cursor:'pointer'}} onClick={()=>olvidePass()}>Olvide mi contraseña (indique su email de autenticación)</p>

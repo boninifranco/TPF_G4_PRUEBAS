@@ -126,8 +126,6 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
 
   },[])
 
-  console.log(imagenes)
-
   return (
     <Form className="flex_container" onSubmit={handleSubmit}>
     {error && (

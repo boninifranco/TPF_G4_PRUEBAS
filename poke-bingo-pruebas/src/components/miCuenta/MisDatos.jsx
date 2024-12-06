@@ -45,7 +45,6 @@ export const MisDatos = ({ onModify }) => {
   }, []);
 
   const miDesempenio = ()=>{
-    //e.preventDefault();
     navigate('/centroCanje')
   }
 

@@ -14,7 +14,7 @@
   
   /* Centrado del Alert */
   .alert-centered {
-    width: 50%; /* Puedes ajustar el ancho */
+    width: 50%;
     max-width: 500px;
     min-width: 300px;
   }

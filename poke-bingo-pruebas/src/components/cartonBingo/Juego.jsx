@@ -8,7 +8,6 @@ import {baseUrl} from '../../core/constant/constantes.ts';
 
 // Conectar con el backend WebSocket
 const socket = io(`${baseUrl}`, {
-  //query: { user},
   reconnection: true,        // Habilitar reconexión automática
   reconnectionAttempts: 10,  // Número de intentos de reconexión
   reconnectionDelay: 1000,   // Delay en milisegundos entre intentos
@@ -51,17 +50,14 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
           
     
           // Añadir la imagen seleccionada al array de salieron
-          //setSalieron([...salieron, imagenSeleccionada.imagen]);
           setSalio(imagenSeleccionada.imagen);
           fetchSalieron();
     
           // Enviar la imagen seleccionada al backend para actualizar casilleros
           await marcarCasillerosPorImagen(imagenSeleccionada.imagen.imagenId);
         }else{
-          console.log('hola')
         }
       };
-      console.log(JSON.stringify(salieron))
       // Función para hacer el PATCH con el imagenId al backend
       const marcarCasillerosPorImagen = async (imagenId) => {
         try {
@@ -74,8 +70,6 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
           }
           actualizarAciertosCarton();
           nuevoFetchCartones();
-          // Después del PATCH, podrías hacer un nuevo fetch de los cartones actualizados
-          // para obtener los casilleros modificados
           
         } catch (error) {
           console.error(error);
@@ -102,11 +96,11 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
         for (const carton of cartones){
           const cartonId = carton.cartonId
           try {
+
             // Obtener la suma de aciertos de las filas
             const response = await fetch(`${baseUrl}/filas/aciertos/${cartonId}`);
             const aciertosTotales = await response.json();
-            console.log(`Aciertos totales: ${aciertosTotales}`)
-        
+
             // Enviar PATCH para actualizar los aciertos del cartón
             await fetch(`${baseUrl}/cartones/actualizar-aciertos/${cartonId}`, {
               method: 'PATCH',
@@ -114,7 +108,6 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
               body: JSON.stringify({ aciertos: aciertosTotales })
             });
             nuevoFetchCartones();
-            console.log('Cartón actualizado correctamente');
           } catch (error) {
             console.error('Error al actualizar aciertos del cartón:', error);
           }
@@ -127,13 +120,11 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       const nuevoFetchCartones = async()=>{
         try{
         const response = await fetch(`${baseUrl}/cartones/all?criterio=${criterioOrden.criterio}&orden=${criterioOrden.orden}&partida=${partida}`);
-        // URL de la API, modifícala según tu entorno
       if (!response.ok) {
         throw new Error('Error al recuperar los cartones');
       }
       const data = await response.json();
       setCartones(data);
-      //handleOrdenChange(criterioOrden)
     } catch (err) {
       setError(err.message);
     } finally {
@@ -157,15 +148,6 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
         }
         
       },[salio])
-
-     
-      /*useEffect(()=>{
-        setPartidasSelec(seleccionadas)
-        console.log(partidasSelec)
-      },[partida])*/
-      
-      console.log(instancia)
-        
     
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
