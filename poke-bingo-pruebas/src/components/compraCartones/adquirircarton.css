@@ -1,51 +1,73 @@
+/* Contenedor principal */
 .box_adquirircarton {
   background-color: #fffccd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 10vh 0 2vh 0;
+  box-sizing: border-box;
 }
-.box_adquirircarton .carousel-indicators{
-  display: none;
-}
-
 .adquirir_body {
   background-color: #fffccd;
   height: 100%;
   padding: 6em 0 6em 0;
   display: flex;
 }
-.carton-container {
+/* Títulos */
+.box_adquirircarton h3 {
+  margin-top: 0;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.box_adquirircarton h4 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* Carrusel */
+.box_adquirircarton .carousel-margin {
+  width: 888px; 
+  max-width: 90%;
+  height: 600px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Contenedor del cartón */
+.box_adquirircarton .carton-container {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+  width: 100%;
+  max-width: 888px;
+  height: auto;
 }
-.carton-container .casilleroToggle{
-  background-color: #f0f0f0;
-  transform: none !important;
-  outline: none !important;
-  width: 160px !important;
-  height: 160px !important;
-  max-width: 160px !important;
-  max-height: 160px !important;
-}
-.carton-container .casilleroToggle img{
-  max-width: 160px;
-  max-height: 160px;
+
+.box_adquirircarton .carton-container .casilleroToggle img,
+.box_adquirircarton .carton-container .casilleroUser img {
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
-.carton-container .carton-user{
-  width: 45vw;
-  height: 55vh;
-  transition: none
+
+/* Botones */
+.box_adquirircarton .botones_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2vh;
+  padding-bottom: 2vh; /* Asegura espacio con el footer */
 }
 
-.carton-container .casilleroUser{
-  width: 160px;
-  height: 160px;
-  transition: none
-}
-
-.carton-container input{
-  margin-left: 1vw;
-  height: 20px;
-  width: 20px;
+.box_adquirircarton .botones_div .adquirir-button {
+  padding: 10px 20px;
+  font-size: 1rem;
 }
 
 .box_adquirircarton .carousel-control-prev-icon,
@@ -56,30 +78,34 @@
   border-radius: 50%;
 }
 
-.carousel-control-prev,
-.carousel-control-next {
-  width: 5%; /* Asegura que los controles sean clickeables */
+.box_adquirircarton .carousel-control-prev,
+.box_adquirircarton .carousel-control-next {
+  width: 5%;
 }
 
-.carousel-margin{
-  width: 888px;
-  height: 635.1px;
-}
-
+/* Ajustes responsivos */
 @media (min-width: 789px) {
   .box_adquirircarton {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10vh;
+    padding-top: 12vh;
   }
 
-  .botones_div {
-    display: flex;
-    flex-direction: column;
+  .box_adquirircarton .botones_div {
+    margin-top: 3vh;
+    padding-bottom: 3vh;
   }
-  .button_only {
-    margin: 1em 3em 0 1em;
+}
+
+@media (max-width: 768px) {
+  .box_adquirircarton .carousel-margin {
+    width: 100%;
+    height: auto;
+  }
+
+  .box_adquirircarton .carton-container {
+    max-width: 100%;
+  }
+
+  .box_adquirircarton .botones_div {
+    padding-bottom: 5vh;
   }
 }
