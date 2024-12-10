@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './yasalieron.css'
 import io from 'socket.io-client';
 import {baseUrl} from '../../core/constant/constantes.ts';
+import { useNavigate } from 'react-router-dom';
 
 const socket = io(`${baseUrl}`, {
   //query: { user},
@@ -31,7 +32,8 @@ export const YaSalieron = () => {
     
   });
   const [salieronTodos, setSalieronTodos] = useState([]);
-  const salieronReverse = [...salieronTodos].reverse()
+  const salieronReverse = [...salieronTodos].reverse();
+  const navigate = useNavigate();
 
   const handleReceiveFicha = (newFicha) => {
     console.log('Ficha recibida en el cliente:', newFicha);
@@ -40,9 +42,38 @@ export const YaSalieron = () => {
       
   };
 
-  useEffect(()=>{
+  
+
+  useEffect(() => {
+    const fetchSalieron = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/img-seleccionadas/salieron`);
+        if (!response.ok) {
+          throw new Error('Error al recuperar las fichas');
+        }
+        const data = await response.json();
+        setSalieronTodos(data);
+        
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // Llama a la función inmediatamente
+    fetchSalieron();
+
+    // Configura un intervalo para llamar a la función cada 5 segundos
+    const intervalId = setInterval(fetchSalieron, 500);
+
+    // Limpia el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
+  }, []);
+
+console.log(salieronTodos)
+
+  /*useEffect(()=>{
     setSalieronTodos([...salieronTodos, fichaSalio])
-  },[fichaSalio])
+  },[fichaSalio])*/
   
     // Escuchar nuevos mensajes desde el servidor
     socket.on('receiveFicha', handleReceiveFicha);
@@ -61,11 +92,12 @@ export const YaSalieron = () => {
         </div>
       )}
       <h4>Ya salieron:</h4>
-      <div className='salieron'>
-        {salieronReverse && fichaSalio.salio.id != '' && salieronReverse.slice(0, salieronReverse.length-1).map((ficha) => (
-          <div key={ficha.salio.id} className="casillero">
-            <img src={ficha.salio.url} alt={`Ficha ${'hola'}`} />
-            <p>{ficha.salio.id}</p>
+      
+      <div className='salieron' >
+        {salieronReverse && fichaSalio.salio.id != '' && salieronReverse.slice(1, salieronReverse.length).map((ficha) => (
+          <div key={ficha.idSalio} className="casillero">
+            <img src={ficha.url} alt={`Ficha ${'hola'}`} />
+            <p>{ficha.id}</p>
           </div>
         ))}
       </div>

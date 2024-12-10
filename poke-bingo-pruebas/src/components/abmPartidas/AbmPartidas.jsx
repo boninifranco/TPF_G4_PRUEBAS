@@ -31,7 +31,7 @@ export const AbmPartidas = () => {
     const handleShowAlert = () => setShowAlert(true);
     const handleCloseAlert = () => setShowAlert(false);
     const handleAccept = () => {
-      handleDelete()
+      handleDelete()      
     };     
     
 
@@ -166,8 +166,10 @@ export const AbmPartidas = () => {
           console.error('Error en la solicitud:', error.message);
           navigate('/error', { state: { errorMessage: error.message } });
         });
-
+        
     }
+
+    
 
     const handleUpdate = async (e)=>{
       e.preventDefault();        
@@ -298,11 +300,12 @@ export const AbmPartidas = () => {
         const fetchPartidas = async ()=>{
             try {
                 const response =  await fetch(`${baseUrl}/partidas`)
-                if(!response.ok) {
+                
+                if(!response.ok && response.status != 404) {
                     console.error('No se pudieron obtener las partidas:', response.statusText);              
                     const errorData = await response.json();
                     throw new Error(errorData.message || 'Ocurrió un error inesperado');
-                };
+                };                
                 const data = await response.json();
                 if(Array.isArray(data)){
                   const dataConvertida = data.map((item) => ({
@@ -382,8 +385,11 @@ export const AbmPartidas = () => {
 },[renderizar])
 
 const conImagenes = (partidaId) => {
-  const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
-  return partida ? partida.hasImages : false;
+  if(partidasImagenes){
+    const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
+    return partida ? partida.hasImages : false;
+  }
+  
 };
   
 
