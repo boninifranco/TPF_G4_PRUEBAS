@@ -6,6 +6,7 @@ import { Juego } from '../../components/cartonBingo/Juego';
 import '../salaDeJuegosPage/salaDeJuegos.css'
 import { ChatAdmin } from '../../components/cartonBingo/ChatAdmin';
 import {baseUrl} from '../../core/constant/constantes.ts';
+import {Resultados} from '../../components/resultados/Resultados.jsx'
 
 
 export const SalaDeJuegos = () => {
@@ -23,6 +24,7 @@ export const SalaDeJuegos = () => {
   const [cartones, setCartones] = useState([])
   const [seleccionadas, setSeleccionadas] = useState([])
   const [ganadores, setGanadores] = useState([])
+  const [listaGanadores, setListaGanadores] = useState([])
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -149,11 +151,31 @@ const consultarGanador = async (fila)=>{
       puntos: puntos
     })
   }
+
+  const fetchResultados = async () =>{
+    try {
+      const response = await fetch(`${baseUrl}/resultado/bypartida/${partidaSelec.partidaId}`);
+      const data = await response.json();
+      
+      setListaGanadores(data);
+    } catch (error) {
+      console.error('Error fetching results:', error);
+    }    
+  };
+  
+  console.log(JSON.stringify(listaGanadores))
+  useEffect(()=> {
+    const fetchInterval = setInterval(() => {
+      fetchResultados();
+    }, 500)
+    //console.log(ganadores)
+    return () => clearInterval(fetchInterval);
+  },);
   
   return (
-    <div style={{marginTop:'90px', backgroundColor:'#FFFCCD', display:'flex', width:'100vw'}}>
-    <div style={{marginTop:'5px',backgroundColor:'#FFFCCD', display:'flex', flexDirection:'column',gap:'10%'}}>
-        <div style={{display:'flex', justifyContent:'center',gap:'10px', maxHeight:'10vh', marginBottom:'5px'}}>
+    <div style={{marginTop:'90px', backgroundColor:'#FFFCCD', display:'flex', width:'100vw', paddingLeft:'15px', paddingRight:'30px'}}>
+    <div style={{marginTop:'5px',backgroundColor:'#FFFCCD', display:'flex', flexDirection:'column',gap:'10%', height:'150vh'}}>
+        <div style={{display:'flex', justifyContent:'center', gap:'10px', maxHeight:'10vh', marginBottom:'5px', marginTop:'30px'}}>
           <DropdownButton as={ButtonGroup}  title={partidaSelec? `Jugamos Partida ${partidaSelec.partidaId}`:'Seleccionar Partida'} id="bg-nested-dropdown" variant="danger" style={{width:'200px'}} >
             {partidas.map((partida,index)=>(
               <Dropdown.Item key={index} onClick={() => setPartidaSelec(partida)} >{`Partida nº ${partida.partidaId}`}</Dropdown.Item>
@@ -165,13 +187,13 @@ const consultarGanador = async (fila)=>{
               <Dropdown.Item key={puntaje.id} onClick={()=>seleccionarInstancia(puntaje.id, puntaje.descripcion, puntaje.puntos)}>{puntaje.descripcion}</Dropdown.Item>
             ))}
           </DropdownButton>
-          <div>
+          <div >
         <ul>
           <h4 style={{textAlign:'center',color:'#B11A17'}}>Resultados de Partida {partidaSelec.partidaId}</h4>
-        {ganadores.length > 0 ? (
-          ganadores.map((ganador, index) => (
+        {listaGanadores.length > 0 ? (
+          listaGanadores.map((ganador, index) => (
             <li key={index}>
-              <strong style={{textAlign:'left',color:'#B11A17'}}>El jugador {ganador.jugador}, ha ganado el {ganador.instancia} - Puntos: {ganador.puntos} </strong>
+              <strong style={{textAlign:'left',color:'#B11A17'}}>El jugador {ganador.usuario.apellido}, ha ganado el {ganador.idPuntaje.descripcion} - Puntos: {ganador.idPuntaje.puntos} </strong>
             </li>
           ))
         ) : (
@@ -185,7 +207,7 @@ const consultarGanador = async (fila)=>{
         </div>
         
     </div>
-    <ChatAdmin/>
+    <ChatAdmin/>    
     </div>
             
   ) 
