@@ -48,7 +48,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
       setFilas([]); // Guardar las filas en el estado
     }
     
-  };
+  };  
 
   useEffect(() => {
     const fetchInterval = setInterval(() => {
@@ -56,6 +56,7 @@ export const FilasOrdenadas = ({instancia, consultarGanador, partida}) => {
       fetchFilasOrdenadas(); // Llama a la función para actualizar las filas
       
     }, 500); // Cada 500ms
+
 
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(fetchInterval);

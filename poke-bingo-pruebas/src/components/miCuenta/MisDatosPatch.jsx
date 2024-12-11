@@ -212,7 +212,7 @@ export const MisDatosPatch = ({ onGuardado, hideEmailAndPassword }) => {
         </Form.Group>
 
         <Form.Group className="divcont">
-          <p className="pform_style">UserName</p>
+          <p className="pform_style">Apodo</p>
           <Form.Control
             type="text"
             name="userName"

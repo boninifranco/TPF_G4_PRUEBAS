@@ -51,6 +51,7 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
     
           // Añadir la imagen seleccionada al array de salieron
           setSalio(imagenSeleccionada.imagen);
+          
           fetchSalieron();
     
           // Enviar la imagen seleccionada al backend para actualizar casilleros
@@ -58,6 +59,26 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
         }else{
         }
       };
+
+      useEffect(()=>{
+        const enviarSalieron = async (salio)=>{
+          try {
+            await fetch(`${baseUrl}/img-seleccionadas/salieron`,{
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(
+                salio
+              )
+              });         
+            
+          } catch (error) {
+            console.log('error al enviar salieron')
+          }
+        }
+        enviarSalieron(salio);
+
+      },[salio])
+      
       // Función para hacer el PATCH con el imagenId al backend
       const marcarCasillerosPorImagen = async (imagenId) => {
         try {
@@ -78,13 +99,13 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
       };
     
       const fetchSalieron = async()=>{
-        const response = await fetch(`${baseUrl}/casilleros/salieron`)
+        const response = await fetch(`${baseUrl}/img-seleccionadas/salieron`)
         try{
         if (!response.ok) {
           throw new Error('Error al recuperar los cartones');
         }
         const data = await response.json();
-        setSalieron(data);
+        setSalieron(data.reverse());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -144,11 +165,10 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
 
       useEffect(()=>{
         if(salio){
-          socket.emit('sendFicha', {salio});
-        }
-        
+          socket.emit('sendFicha', {salio});          
+        }               
       },[salio])
-    
+      console.log('esta es la imagen que salio:', salio)
   return (
     <div style={{display:'flex', flexDirection:'column'}}>
     <div style={{display:'flex', width:'70vw'}}>
@@ -167,8 +187,8 @@ export const Juego = ({partida, seleccionadas, instancia, consultarGanador}) => 
             <div style={{display:'flex'}}>
                 {salieron.map((img,index)=>(
                 <div  style={{display:'flex', alignItems:'center',justifyContent:'center', marginRight:'20px'}}   >
-                    <img  key={index} src={img.imagen_url} style={{width:'60px'}}/>
-                    <p style={{textAlign:'center'}}>{img.casillero_imagenId}</p>
+                    <img  key={index} src={img.url} style={{width:'60px'}}/>
+                    <p style={{textAlign:'center'}}>{img.id}</p>
                 </div>
                     ) 
                 )}

@@ -78,7 +78,7 @@ export const MisDatos = ({ onModify }) => {
           <p className="pbox_style">{user.direccion}</p>
         </div>
         <div className="divcont">
-          <p className="ptitle_style">UserName</p>
+          <p className="ptitle_style">Apodo</p>
           <p className="pbox_style">{datosRegistro.userName}</p>
         </div>
         <div className="divcont">

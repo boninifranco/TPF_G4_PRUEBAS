@@ -9,9 +9,15 @@
     flex-direction: column;
     align-items: center;
 }
+
 .salieron{
-    display: flex;
-    align-items: center;
+  width: 450px; /* Ajusta el ancho del contenedor */
+  overflow-x: auto; /* Activa el scroll horizontal */
+  display: flex; /* Alinea los div horizontalmente */
+  height:120px;
+  margin-right: 20px;
+  
+    
 }
 .fichasUser .casillero {
     display: flex;
@@ -20,13 +26,15 @@
     justify-content: center; /* Centrar en el eje horizontal */
     border: 1px solid #000;
     background-color: #f0f0f0;
-    overflow: hidden; /* Evitar que contenido se desborde */
+    //overflow: hidden; /* Evitar que contenido se desborde */
+    flex-shrink: 0;
   }
   
 .fichasUser .casillero img {
     max-width: 80%;
     max-height: 80%;
     object-fit: contain; /* Asegura que la imagen se ajuste sin distorsionarse */
+    flex-shrink: 0;
   }
   
 .fichasUser .casillero p {
