@@ -51,15 +51,15 @@ export const CentroCanje = () => {
   };
 
   return (
-    <div className="account_body">
+    <div className="account_body" >
       <div className="misdatos">
-        <div className="data_style">
+        <div className="data_style" >
           <div className="info_row info_row_two info_style">
             <ListaPremiosCanje
               premiosIniciales={premios}
               puntosIniciales={user.puntos}
               usuarioId={user.id}
-              onCanjeConfirmado={refrescarDatos}
+              onCanjeConfirmado={refrescarDatos}              
             />
           </div>
         </div>
