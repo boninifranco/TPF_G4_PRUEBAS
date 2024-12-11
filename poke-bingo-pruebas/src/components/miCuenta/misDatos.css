@@ -34,6 +34,7 @@
 .data_style h1 {
   color: #fffab3;
   text-shadow: 2px 2px 2px rgba(18, 18, 18, 0.85);
+  
 }
 .btn_changePass{
   background-color: #fffab3;
@@ -91,7 +92,7 @@
     margin-bottom: 2vh;
   }
   .info_style{
-    margin-top: 2.5em;
+    margin-top: 0.1em;
   }
   .data_style {
     display: flex;
