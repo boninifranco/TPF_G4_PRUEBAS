@@ -24,7 +24,7 @@ export const AbmPartidas = () => {
     const [tieneImagenes, setTieneImagenes] = useState(false)
     const [imagenes, setImagenes] = useState([]);
     const [seleccionadas, setSeleccionadas] = useState([]);
-    const [partidasImagenes, setPartidasImagenes] = useState({});
+    const [partidasImagenes, setPartidasImagenes] = useState([{}]);
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
 
@@ -384,14 +384,16 @@ export const AbmPartidas = () => {
     fetchPartidasConImagenes();
 },[renderizar])
 
+
 const conImagenes = (partidaId) => {
-  if(partidasImagenes){
+  if(partidasImagenes)
+  {
     const partida = partidasImagenes.find((p) => p.partidaId === partidaId);
-    return partida ? partida.hasImages : false;
+    return partida ? partida.hasImages : false;  
   }
   
 };
-  
+console.log(JSON.stringify(partidasImagenes))  
 
   return (
     <div style={{display:'flex', justifyContent:'center'}}>
